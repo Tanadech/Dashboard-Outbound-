@@ -18,12 +18,14 @@ function renderWH() {
 
 function openWHModal(wh) {
   const docs = {};
-  filtered.filter(r => r.warehouse === wh).forEach(r => {
-    if (!docs[r.docNo]) docs[r.docNo] = { docNo: r.docNo, sh: 0, ov: 0 };
-    docs[r.docNo].sh += r.shortage;
-    docs[r.docNo].ov += r.overage;
-  });
-  const rows = Object.values(docs).filter(d => d.sh > 0 || d.ov > 0).sort((a, b) => a.docNo.localeCompare(b.docNo, 'th'));
+  filtered
+    .filter(r => r.warehouse === wh && (r.shortage > 0 || r.overage > 0))
+    .forEach(r => {
+      if (!docs[r.docNo]) docs[r.docNo] = { docNo: r.docNo, sh: 0, ov: 0 };
+      docs[r.docNo].sh += r.shortage;
+      docs[r.docNo].ov += r.overage;
+    });
+  const rows = Object.values(docs).sort((a, b) => a.docNo.localeCompare(b.docNo, 'th'));
 
   document.getElementById('whModalTitle').textContent = `📋 เอกสารคลัง ${wh}`;
   document.getElementById('whModalInfo').textContent  = `${rows.length.toLocaleString()} เอกสาร`;
