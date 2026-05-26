@@ -1,0 +1,12 @@
+# Data files (ไม่ push ข้อมูลจริงขึ้น GitHub)
+DATA PT/
+
+# Claude Code internal files
+.claude/
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# macOS
+.DS_Store

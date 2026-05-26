@@ -1,0 +1,77 @@
+#filterBar {
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+  padding: 10px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 10px;
+  width: 100%;
+}
+
+.fb-title {
+  flex: 1 1 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #f0f0f0;
+  margin-bottom: 4px;
+}
+.fb-title h1        { font-size: 16px; font-weight: 700; color: var(--text-1); }
+.fb-title p         { font-size: 11px; color: var(--text-3); margin-top: 1px; }
+.fb-title-right     { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+#fileStatusLabel        { font-size: 11.5px; color: var(--text-3); }
+#fileStatusLabel.ok     { color: var(--green); font-weight: 600; }
+
+.fg {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 130px;
+}
+.fg label {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+.fg select,
+.fg input {
+  padding: 7px 9px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  font-size: 12.5px;
+  font-family: inherit;
+  background: #fff;
+  color: var(--text-1);
+  outline: none;
+  transition: border 0.18s;
+}
+.fg select:focus,
+.fg input:focus { border-color: var(--blue); }
+.fg.wide input  { min-width: 190px; }
+
+.fb-actions { display: flex; gap: 7px; align-items: flex-end; flex-wrap: wrap; }
+
+.qf-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 6px 0 2px;
+  border-top: 1px solid #f0f0f0;
+  width: 100%;
+}
+.qf-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  white-space: nowrap;
+}

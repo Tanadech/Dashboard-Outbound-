@@ -1,0 +1,39 @@
+.bp {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Base badge colors */
+.bp-red    { background: #fff0f0; color: var(--red); }
+.bp-blue   { background: #e8f4fd; color: var(--blue); }
+.bp-purple { background: #f3f0ff; color: var(--purple); }
+.bp-green  { background: #ebfbee; color: var(--green); }
+.bp-orange { background: #fff4e6; color: var(--orange); }
+.bp-gray   { background: #f1f3f5; color: var(--text-2); }
+
+/* Risk level badges */
+.bp-risk-vh { background: #ffe0e0; color: #7a0000; font-weight: 700; }
+.bp-risk-h  { background: #fff0f0; color: var(--red); }
+.bp-risk-m  { background: #fff4e6; color: var(--orange); }
+.bp-risk-w  { background: #fffde6; color: #c87800; }
+.bp-risk-l  { background: #ebfbee; color: var(--green); }
+
+/* Rank badges */
+.rank-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font-size: 10.5px;
+  font-weight: 700;
+}
+.r1 { background: #ffd700; color: #7a5900; }
+.r2 { background: #c0c0c0; color: #444; }
+.r3 { background: #cd7f32; color: #fff; }
+.rn { background: #f1f3f5; color: var(--text-2); }

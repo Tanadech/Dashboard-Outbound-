@@ -1,0 +1,17 @@
+@media (max-width: 960px) {
+  #topHeader    { padding: 9px 14px; }
+  #filterBar    { padding: 8px 14px; }
+  #navBar       { padding: 0 8px; }
+  #content      { padding: 16px 14px 40px; }
+  .chart-grid   { grid-template-columns: 1fr; }
+  .chart-grid.g3 { grid-template-columns: 1fr; }
+  .kpi-grid     { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 540px) {
+  .kpi-grid     { grid-template-columns: 1fr; }
+  #content      { padding: 12px 10px 30px; }
+  #filterBar    { padding: 8px 10px; }
+  .th-left h1   { font-size: 14px; }
+  #fileStatusLabel { display: none; }
+}

@@ -1,0 +1,23 @@
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  justify-content: center;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+.pagination button {
+  padding: 4px 9px;
+  border: 1px solid var(--border);
+  background: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 11.5px;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+.pagination button:hover,
+.pagination button.cur { background: var(--blue); color: #fff; border-color: var(--blue); }
+.pagination button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.pg-info { font-size: 11.5px; color: var(--text-3); }

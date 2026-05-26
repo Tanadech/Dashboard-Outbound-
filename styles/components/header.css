@@ -1,0 +1,13 @@
+#topHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 24px;
+  gap: 12px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--border);
+}
+
+.th-left h1 { font-size: 16px; font-weight: 700; color: var(--text-1); }
+.th-left p  { font-size: 11px; color: var(--text-3); margin-top: 2px; }
+.th-right   { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }

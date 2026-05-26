@@ -1,0 +1,29 @@
+:root {
+  --sidebar-w:      240px;
+  --header-h:       60px;
+  --sidebar-bg:     #1a2744;
+  --sidebar-text:   rgba(255, 255, 255, 0.72);
+  --sidebar-active: #3b5bdb;
+
+  /* Brand colors */
+  --blue:   #3b5bdb;
+  --green:  #2f9e44;
+  --orange: #e8590c;
+  --purple: #7048e8;
+  --red:    #c92a2a;
+  --teal:   #0c8599;
+  --amber:  #f59f00;
+
+  /* Surface */
+  --bg:     #f0f2f8;
+  --card:   #ffffff;
+  --border: #dee2e6;
+
+  /* Text */
+  --text-1: #1a1a2e;
+  --text-2: #495057;
+  --text-3: #868e96;
+
+  /* Effects */
+  --shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+}

@@ -1,0 +1,5 @@
+@media print {
+  #stickyWrap  { display: none !important; }
+  .pagination  { display: none !important; }
+  .dash-section { page-break-inside: avoid; }
+}
