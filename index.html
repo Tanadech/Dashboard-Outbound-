@@ -48,12 +48,17 @@
       <button class="modal-close" onclick="closeWHModal()">✕</button>
     </div>
     <div class="modal-body">
-      <p class="modal-info" id="whModalInfo"></p>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <input class="tbl-search" id="whModalSearch" placeholder="ค้นหาเลขที่เอกสาร..." oninput="renderWHModalRows()" style="flex:1;max-width:260px">
+        <span class="row-info" id="whModalInfo"></span>
+      </div>
       <table>
         <thead><tr>
           <th>เลขที่เอกสาร</th>
+          <th>สาขา</th>
           <th class="num">จำนวนขาด</th>
           <th class="num">จำนวนเกิน</th>
+          <th>สาเหตุ</th>
         </tr></thead>
         <tbody id="whModalBody"></tbody>
       </table>

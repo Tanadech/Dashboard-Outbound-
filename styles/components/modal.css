@@ -10,7 +10,7 @@
 .modal-card {
   background: var(--card);
   border-radius: 12px;
-  width: min(660px, 93vw);
+  width: min(920px, 95vw);
   max-height: 80vh;
   display: flex;
   flex-direction: column;
