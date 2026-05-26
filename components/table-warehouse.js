@@ -23,7 +23,7 @@ function openWHModal(wh) {
     docs[r.docNo].sh += r.shortage;
     docs[r.docNo].ov += r.overage;
   });
-  const rows = Object.values(docs).sort((a, b) => a.docNo.localeCompare(b.docNo, 'th'));
+  const rows = Object.values(docs).filter(d => d.sh > 0 || d.ov > 0).sort((a, b) => a.docNo.localeCompare(b.docNo, 'th'));
 
   document.getElementById('whModalTitle').textContent = `📋 เอกสารคลัง ${wh}`;
   document.getElementById('whModalInfo').textContent  = `${rows.length.toLocaleString()} เอกสาร`;
