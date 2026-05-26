@@ -4,7 +4,7 @@ cd /d "%~dp0"
 :: ============================================================
 ::  แก้ไข path ไฟล์ Excel ด้านล่างนี้ครั้งเดียว แล้วใช้ได้เลย
 :: ============================================================
-SET EXCEL_PATH=C:\Users\WIN11\Desktop\your-file.xlsx
+SET EXCEL_PATH=C:\Users\WIN11\Desktop\Work\09 Report รายงานสินค้า R008\DATA PT\Transaction Outbound Report.xlsx
 
 :: ============================================================
 
