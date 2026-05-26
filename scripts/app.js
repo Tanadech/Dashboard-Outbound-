@@ -44,11 +44,14 @@ function handleFile(input) {
   }
 }
 
+const RAW_URL = 'https://raw.githubusercontent.com/Tanadech/Dashboard-Outbound-/main/data/data.json';
+
 /* ─── Auto-fetch data/data.json from GitHub Pages on page load ─── */
 async function autoLoadData() {
   loading(true);
   try {
-    const res = await fetch('./data/data.json?t=' + Date.now());
+    let res = await fetch('./data/data.json?t=' + Date.now());
+    if (!res.ok) res = await fetch(RAW_URL + '?t=' + Date.now());
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const json = await res.json();
     if (!Array.isArray(json) || json.length === 0) throw new Error('ไม่มีข้อมูล');
