@@ -23,19 +23,21 @@ function openWHModal(wh) {
   filtered
     .filter(r => r.warehouse === wh && (r.shortage > 0 || r.overage > 0))
     .forEach(r => {
-      if (!docs[r.docNo]) docs[r.docNo] = { docNo: r.docNo, sh: 0, ov: 0, branches: new Set(), causes: new Set() };
+      if (!docs[r.docNo]) docs[r.docNo] = { docNo: r.docNo, sh: 0, ov: 0, branches: new Set(), recorders: new Set(), causes: new Set() };
       docs[r.docNo].sh += r.shortage;
       docs[r.docNo].ov += r.overage;
-      if (r.branch) docs[r.docNo].branches.add(r.branch);
-      if (r.cause)  docs[r.docNo].causes.add(r.cause);
+      if (r.branch)     docs[r.docNo].branches.add(r.branch);
+      if (r.recorderT4) docs[r.docNo].recorders.add(r.recorderT4);
+      if (r.cause)      docs[r.docNo].causes.add(r.cause);
     });
 
   whModalData = Object.values(docs).map(d => ({
-    docNo:  d.docNo,
-    sh:     d.sh,
-    ov:     d.ov,
-    branch: [...d.branches].join(', '),
-    cause:  [...d.causes].join(', ')
+    docNo:    d.docNo,
+    sh:       d.sh,
+    ov:       d.ov,
+    branch:   [...d.branches].join(', '),
+    recorder: [...d.recorders].join(', '),
+    cause:    [...d.causes].join(', ')
   })).sort((a, b) => a.docNo.localeCompare(b.docNo, 'th'));
 
   document.getElementById('whModalTitle').textContent = `📋 เอกสารคลัง ${wh}`;
@@ -58,6 +60,7 @@ function renderWHModalRows() {
       <td>${d.branch}</td>
       <td class="num">${d.sh > 0 ? `<span class="bp bp-red">${d.sh.toLocaleString()}</span>` : '—'}</td>
       <td class="num">${d.ov > 0 ? `<span class="bp bp-blue">${d.ov.toLocaleString()}</span>` : '—'}</td>
+      <td>${d.recorder || '—'}</td>
       <td>${d.cause}</td>
     </tr>`).join('');
 }
