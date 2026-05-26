@@ -33,7 +33,7 @@ function openBRModal(br) {
       docs[r.docNo].sh += r.shortage;
       docs[r.docNo].ov += r.overage;
       if (r.warehouse)  docs[r.docNo].warehouses.add(r.warehouse);
-      if (r.recorderT4) docs[r.docNo].recorders.add(r.recorderT4);
+      if (r.recorder)   docs[r.docNo].recorders.add(r.recorder);
       if (r.cause)      docs[r.docNo].causes.add(r.cause);
     });
 

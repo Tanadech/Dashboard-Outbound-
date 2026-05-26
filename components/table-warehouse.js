@@ -26,9 +26,9 @@ function openWHModal(wh) {
       if (!docs[r.docNo]) docs[r.docNo] = { docNo: r.docNo, sh: 0, ov: 0, branches: new Set(), recorders: new Set(), causes: new Set() };
       docs[r.docNo].sh += r.shortage;
       docs[r.docNo].ov += r.overage;
-      if (r.branch)     docs[r.docNo].branches.add(r.branch);
-      if (r.recorderT4) docs[r.docNo].recorders.add(r.recorderT4);
-      if (r.cause)      docs[r.docNo].causes.add(r.cause);
+      if (r.branch)    docs[r.docNo].branches.add(r.branch);
+      if (r.recorder)  docs[r.docNo].recorders.add(r.recorder);
+      if (r.cause)     docs[r.docNo].causes.add(r.cause);
     });
 
   whModalData = Object.values(docs).map(d => ({
