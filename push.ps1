@@ -1,6 +1,4 @@
-[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 $host.UI.RawUI.WindowTitle = "Push Update -> GitHub Pages"
-
 Set-Location $PSScriptRoot
 
 Write-Host ""
@@ -12,24 +10,22 @@ Write-Host ""
 git add index.html components\ lib\ scripts\ styles\
 
 $date = Get-Date -Format "yyyy-MM-dd HH:mm"
-$msg  = "Update $date"
-
-git commit -m $msg
+git commit -m "Update $date"
 
 if ($LASTEXITCODE -eq 0) {
     Write-Host ""
-    Write-Host "  กำลัง push ขึ้น GitHub..." -ForegroundColor Cyan
+    Write-Host "  Pushing to GitHub..." -ForegroundColor Cyan
     git push origin main
     if ($LASTEXITCODE -eq 0) {
         Write-Host ""
-        Write-Host "  สำเร็จ! GitHub Pages จะอัพเดทใน 1-2 นาที" -ForegroundColor Green
+        Write-Host "  Done! GitHub Pages will update in ~1-2 min." -ForegroundColor Green
     } else {
         Write-Host ""
-        Write-Host "  Push ไม่ได้ - ตรวจสอบ internet หรือ credentials" -ForegroundColor Red
+        Write-Host "  Push failed. Check internet / credentials." -ForegroundColor Red
     }
 } else {
     Write-Host ""
-    Write-Host "  ไม่มีการเปลี่ยนแปลง หรือ commit ไม่ได้" -ForegroundColor Yellow
+    Write-Host "  Nothing new to commit." -ForegroundColor Yellow
 }
 
 Write-Host ""
