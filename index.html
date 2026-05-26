@@ -67,6 +67,116 @@
   </div>
 </div>
 
+<!-- JOB TYPE DETAIL MODAL -->
+<div id="jtModal" class="modal-overlay" style="display:none" onclick="closeJTModal(event)">
+  <div class="modal-card">
+    <div class="modal-hdr">
+      <h3 id="jtModalTitle">📋 เอกสารประเภทงาน</h3>
+      <button class="modal-close" onclick="closeJTModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <input class="tbl-search" id="jtModalSearch" placeholder="ค้นหาเลขที่เอกสาร..." oninput="renderJTModalRows()" style="flex:1;max-width:260px">
+        <span class="row-info" id="jtModalInfo"></span>
+      </div>
+      <table>
+        <thead><tr>
+          <th>เลขที่เอกสาร</th>
+          <th>คลังสินค้า</th>
+          <th>สาขา</th>
+          <th class="num">จำนวนขาด</th>
+          <th class="num">จำนวนเกิน</th>
+          <th>ผู้บันทึก</th>
+          <th>สาเหตุ</th>
+        </tr></thead>
+        <tbody id="jtModalBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- CAUSE DETAIL MODAL -->
+<div id="caModal" class="modal-overlay" style="display:none" onclick="closeCAModal(event)">
+  <div class="modal-card">
+    <div class="modal-hdr">
+      <h3 id="caModalTitle">📋 เอกสารสาเหตุขาดเกิน</h3>
+      <button class="modal-close" onclick="closeCAModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <input class="tbl-search" id="caModalSearch" placeholder="ค้นหาเลขที่เอกสาร..." oninput="renderCAModalRows()" style="flex:1;max-width:260px">
+        <span class="row-info" id="caModalInfo"></span>
+      </div>
+      <table>
+        <thead><tr>
+          <th>เลขที่เอกสาร</th>
+          <th>คลังสินค้า</th>
+          <th>สาขา</th>
+          <th>ประเภทงาน</th>
+          <th class="num">จำนวนขาด</th>
+          <th class="num">จำนวนเกิน</th>
+          <th>ผู้บันทึก</th>
+        </tr></thead>
+        <tbody id="caModalBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- RECORDER DETAIL MODAL -->
+<div id="recModal" class="modal-overlay" style="display:none" onclick="closeRECModal(event)">
+  <div class="modal-card">
+    <div class="modal-hdr">
+      <h3 id="recModalTitle">📋 เอกสารผู้บันทึก</h3>
+      <button class="modal-close" onclick="closeRECModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <input class="tbl-search" id="recModalSearch" placeholder="ค้นหาเลขที่เอกสาร..." oninput="renderRECModalRows()" style="flex:1;max-width:260px">
+        <span class="row-info" id="recModalInfo"></span>
+      </div>
+      <table>
+        <thead><tr>
+          <th>เลขที่เอกสาร</th>
+          <th>คลังสินค้า</th>
+          <th>สาขา</th>
+          <th>ประเภทงาน</th>
+          <th class="num">จำนวนขาด</th>
+          <th class="num">จำนวนเกิน</th>
+          <th>สาเหตุ</th>
+        </tr></thead>
+        <tbody id="recModalBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- DOCUMENT DETAIL MODAL -->
+<div id="dtModal" class="modal-overlay" style="display:none" onclick="closeDTModal(event)">
+  <div class="modal-card">
+    <div class="modal-hdr">
+      <h3 id="dtModalTitle">📋 รายละเอียดเอกสาร</h3>
+      <button class="modal-close" onclick="closeDTModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px" id="dtModalSummary"></div>
+      <table>
+        <thead><tr>
+          <th>คลังสินค้า</th>
+          <th>สาขา</th>
+          <th>ประเภทงาน</th>
+          <th class="num">จำนวนขาด</th>
+          <th class="num">จำนวนเกิน</th>
+          <th>ผู้บันทึก</th>
+          <th>สาเหตุ</th>
+          <th>สถานะ</th>
+        </tr></thead>
+        <tbody id="dtModalBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
 <!-- BRANCH DETAIL MODAL -->
 <div id="brModal" class="modal-overlay" style="display:none" onclick="closeBRModal(event)">
   <div class="modal-card">
@@ -591,10 +701,10 @@
 <script src="components/kpi.js?v=2"></script>
 <script src="components/table-warehouse.js?v=4"></script>
 <script src="components/table-branch.js?v=5"></script>
-<script src="components/table-jobtype.js?v=2"></script>
-<script src="components/table-cause.js?v=2"></script>
-<script src="components/table-recorder.js?v=2"></script>
-<script src="components/table-detail.js?v=2"></script>
+<script src="components/table-jobtype.js?v=3"></script>
+<script src="components/table-cause.js?v=3"></script>
+<script src="components/table-recorder.js?v=3"></script>
+<script src="components/table-detail.js?v=3"></script>
 
 <!-- 7. App orchestration (ties everything together — must be last) -->
 <script src="scripts/app.js?v=2"></script>

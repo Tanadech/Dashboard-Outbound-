@@ -42,7 +42,7 @@ function renderDT() {
     else if (r.overage > 0)              totalBadgeCls = 'bp-blue';
 
     return `
-    <tr>
+    <tr style="cursor:pointer" onclick="openDTModal('${r.docNo.replace(/'/g, "\\'")}')">
       <td>${r.docNo}</td>
       <td><span class="bp bp-orange">${r.warehouse}</span></td>
       <td>${r.branch}</td>
@@ -54,4 +54,39 @@ function renderDT() {
       <td>${isR008 ? '<span class="bp bp-red">ขาดเกิน</span>' : '<span class="bp bp-green">ปกติ</span>'}</td>
     </tr>`;
   });
+}
+
+function openDTModal(docNo) {
+  const rows = filtered.filter(r => r.docNo === docNo);
+  const totalSh = rows.reduce((s, r) => s + r.shortage, 0);
+  const totalOv = rows.reduce((s, r) => s + r.overage,  0);
+
+  document.getElementById('dtModalTitle').textContent = `📋 เลขที่เอกสาร: ${docNo}`;
+  document.getElementById('dtModalSummary').innerHTML =
+    `<span class="bp bp-red">ขาด ${totalSh.toLocaleString()} ชิ้น</span> &nbsp;` +
+    `<span class="bp bp-blue">เกิน ${totalOv.toLocaleString()} ชิ้น</span> &nbsp;` +
+    `<span class="row-info">${rows.length} รายการ</span>`;
+
+  document.getElementById('dtModalBody').innerHTML = rows.map(r => {
+    const isR008 = r.shortage > 0 || r.overage > 0;
+    return `
+    <tr>
+      <td><span class="bp bp-orange">${r.warehouse}</span></td>
+      <td>${r.branch}</td>
+      <td>${r.jobType}</td>
+      <td class="num">${r.shortage > 0 ? `<span class="bp bp-red">${r.shortage.toLocaleString()}</span>` : '—'}</td>
+      <td class="num">${r.overage  > 0 ? `<span class="bp bp-blue">${r.overage.toLocaleString()}</span>` : '—'}</td>
+      <td>${r.recorder || '—'}</td>
+      <td>${r.cause}</td>
+      <td>${isR008 ? '<span class="bp bp-red">ขาดเกิน</span>' : '<span class="bp bp-green">ปกติ</span>'}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('dtModal').style.display = 'flex';
+}
+
+function closeDTModal(e) {
+  if (!e || e.target === document.getElementById('dtModal')) {
+    document.getElementById('dtModal').style.display = 'none';
+  }
 }
