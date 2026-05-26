@@ -66,6 +66,32 @@
   </div>
 </div>
 
+<!-- BRANCH DETAIL MODAL -->
+<div id="brModal" class="modal-overlay" style="display:none" onclick="closeBRModal(event)">
+  <div class="modal-card">
+    <div class="modal-hdr">
+      <h3 id="brModalTitle">📋 เอกสารสาขา</h3>
+      <button class="modal-close" onclick="closeBRModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <input class="tbl-search" id="brModalSearch" placeholder="ค้นหาเลขที่เอกสาร..." oninput="renderBRModalRows()" style="flex:1;max-width:260px">
+        <span class="row-info" id="brModalInfo"></span>
+      </div>
+      <table>
+        <thead><tr>
+          <th>เลขที่เอกสาร</th>
+          <th>คลังสินค้า</th>
+          <th class="num">จำนวนขาด</th>
+          <th class="num">จำนวนเกิน</th>
+          <th>สาเหตุ</th>
+        </tr></thead>
+        <tbody id="brModalBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
 <!-- ===== LOADING OVERLAY ===== -->
 <div id="loader">
   <div class="loader-box">
@@ -562,7 +588,7 @@
 <script src="components/chart.js?v=2"></script>
 <script src="components/kpi.js?v=2"></script>
 <script src="components/table-warehouse.js?v=2"></script>
-<script src="components/table-branch.js?v=2"></script>
+<script src="components/table-branch.js?v=3"></script>
 <script src="components/table-jobtype.js?v=2"></script>
 <script src="components/table-cause.js?v=2"></script>
 <script src="components/table-recorder.js?v=2"></script>
