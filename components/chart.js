@@ -1,5 +1,12 @@
 Chart.register(ChartDataLabels);
 
+/* ─── Global Chart.js font defaults ─── */
+Chart.defaults.font.family = 'Sarabun';
+Chart.defaults.font.size   = 14;
+Chart.defaults.plugins.tooltip.titleFont = { family: 'Sarabun', size: 14, weight: 'bold' };
+Chart.defaults.plugins.tooltip.bodyFont  = { family: 'Sarabun', size: 14 };
+Chart.defaults.plugins.tooltip.padding   = 10;
+
 /* ─── Build datalabels plugin config based on chart type ─── */
 function buildDL(type, isHorizontal, isDoughnut, isStacked) {
   if (isDoughnut) {
@@ -10,7 +17,7 @@ function buildDL(type, isHorizontal, isDoughnut, isStacked) {
         const pct = (v / tot * 100).toFixed(1);
         return parseFloat(pct) >= 5 ? `${pct}%\n${v.toLocaleString()}` : '';
       },
-      font: { family: 'Sarabun', size: 10, weight: '600' },
+      font: { family: 'Sarabun', size: 13, weight: '600' },
       color: '#fff',
       textAlign: 'center',
       display: ctx => {
@@ -24,7 +31,7 @@ function buildDL(type, isHorizontal, isDoughnut, isStacked) {
     return {
       anchor: 'center', align: 'center',
       formatter: v => v > 0 ? v.toLocaleString() : null,
-      font: { family: 'Sarabun', size: 9, weight: '700' },
+      font: { family: 'Sarabun', size: 12, weight: '700' },
       color: '#fff',
       display: ctx => (ctx.dataset.data[ctx.dataIndex] || 0) > 0
     };
@@ -32,18 +39,18 @@ function buildDL(type, isHorizontal, isDoughnut, isStacked) {
 
   if (isHorizontal) {
     return {
-      anchor: 'end', align: 'right', offset: 4,
+      anchor: 'end', align: 'right', offset: 6,
       formatter: v => v > 0 ? v.toLocaleString() : null,
-      font: { family: 'Sarabun', size: 10, weight: '600' },
+      font: { family: 'Sarabun', size: 13, weight: '600' },
       color: '#495057',
       display: ctx => (ctx.dataset.data[ctx.dataIndex] || 0) > 0
     };
   }
 
   return {
-    anchor: 'end', align: 'top', offset: 2,
+    anchor: 'end', align: 'top', offset: 4,
     formatter: v => v > 0 ? v.toLocaleString() : null,
-    font: { family: 'Sarabun', size: 10, weight: '600' },
+    font: { family: 'Sarabun', size: 13, weight: '600' },
     color: '#495057',
     clamp: true,
     display: ctx => (ctx.dataset.data[ctx.dataIndex] || 0) > 0
@@ -70,11 +77,11 @@ function mkChart(id, type, labels, datasets, opts = {}) {
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      layout: { padding: { top: isHorizontal || isDoughnut ? 4 : 20, right: isHorizontal ? 40 : 4 } },
+      layout: { padding: { top: isHorizontal || isDoughnut ? 6 : 28, right: isHorizontal ? 70 : 6, bottom: 4 } },
       plugins: {
         legend: {
           position: isDoughnut ? 'right' : 'top',
-          labels: { font: { family: 'Sarabun', size: 11 }, boxWidth: 11, padding: 8 }
+          labels: { font: { family: 'Sarabun', size: 14 }, boxWidth: 13, padding: 12 }
         },
         datalabels: buildDL(type, isHorizontal, isDoughnut, isStacked),
         ...extraPlugins
@@ -164,7 +171,7 @@ function renderCharts() {
         x: {
           stacked: true, beginAtZero: true,
           ticks: {
-            font: { family: 'Sarabun', size: 10 },
+            font: { family: 'Sarabun', size: 13 },
             callback: (value, index) => {
               const b = brTop10[index];
               if (!b) return value;
