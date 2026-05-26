@@ -540,36 +540,36 @@
 <!-- ===== JAVASCRIPT — load order matters ===== -->
 
 <!-- 1. State & constants (must be first) -->
-<script src="lib/constants.js"></script>
+<script src="lib/constants.js?v=2"></script>
 
 <!-- 2. Pure utilities (no dependencies on each other) -->
-<script src="lib/format.js"></script>
-<script src="lib/normalize.js"></script>
+<script src="lib/format.js?v=2"></script>
+<script src="lib/normalize.js?v=2"></script>
 
 <!-- 3. Aggregation (depends on format.js: riskBadge) -->
-<script src="lib/calculate.js"></script>
+<script src="lib/calculate.js?v=2"></script>
 
 <!-- 4. Filter logic (depends on state + will call renderAll at runtime) -->
-<script src="lib/filter.js"></script>
+<script src="lib/filter.js?v=2"></script>
 
 <!-- 5. Export (depends on state) -->
-<script src="lib/export.js"></script>
+<script src="lib/export.js?v=2"></script>
 
 <!-- 6. UI components (depend on state, utilities, lib) -->
-<script src="components/loading.js"></script>
-<script src="components/pagination.js"></script>
-<script src="components/nav.js"></script>
-<script src="components/chart.js"></script>
-<script src="components/kpi.js"></script>
-<script src="components/table-warehouse.js"></script>
-<script src="components/table-branch.js"></script>
-<script src="components/table-jobtype.js"></script>
-<script src="components/table-cause.js"></script>
-<script src="components/table-recorder.js"></script>
-<script src="components/table-detail.js"></script>
+<script src="components/loading.js?v=2"></script>
+<script src="components/pagination.js?v=2"></script>
+<script src="components/nav.js?v=2"></script>
+<script src="components/chart.js?v=2"></script>
+<script src="components/kpi.js?v=2"></script>
+<script src="components/table-warehouse.js?v=2"></script>
+<script src="components/table-branch.js?v=2"></script>
+<script src="components/table-jobtype.js?v=2"></script>
+<script src="components/table-cause.js?v=2"></script>
+<script src="components/table-recorder.js?v=2"></script>
+<script src="components/table-detail.js?v=2"></script>
 
 <!-- 7. App orchestration (ties everything together — must be last) -->
-<script src="scripts/app.js"></script>
+<script src="scripts/app.js?v=2"></script>
 
 </body>
 </html>
