@@ -23,9 +23,10 @@ function openWHModal(wh) {
   filtered
     .filter(r => r.warehouse === wh && (r.shortage > 0 || r.overage > 0))
     .forEach(r => {
-      if (!docs[r.docNo]) docs[r.docNo] = { docNo: r.docNo, sh: 0, ov: 0, branches: new Set(), recorders: new Set(), causes: new Set() };
+      if (!docs[r.docNo]) docs[r.docNo] = { docNo: r.docNo, sh: 0, ov: 0, date: r.queueDate, branches: new Set(), recorders: new Set(), causes: new Set() };
       docs[r.docNo].sh += r.shortage;
       docs[r.docNo].ov += r.overage;
+      if (!docs[r.docNo].date && r.queueDate) docs[r.docNo].date = r.queueDate;
       if (r.branch)    docs[r.docNo].branches.add(r.branch);
       if (r.recorder)  docs[r.docNo].recorders.add(r.recorder);
       if (r.cause)     docs[r.docNo].causes.add(r.cause);
@@ -33,6 +34,7 @@ function openWHModal(wh) {
 
   whModalData = Object.values(docs).map(d => ({
     docNo:    d.docNo,
+    date:     d.date,
     sh:       d.sh,
     ov:       d.ov,
     branch:   [...d.branches].join(', '),
@@ -57,6 +59,7 @@ function renderWHModalRows() {
   document.getElementById('whModalBody').innerHTML = rows.map(d => `
     <tr>
       <td>${d.docNo}</td>
+      <td>${fmtDate(d.date)}</td>
       <td>${d.branch}</td>
       <td class="num">${d.sh > 0 ? `<span class="bp bp-red">${d.sh.toLocaleString()}</span>` : '—'}</td>
       <td class="num">${d.ov > 0 ? `<span class="bp bp-blue">${d.ov.toLocaleString()}</span>` : '—'}</td>

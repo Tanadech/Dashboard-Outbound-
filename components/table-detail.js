@@ -60,9 +60,11 @@ function openDTModal(docNo) {
   const rows = filtered.filter(r => r.docNo === docNo);
   const totalSh = rows.reduce((s, r) => s + r.shortage, 0);
   const totalOv = rows.reduce((s, r) => s + r.overage,  0);
+  const dateStr = fmtDate(rows.find(r => r.queueDate)?.queueDate || null);
 
   document.getElementById('dtModalTitle').textContent = `📋 เลขที่เอกสาร: ${docNo}`;
   document.getElementById('dtModalSummary').innerHTML =
+    `<span class="bp bp-gray">📅 ${dateStr}</span> &nbsp;` +
     `<span class="bp bp-red">ขาด ${totalSh.toLocaleString()} ชิ้น</span> &nbsp;` +
     `<span class="bp bp-blue">เกิน ${totalOv.toLocaleString()} ชิ้น</span> &nbsp;` +
     `<span class="row-info">${rows.length} รายการ</span>`;
