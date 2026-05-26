@@ -140,10 +140,6 @@ function renderCharts() {
     wh.map(d => d.warehouse),
     donutDS(wh.map(d => d.issueTotal)));
 
-  const whTop10 = topN(wh, 'issueTotal', 10);
-  mkChart('cWHTop', 'bar', whTop10.map(d => d.warehouse),
-    [barDS('ปัญหารวม', whTop10.map(d => d.issueTotal), 0)],
-    { indexAxis: 'y', scales: { x: { beginAtZero: true } } });
 
   /* ── Branch ── */
   mkChart('cBrTop', 'bar', brTop10.map(d => short(d.branch)),
