@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard R008 – วิเคราะห์สินค้าเสียหายจากการขนส่ง</title>
+  <title>Dashboard Outbound – วิเคราะห์สินค้าขาดเกินที่สาขา</title>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -61,7 +61,7 @@
       <div class="th-right">
         <span id="fileStatusLabel">ยังไม่ได้เลือกไฟล์</span>
         <label class="btn btn-primary btn-file">
-          📂 นำเข้าไฟล์ R008
+          📂 นำเข้าไฟล์
           <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" style="display:none" onchange="handleFile(this)">
         </label>
       </div>
@@ -82,7 +82,7 @@
         <select id="fJT" onchange="applyFilters()"><option value="">ทั้งหมด</option></select>
       </div>
       <div class="fg">
-        <label>สาเหตุ R008</label>
+        <label>สาเหตุขาดเกิน</label>
         <select id="fCA" onchange="applyFilters()"><option value="">ทั้งหมด</option></select>
       </div>
       <div class="fg wide">
@@ -119,7 +119,7 @@
       <a class="nav-link" href="#sec-warehouse"><span class="ico">🏭</span>วิเคราะห์คลัง</a>
       <a class="nav-link" href="#sec-branch"><span class="ico">🏪</span>วิเคราะห์สาขา</a>
       <a class="nav-link" href="#sec-jobtype"><span class="ico">🧾</span>วิเคราะห์ประเภทงาน</a>
-      <a class="nav-link" href="#sec-cause"><span class="ico">⚠️</span>วิเคราะห์สาเหตุ R008</a>
+      <a class="nav-link" href="#sec-cause"><span class="ico">⚠️</span>วิเคราะห์สาเหตุขาดเกิน</a>
       <a class="nav-link" href="#sec-recorder"><span class="ico">👤</span>วิเคราะห์ผู้บันทึก</a>
       <a class="nav-link" href="#sec-detail"><span class="ico">📋</span>รายละเอียดข้อมูล</a>
     </nav>
@@ -162,7 +162,7 @@
           <div class="chart-box h260"><canvas id="cOvJTDonut"></canvas></div>
         </div>
         <div class="chart-card">
-          <h3>⚠️ Top 5 สาเหตุ R008</h3>
+          <h3>⚠️ Top 5 สาเหตุขาดเกินสาขา</h3>
           <div class="chart-box h260"><canvas id="cOvCauseBar"></canvas></div>
         </div>
       </div>
@@ -208,7 +208,7 @@
             <thead><tr>
               <th>คลังสินค้า</th>
               <th class="num">จำนวนเอกสารทั้งหมด (เอกสาร)</th>
-              <th class="num">จำนวนเอกสาร R008 (เอกสาร)</th>
+              <th class="num">จำนวนเอกสารขาดเกิน (เอกสาร)</th>
               <th class="num">จำนวนขาด (ชิ้น)</th>
               <th class="num">จำนวนเกิน (ชิ้น)</th>
               <th class="num">จำนวนรวมทั้งหมด (ชิ้น)</th>
@@ -273,7 +273,7 @@
               <th>คลังที่เกี่ยวข้อง</th>
               <th>ประเภทงานที่พบมาก</th>
               <th class="num">จำนวนเอกสารทั้งหมด (เอกสาร)</th>
-              <th class="num">จำนวนเอกสาร R008 (เอกสาร)</th>
+              <th class="num">จำนวนเอกสารขาดเกิน (เอกสาร)</th>
               <th class="num">จำนวนขาด (ชิ้น)</th>
               <th class="num">จำนวนเกิน (ชิ้น)</th>
               <th class="num">จำนวนรวมทั้งหมด (ชิ้น)</th>
@@ -327,7 +327,7 @@
             <thead><tr>
               <th>ประเภทงาน</th>
               <th class="num">จำนวนเอกสารทั้งหมด (เอกสาร)</th>
-              <th class="num">จำนวนเอกสาร R008 (เอกสาร)</th>
+              <th class="num">จำนวนเอกสารขาดเกิน (เอกสาร)</th>
               <th class="num">จำนวนขาด (ชิ้น)</th>
               <th class="num">จำนวนเกิน (ชิ้น)</th>
               <th class="num">จำนวนรวมทั้งหมด (ชิ้น)</th>
@@ -350,21 +350,21 @@
       <div class="sec-hdr">
         <span class="sec-icon">⚠️</span>
         <div class="sec-hdr-text">
-          <h2>วิเคราะห์สาเหตุ R008</h2>
-          <p>วิเคราะห์สาเหตุของการเกิด R008</p>
+          <h2>วิเคราะห์สาเหตุขาดเกิน</h2>
+          <p>วิเคราะห์สาเหตุของการขาดเกิน</p>
         </div>
       </div>
 
       <div class="chart-grid g1">
         <div class="chart-card">
-          <h3>📊 Top 10 สาเหตุ R008 ที่มีปัญหารวมสูงสุด</h3>
+          <h3>📊 Top 10 สาเหตุขาดเกินสาขา ที่มีปัญหารวมสูงสุด</h3>
           <div class="chart-box h360"><canvas id="cCATop"></canvas></div>
         </div>
       </div>
 
       <div class="chart-grid">
         <div class="chart-card">
-          <h3>🍩 สัดส่วนตามสาเหตุ R008</h3>
+          <h3>🍩 สัดส่วนตามสาเหตุขาดเกิน</h3>
           <div class="chart-box h300"><canvas id="cCADonut"></canvas></div>
         </div>
         <div class="chart-card">
@@ -374,7 +374,7 @@
       </div>
 
       <div class="tbl-card">
-        <h3>📋 สรุปตามสาเหตุ R008</h3>
+        <h3>📋 สรุปตามสาเหตุขาดเกิน</h3>
         <div class="tbl-toolbar">
           <input class="tbl-search" id="sCA" placeholder="ค้นหาสาเหตุ..." oninput="renderCA()">
           <span class="row-info" id="infoCA"></span>
@@ -382,9 +382,9 @@
         <div class="tbl-wrap">
           <table>
             <thead><tr>
-              <th>สาเหตุ R008</th>
+              <th>สาเหตุขาดเกิน</th>
               <th class="num">จำนวนเอกสารทั้งหมด (เอกสาร)</th>
-              <th class="num">จำนวนเอกสาร R008 (เอกสาร)</th>
+              <th class="num">จำนวนเอกสารขาดเกิน (เอกสาร)</th>
               <th class="num">จำนวนขาด (ชิ้น)</th>
               <th class="num">จำนวนเกิน (ชิ้น)</th>
               <th class="num">จำนวนรวมทั้งหมด (ชิ้น)</th>
@@ -416,7 +416,7 @@
 
       <div class="chart-grid">
         <div class="chart-card">
-          <h3>🏆 Top 10 ผู้บันทึกที่มีเอกสาร R008 สูงสุด</h3>
+          <h3>🏆 Top 10 ผู้บันทึกที่มีเอกสารขาดเกินสาขา สูงสุด</h3>
           <div class="chart-box h320"><canvas id="cRECTop"></canvas></div>
         </div>
         <div class="chart-card">
@@ -431,7 +431,7 @@
           <div class="chart-box h320"><canvas id="cRECOver"></canvas></div>
         </div>
         <div class="chart-card">
-          <h3>🍩 สัดส่วนเอกสาร R008 ตามผู้บันทึก (Top 10)</h3>
+          <h3>🍩 สัดส่วนเอกสารขาดเกินสาขา ตามผู้บันทึก (Top 10)</h3>
           <div class="chart-box h320"><canvas id="cRECDonut"></canvas></div>
         </div>
       </div>
@@ -454,7 +454,7 @@
             <thead><tr>
               <th>ผู้บันทึก</th>
               <th class="num">จำนวนเอกสารทั้งหมด (เอกสาร)</th>
-              <th class="num">จำนวนเอกสาร R008 (เอกสาร)</th>
+              <th class="num">จำนวนเอกสารขาดเกิน (เอกสาร)</th>
               <th class="num">จำนวนขาด (ชิ้น)</th>
               <th class="num">จำนวนเกิน (ชิ้น)</th>
               <th class="num">จำนวนรวมทั้งหมด (ชิ้น)</th>
@@ -478,7 +478,7 @@
       <div class="sec-hdr">
         <span class="sec-icon">📋</span>
         <div class="sec-hdr-text">
-          <h2>รายละเอียดรายการ R008</h2>
+          <h2>รายละเอียดขาดเกินสาขา</h2>
           <p>ข้อมูลรายละเอียดทุกรายการ</p>
         </div>
       </div>
@@ -501,7 +501,7 @@
               <th class="num sortable" onclick="sdSort('shortage')">จำนวนขาด</th>
               <th class="num sortable" onclick="sdSort('overage')">จำนวนเกิน</th>
               <th class="num sortable" onclick="sdSort('total')">ปัญหารวม</th>
-              <th>สาเหตุ R008</th>
+              <th>สาเหตุขาดเกิน</th>
               <th>สถานะเอกสาร</th>
             </tr></thead>
             <tbody id="bDT"></tbody>

@@ -18,7 +18,7 @@ function renderKPI() {
       <div class="empty" style="grid-column:1/-1">
         <div class="e-ico">📂</div>
         <h3>ยังไม่ได้โหลดข้อมูล</h3>
-        <p>กรุณากดปุ่ม "เลือกไฟล์ R008" ด้านบนขวา แล้วเลือกไฟล์ R008_060526.xlsx / .xls / .csv</p>
+        <p>กรุณากดปุ่ม "นำเข้าไฟล์" ด้านบนขวา แล้วเลือกไฟล์ .xlsx / .xls / .csv</p>
       </div>`;
     return;
   }
@@ -39,20 +39,20 @@ function renderKPI() {
   const tJT = [...jt].sort((a, b) => b.r008DocCount - a.r008DocCount)[0] || { jobType: 'N/A', r008DocCount: 0 };
 
   document.getElementById('overviewSub').textContent =
-    `รายการ ${filtered.length.toLocaleString()} รายการ | เอกสารทั้งหมด ${totalAllDocs.size.toLocaleString()} ใบ | เอกสาร R008 ${r008Set.size.toLocaleString()} ใบ`;
+    `รายการ ${filtered.length.toLocaleString()} รายการ | เอกสารทั้งหมด ${totalAllDocs.size.toLocaleString()} ใบ | เอกสารขาดเกิน ${r008Set.size.toLocaleString()} ใบ`;
 
   /* Overview KPIs */
   document.getElementById('kpiMain').innerHTML = [
     { c: 'c-blue',   ico: '📄', label: 'จำนวนเอกสารทั้งหมด',              val: totalAllDocs.size.toLocaleString(), sub: 'เอกสาร (ไม่ซ้ำ)' },
-    { c: 'c-red',    ico: '🔴', label: 'จำนวนเอกสาร R008',                 val: r008Set.size.toLocaleString(),      sub: 'เอกสารที่มีขาด/เกิน' },
+    { c: 'c-red',    ico: '🔴', label: 'จำนวนเอกสารขาดเกิน',                 val: r008Set.size.toLocaleString(),      sub: 'เอกสารที่มีขาด/เกิน' },
     { c: 'c-orange', ico: '📉', label: 'ขาด / เกิน รวม',
       val: `📉 ขาด : ${sh.toLocaleString()} ชิ้น<br>📈 เกิน : ${ov.toLocaleString()} ชิ้น`,
       sub: 'จำนวนชิ้นรวมทั้งหมด', fs: '20px' },
     { c: 'c-purple', ico: '⚠️', label: 'จำนวนสินค้าขาดเกินทั้งหมด',       val: tot.toLocaleString(),               sub: 'ชิ้น' },
     { c: 'c-amber',  ico: '🏭', label: 'เอกสารตามคลัง',                    val: whDocLines,                         sub: 'จำนวนเอกสารทั้งหมดต่อคลัง', ml: true },
-    { c: 'c-green',  ico: '🏆', label: 'คลังที่มีเอกสาร R008 สูงสุด',      val: tWH.warehouse,                      sub: `เอกสาร R008 ${tWH.r008DocCount.toLocaleString()} ใบ` },
-    { c: 'c-amber',  ico: '🏪', label: 'สาขาที่มีเอกสาร R008 สูงสุด',      val: short(tBR.branch, 18),              sub: `เอกสาร R008 ${tBR.r008DocCount.toLocaleString()} ใบ` },
-    { c: 'c-purple', ico: '🔧', label: 'ประเภทงานที่มีเอกสาร R008 สูงสุด', val: tJT.jobType,                        sub: `เอกสาร R008 ${tJT.r008DocCount.toLocaleString()} ใบ` }
+    { c: 'c-green',  ico: '🏆', label: 'คลังที่มีเอกสาร สูงสุด',                   val: tWH.warehouse,                      sub: `เอกสารขาดเกิน ${tWH.r008DocCount.toLocaleString()} ใบ` },
+    { c: 'c-amber',  ico: '🏪', label: 'สาขาที่มีเอกสาร สูงสุด',                   val: short(tBR.branch, 18),              sub: `เอกสารขาดเกิน ${tBR.r008DocCount.toLocaleString()} ใบ` },
+    { c: 'c-purple', ico: '🔧', label: 'ประเภทงานที่มีเอกสาร สูงสุด',             val: tJT.jobType,                        sub: `เอกสารขาดเกิน ${tJT.r008DocCount.toLocaleString()} ใบ` }
   ].map(buildKpiCard).join('');
 
   /* Warehouse KPIs */
@@ -66,7 +66,7 @@ function renderKPI() {
   const jtByR008 = [...jt].sort((a, b) => b.r008DocCount - a.r008DocCount);
   document.getElementById('kpiJT').innerHTML = [
     { c: 'c-blue',   ico: '🔧', label: 'ประเภทงานทั้งหมด',              val: jt.length,                                                               sub: 'ประเภท' },
-    { c: 'c-purple', ico: '🏆', label: 'ประเภทงานเอกสาร R008 สูงสุด',   val: jtByR008[0]?.jobType || '-',                                               sub: `${(jtByR008[0]?.r008DocCount || 0).toLocaleString()} ใบ` },
+    { c: 'c-purple', ico: '🏆', label: 'ประเภทงานเอกสารขาดเกินสาขา สูงสุด',   val: jtByR008[0]?.jobType || '-',                                               sub: `${(jtByR008[0]?.r008DocCount || 0).toLocaleString()} ใบ` },
     { c: 'c-red',    ico: '📉', label: 'ขาดสูงสุดในประเภทงาน',           val: (topN(jt, 'shortageTotal', 1)[0]?.shortageTotal || 0).toLocaleString(),    sub: topN(jt, 'shortageTotal', 1)[0]?.jobType || '-' },
     { c: 'c-orange', ico: '📈', label: 'เกินสูงสุดในประเภทงาน',           val: (topN(jt, 'overageTotal',  1)[0]?.overageTotal  || 0).toLocaleString(),   sub: topN(jt, 'overageTotal',  1)[0]?.jobType || '-' }
   ].map(buildKpiCard).join('');
@@ -81,10 +81,10 @@ function renderKPI() {
     ? (rec.reduce((s, r) => s + r.r008DocCount, 0) / rec.length).toFixed(1) : '0';
 
   document.getElementById('kpiREC').innerHTML = [
-    { c: 'c-red',    ico: '🏆', label: 'ผู้บันทึกที่มีเอกสาร R008 สูงสุด',  val: short(tREC.recorder,  20), sub: `เอกสาร R008 ${tREC.r008DocCount.toLocaleString()} ใบ` },
+    { c: 'c-red',    ico: '🏆', label: 'ผู้บันทึกที่มีเอกสารขาดเกินสาขา สูงสุด',  val: short(tREC.recorder,  20), sub: `เอกสารขาดเกินสาขา ${tREC.r008DocCount.toLocaleString()} ใบ` },
     { c: 'c-orange', ico: '📉', label: 'ผู้บันทึกที่มีจำนวนขาดสูงสุด',       val: short(tRECS.recorder, 20), sub: `ขาด ${(tRECS.shortageTotal || 0).toLocaleString()} ชิ้น` },
     { c: 'c-teal',   ico: '📈', label: 'ผู้บันทึกที่มีจำนวนเกินสูงสุด',       val: short(tRECO.recorder, 20), sub: `เกิน ${(tRECO.overageTotal || 0).toLocaleString()} ชิ้น` },
     { c: 'c-purple', ico: '⚠️', label: 'ผู้บันทึกที่มีปัญหารวมสูงสุด',        val: short(tRECT.recorder, 20), sub: `ปัญหา ${(tRECT.issueTotal || 0).toLocaleString()} ชิ้น` },
-    { c: 'c-blue',   ico: '📊', label: 'ค่าเฉลี่ย R008 ต่อผู้บันทึก',         val: avgR008,                   sub: 'เอกสาร/คน' }
+    { c: 'c-blue',   ico: '📊', label: 'ค่าเฉลี่ยขาดเกินสาขา ต่อผู้บันทึก',         val: avgR008,                   sub: 'เอกสาร/คน' }
   ].map(buildKpiCard).join('');
 }

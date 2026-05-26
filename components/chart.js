@@ -110,7 +110,7 @@ function renderCharts() {
   /* ── Overview ── */
   mkChart('cOvWHBar', 'bar', wh.map(d => d.warehouse),
     [barDS('เอกสารทั้งหมด', wh.map(d => d.totalDocCount), 0),
-     barDS('เอกสาร R008',   wh.map(d => d.r008DocCount),  2)],
+     barDS('เอกสารขาดเกินสาขา',   wh.map(d => d.r008DocCount),  2)],
     { scales: scBoth });
 
   mkChart('cOvWHDonut', 'doughnut',
@@ -118,7 +118,7 @@ function renderCharts() {
     donutDS(wh.slice(0, 8).map(d => d.totalDocCount)));
 
   mkChart('cOvBrTop', 'bar', brR008Top10.map(d => short(d.branch)),
-    [barDS('เอกสาร R008', brR008Top10.map(d => d.r008DocCount), 3)],
+    [barDS('เอกสารขาดเกินสาขา', brR008Top10.map(d => d.r008DocCount), 3)],
     { indexAxis: 'y', scales: { x: { beginAtZero: true } } });
 
   mkChart('cOvJTDonut', 'doughnut',
@@ -127,7 +127,7 @@ function renderCharts() {
 
   const ca5R008 = topN(ca, 'r008DocCount', 5);
   mkChart('cOvCauseBar', 'bar', ca5R008.map(d => short(d.cause)),
-    [barDS('เอกสาร R008', ca5R008.map(d => d.r008DocCount), 4)],
+    [barDS('เอกสารขาดเกินสาขา', ca5R008.map(d => d.r008DocCount), 4)],
     { indexAxis: 'y', scales: { x: { beginAtZero: true } } });
 
   /* ── Warehouse ── */
@@ -193,7 +193,7 @@ function renderCharts() {
                 '',
                 `จำนวนขาด: ${b.shortageTotal.toLocaleString()} ชิ้น`,
                 `จำนวนเกิน: ${b.overageTotal.toLocaleString()} ชิ้น`,
-                `เอกสาร R008: ${b.r008DocCount.toLocaleString()} ใบ`,
+                `เอกสารขาดเกินสาขา: ${b.r008DocCount.toLocaleString()} ใบ`,
                 `สัดส่วน: ${b.percentage}%`,
                 '',
                 'Top ประเภทงาน:'
@@ -250,7 +250,7 @@ function renderCharts() {
           if (!v) return [];
           return ['',
             `เอกสารทั้งหมด: ${v.totalDocCount.toLocaleString()} ใบ`,
-            `เอกสาร R008: ${v.r008DocCount.toLocaleString()} ใบ`,
+            `เอกสารขาดเกินสาขา: ${v.r008DocCount.toLocaleString()} ใบ`,
             `จำนวนขาด: ${v.shortageTotal.toLocaleString()} ชิ้น`,
             `จำนวนเกิน: ${v.overageTotal.toLocaleString()} ชิ้น`,
             `ปัญหารวม: ${v.issueTotal.toLocaleString()} ชิ้น`,
@@ -261,7 +261,7 @@ function renderCharts() {
   });
 
   mkChart('cRECTop', 'bar', recT10.map(d => short(d.recorder, 20)),
-    [barDS('เอกสาร R008', recT10.map(d => d.r008DocCount), 3)],
+    [barDS('เอกสารขาดเกินสาขา', recT10.map(d => d.r008DocCount), 3)],
     { indexAxis: 'y', scales: { x: { beginAtZero: true } }, plugins: recTooltip(recT10) });
 
   mkChart('cRECShort', 'bar', recS10.map(d => short(d.recorder, 20)),

@@ -51,7 +51,7 @@ function renderDT() {
       <td class="num">${r.overage  > 0 ? `<span class="bp bp-blue">${r.overage.toLocaleString()}</span>` : '0'}</td>
       <td class="num">${r.total    > 0 ? `<span class="bp ${totalBadgeCls}">${r.total.toLocaleString()}</span>` : '0'}</td>
       <td>${r.cause}</td>
-      <td>${isR008 ? '<span class="bp bp-red">R008</span>' : '<span class="bp bp-green">ปกติ</span>'}</td>
+      <td>${isR008 ? '<span class="bp bp-red">ขาดเกิน</span>' : '<span class="bp bp-green">ปกติ</span>'}</td>
     </tr>`;
   });
 }

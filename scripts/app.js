@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="empty" style="grid-column:1/-1">
       <div class="e-ico">📂</div>
       <h3>ยังไม่ได้โหลดข้อมูล</h3>
-      <p>กรุณากดปุ่ม <strong>"นำเข้าไฟล์ R008"</strong> ที่มุมบนขวา<br>
-         แล้วเลือกไฟล์ <strong>R008_060526.xlsx / .xls / .csv</strong></p>
+      <p>กรุณากดปุ่ม <strong>"นำเข้าไฟล์"</strong> ที่มุมบนขวา<br>
+         แล้วเลือกไฟล์ <strong>.xlsx / .xls / .csv</strong></p>
     </div>`;
 });
