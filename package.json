@@ -1,0 +1,11 @@
+{
+  "name": "r008-dashboard-converter",
+  "version": "1.0.0",
+  "description": "Excel to JSON converter for R008 Dashboard",
+  "scripts": {
+    "convert": "node convert.js"
+  },
+  "dependencies": {
+    "xlsx": "^0.18.5"
+  }
+}

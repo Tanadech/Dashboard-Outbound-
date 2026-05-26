@@ -1,6 +1,9 @@
 # Data files (ไม่ push ข้อมูลจริงขึ้น GitHub)
 DATA PT/
 
+# Node.js
+node_modules/
+
 # Claude Code internal files
 .claude/
 

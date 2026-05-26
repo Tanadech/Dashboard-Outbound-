@@ -44,6 +44,32 @@ function handleFile(input) {
   }
 }
 
+/* ─── Auto-fetch data/data.json from GitHub Pages on page load ─── */
+async function autoLoadData() {
+  loading(true);
+  try {
+    const res = await fetch('./data/data.json?t=' + Date.now());
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const json = await res.json();
+    if (!Array.isArray(json) || json.length === 0) throw new Error('ไม่มีข้อมูล');
+
+    processData(json);
+
+    const lbl = document.getElementById('fileStatusLabel');
+    lbl.textContent = '✅ โหลดข้อมูลอัตโนมัติ — ' + new Date().toLocaleTimeString('th-TH');
+    lbl.className = 'ok';
+  } catch (err) {
+    loading(false);
+    document.getElementById('kpiMain').innerHTML = `
+      <div class="empty" style="grid-column:1/-1">
+        <div class="e-ico">📂</div>
+        <h3>ยังไม่มีข้อมูล</h3>
+        <p>กรุณารัน <strong>update-data.bat</strong> เพื่อแปลงไฟล์ Excel ก่อน<br>
+           หรือกดปุ่ม <strong>"นำเข้าไฟล์"</strong> เพื่ออัปโหลดด้วยตนเอง</p>
+      </div>`;
+  }
+}
+
 /* ─── Re-render every dashboard section after data/filter change ─── */
 function renderAll() {
   renderKPI();
@@ -56,13 +82,5 @@ function renderAll() {
   renderDT();
 }
 
-/* ─── Show empty state on first load before any file is imported ─── */
-document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('kpiMain').innerHTML = `
-    <div class="empty" style="grid-column:1/-1">
-      <div class="e-ico">📂</div>
-      <h3>ยังไม่ได้โหลดข้อมูล</h3>
-      <p>กรุณากดปุ่ม <strong>"นำเข้าไฟล์"</strong> ที่มุมบนขวา<br>
-         แล้วเลือกไฟล์ <strong>.xlsx / .xls / .csv</strong></p>
-    </div>`;
-});
+/* ─── Auto-load data on page open ─── */
+document.addEventListener('DOMContentLoaded', autoLoadData);
