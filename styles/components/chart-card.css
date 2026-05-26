@@ -18,7 +18,7 @@
 }
 .chart-card.fw { grid-column: 1 / -1; }
 .chart-card h3 {
-  font-size: 13.5px;
+  font-size: 16px;
   font-weight: 700;
   color: var(--text-1);
   margin-bottom: 14px;

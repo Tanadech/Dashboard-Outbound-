@@ -20,11 +20,11 @@
   border-bottom: 1px solid #f0f0f0;
   margin-bottom: 4px;
 }
-.fb-title h1        { font-size: 16px; font-weight: 700; color: var(--text-1); }
-.fb-title p         { font-size: 11px; color: var(--text-3); margin-top: 1px; }
+.fb-title h1        { font-size: 18px; font-weight: 700; color: var(--text-1); }
+.fb-title p         { font-size: 13px; color: var(--text-3); margin-top: 1px; }
 .fb-title-right     { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 
-#fileStatusLabel        { font-size: 11.5px; color: var(--text-3); }
+#fileStatusLabel        { font-size: 13px; color: var(--text-3); }
 #fileStatusLabel.ok     { color: var(--green); font-weight: 600; }
 
 .fg {
@@ -34,7 +34,7 @@
   min-width: 130px;
 }
 .fg label {
-  font-size: 10.5px;
+  font-size: 12px;
   font-weight: 700;
   color: var(--text-3);
   text-transform: uppercase;
@@ -45,7 +45,7 @@
   padding: 7px 9px;
   border: 1px solid var(--border);
   border-radius: 7px;
-  font-size: 12.5px;
+  font-size: 14px;
   font-family: inherit;
   background: #fff;
   color: var(--text-1);
@@ -68,7 +68,7 @@
   width: 100%;
 }
 .qf-label {
-  font-size: 10.5px;
+  font-size: 12px;
   font-weight: 700;
   color: var(--text-3);
   text-transform: uppercase;
