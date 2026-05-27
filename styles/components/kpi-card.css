@@ -19,10 +19,10 @@
 .kpi-card::after {
   content: attr(data-ico);
   position: absolute;
-  right: 14px;
-  top: 14px;
-  font-size: 32px;
-  opacity: 0.35;
+  right: 12px;
+  top: 10px;
+  font-size: 44px;
+  opacity: 0.75;
   pointer-events: none;
 }
 
