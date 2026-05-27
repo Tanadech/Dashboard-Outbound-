@@ -20,7 +20,7 @@
   content: attr(data-ico);
   position: absolute;
   right: 12px;
-  top: 10px;
+  bottom: 10px;
   font-size: 30px;
   opacity: 0.70;
   pointer-events: none;
