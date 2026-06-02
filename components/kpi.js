@@ -45,17 +45,17 @@ function renderKPI() {
     `รายการ ${filtered.length.toLocaleString()} รายการ | เอกสารทั้งหมด ${totalAllDocs.size.toLocaleString()} ใบ | เอกสารขาดเกิน ${r008Set.size.toLocaleString()} ใบ`;
 
   /* Overview KPIs */
+  const whCards = wh.map(w => ({ c: 'c-amber', ico: '🏭', label: `คลัง ${w.warehouse}`, val: w.totalDocCount.toLocaleString(), sub: 'เอกสารทั้งหมด' }));
   document.getElementById('kpiMain').innerHTML = [
-    { c: 'c-blue',   ico: '📄', label: 'จำนวนเอกสารทั้งหมด',              val: totalAllDocs.size.toLocaleString(), sub: 'เอกสาร (ไม่ซ้ำ)' },
-    { c: 'c-red',    ico: '🔴', label: 'จำนวนเอกสารขาดเกิน',                 val: r008Set.size.toLocaleString(),      sub: 'เอกสารที่มีขาด/เกิน' },
-    { c: 'c-orange', ico: '📉', label: 'ขาด / เกิน รวม',
-      val: `📉 ขาด : ${sh.toLocaleString()} ชิ้น<br>📈 เกิน : ${ov.toLocaleString()} ชิ้น`,
-      sub: 'จำนวนชิ้นรวมทั้งหมด', fs: '20px' },
-    { c: 'c-purple', ico: '⚠️', label: 'จำนวนสินค้าขาดเกินทั้งหมด',       val: tot.toLocaleString(),               sub: 'ชิ้น' },
-    { c: 'c-amber',  ico: '🏭', label: 'เอกสารตามคลัง',                    val: whDocLines,                         sub: 'จำนวนเอกสารทั้งหมดต่อคลัง', ml: true },
-    { c: 'c-green',  ico: '🏆', label: 'คลังที่มีเอกสาร สูงสุด',                   val: tWH.warehouse,                      sub: `เอกสารขาดเกิน ${tWH.r008DocCount.toLocaleString()} ใบ` },
-    { c: 'c-amber',  ico: '🏪', label: 'สาขาที่มีเอกสาร สูงสุด',                   val: short(tBR.branch, 18),              sub: `เอกสารขาดเกิน ${tBR.r008DocCount.toLocaleString()} ใบ` },
-    { c: 'c-purple', ico: '🔧', label: 'ประเภทงานที่มีเอกสาร สูงสุด',             val: tJT.jobType,                        sub: `เอกสารขาดเกิน ${tJT.r008DocCount.toLocaleString()} ใบ` }
+    { c: 'c-blue',   ico: '📄', label: 'เอกสารทั้งหมด',         val: totalAllDocs.size.toLocaleString(), sub: 'ใบ (ไม่ซ้ำ)' },
+    { c: 'c-red',    ico: '🔴', label: 'เอกสารขาดเกิน',          val: r008Set.size.toLocaleString(),      sub: 'ใบ' },
+    { c: 'c-orange', ico: '📉', label: 'จำนวนขาด',               val: sh.toLocaleString(),                sub: 'ชิ้น' },
+    { c: 'c-blue',   ico: '📈', label: 'จำนวนเกิน',               val: ov.toLocaleString(),                sub: 'ชิ้น' },
+    { c: 'c-purple', ico: '⚠️', label: 'ขาด+เกิน รวม',           val: tot.toLocaleString(),               sub: 'ชิ้น' },
+    ...whCards,
+    { c: 'c-green',  ico: '🏆', label: 'คลังปัญหาสูงสุด',        val: tWH.warehouse,                      sub: `ขาดเกิน ${tWH.r008DocCount.toLocaleString()} ใบ` },
+    { c: 'c-amber',  ico: '🏪', label: 'สาขาปัญหาสูงสุด',        val: short(tBR.branch, 18),              sub: `ขาดเกิน ${tBR.r008DocCount.toLocaleString()} ใบ` },
+    { c: 'c-purple', ico: '🔧', label: 'ประเภทงานปัญหาสูงสุด',   val: tJT.jobType,                        sub: `ขาดเกิน ${tJT.r008DocCount.toLocaleString()} ใบ` }
   ].map(buildKpiCard).join('');
 
   /* Warehouse KPIs */
