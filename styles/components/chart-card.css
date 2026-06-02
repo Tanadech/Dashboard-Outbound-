@@ -36,3 +36,4 @@
 .chart-box.h380     { height: 380px; }
 
 canvas { width: 100% !important; }
+.chart-grid.g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }

@@ -46,3 +46,109 @@
   border-top: 2px dashed var(--border);
   margin: 10px 0 32px;
 }
+
+/* ── One-page layout: fill viewport ── */
+.app-layout { height: 100vh; overflow: hidden; }
+
+#content {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  padding: 12px 18px 8px;
+}
+
+.dash-section { height: 100%; }
+.dash-section.active {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow: hidden;
+}
+
+.dash-section.active .sec-hdr  { flex-shrink: 0; margin-bottom: 0; padding-bottom: 6px; }
+.dash-section.active .kpi-grid { flex-shrink: 0; margin-bottom: 0; }
+.dash-section.active .kpi-card { padding: 10px 14px 8px; }
+.dash-section.active .kpi-value { font-size: 20px; margin: 2px 0 2px; }
+.dash-section.active .kpi-sub  { font-size: 11px; }
+.dash-section.active .kpi-label { font-size: 12px; }
+
+.dash-section.active .chart-grid {
+  flex: 1;
+  min-height: 0;
+  margin-bottom: 0;
+  align-items: stretch;
+}
+.dash-section.active .chart-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.dash-section.active .chart-card h3 {
+  flex-shrink: 0;
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+.dash-section.active .chart-card .chart-box {
+  flex: 1;
+  min-height: 0;
+  height: 100% !important;
+}
+
+.dash-section.active .tbl-card {
+  flex: 0 0 180px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0;
+  overflow: hidden;
+}
+.dash-section.active .tbl-card h3   { flex-shrink: 0; font-size: 13px; margin-bottom: 6px; }
+.dash-section.active .tbl-toolbar   { flex-shrink: 0; }
+.dash-section.active .tbl-wrap      { flex: 1; overflow-y: auto; min-height: 0; }
+.dash-section.active .pagination    { flex-shrink: 0; }
+
+/* side-row: chart + table side by side */
+.side-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  flex: 1;
+  min-height: 0;
+}
+.side-row .chart-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--card);
+  border-radius: 12px;
+  padding: 18px 18px 14px;
+  box-shadow: var(--shadow);
+}
+.side-row .chart-card h3 {
+  flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-1);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.side-row .chart-card .chart-box {
+  flex: 1;
+  min-height: 0;
+  height: 100% !important;
+  position: relative;
+  width: 100%;
+}
+.side-row .tbl-card {
+  flex: unset;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Detail page: table fills full height */
+#sec-detail.active .tbl-card {
+  flex: 1;
+}
