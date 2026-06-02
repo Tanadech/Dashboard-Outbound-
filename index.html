@@ -19,7 +19,7 @@
   <!-- Base styles -->
   <link rel="stylesheet" href="styles/base/reset.css?v=2">
   <link rel="stylesheet" href="styles/base/colors.css?v=2">
-  <link rel="stylesheet" href="styles/base/layout.css?v=2">
+  <link rel="stylesheet" href="styles/base/layout.css?v=3">
 
   <!-- Component styles -->
   <link rel="stylesheet" href="styles/components/header.css?v=2">
@@ -287,10 +287,6 @@
     <!-- Section Navigation -->
     <nav id="navBar">
       <a class="nav-link" href="#sec-overview"><span class="ico">📊</span>ภาพรวม</a>
-      <a class="nav-link" href="#sec-warehouse"><span class="ico">🏭</span>วิเคราะห์คลัง</a>
-      <a class="nav-link" href="#sec-branch"><span class="ico">🏪</span>วิเคราะห์สาขา</a>
-      <a class="nav-link" href="#sec-jobtype"><span class="ico">🧾</span>วิเคราะห์ประเภทงาน</a>
-      <a class="nav-link" href="#sec-cause"><span class="ico">⚠️</span>วิเคราะห์สาเหตุขาดเกิน</a>
       <a class="nav-link" href="#sec-recorder"><span class="ico">👤</span>วิเคราะห์ผู้บันทึก</a>
       <a class="nav-link" href="#sec-detail"><span class="ico">📋</span>รายละเอียดข้อมูล</a>
     </nav>
@@ -337,19 +333,9 @@
           <div class="chart-box h260"><canvas id="cOvCauseBar"></canvas></div>
         </div>
       </div>
-    </section>
 
-    <hr class="section-divider">
-
-    <!-- B. WAREHOUSE -->
-    <section class="dash-section" id="sec-warehouse">
-      <div class="sec-hdr">
-        <span class="sec-icon">🏭</span>
-        <div class="sec-hdr-text">
-          <h2>วิเคราะห์คลังสินค้า</h2>
-          <p>สรุปจำนวนขาด/เกิน แยกตามคลังสินค้า</p>
-        </div>
-      </div>
+      <!-- === 🏭 คลังสินค้า === -->
+      <div class="sub-sec-hdr"><h3>🏭 วิเคราะห์คลังสินค้า</h3></div>
 
       <div class="kpi-grid" id="kpiWH"></div>
 
@@ -387,19 +373,9 @@
         </div>
         <div class="pagination" id="pgWH"></div>
       </div>
-    </section>
 
-    <hr class="section-divider">
-
-    <!-- C. BRANCH -->
-    <section class="dash-section" id="sec-branch">
-      <div class="sec-hdr">
-        <span class="sec-icon">🏪</span>
-        <div class="sec-hdr-text">
-          <h2>วิเคราะห์สาขา</h2>
-          <p>สรุปจำนวนขาด/เกิน แยกตามสาขา</p>
-        </div>
-      </div>
+      <!-- === 🏪 สาขา === -->
+      <div class="sub-sec-hdr"><h3>🏪 วิเคราะห์สาขา</h3></div>
 
       <div class="chart-grid g1">
         <div class="chart-card">
@@ -452,19 +428,9 @@
         </div>
         <div class="pagination" id="pgBR"></div>
       </div>
-    </section>
 
-    <hr class="section-divider">
-
-    <!-- D. JOB TYPE -->
-    <section class="dash-section" id="sec-jobtype">
-      <div class="sec-hdr">
-        <span class="sec-icon">🧾</span>
-        <div class="sec-hdr-text">
-          <h2>วิเคราะห์ประเภทงาน</h2>
-          <p>วิเคราะห์ประเภทงานที่มีจำนวนขาด/เกิน</p>
-        </div>
-      </div>
+      <!-- === 🧾 ประเภทงาน === -->
+      <div class="sub-sec-hdr"><h3>🧾 วิเคราะห์ประเภทงาน</h3></div>
 
       <div class="kpi-grid" id="kpiJT"></div>
 
@@ -508,19 +474,9 @@
         </div>
         <div class="pagination" id="pgJT"></div>
       </div>
-    </section>
 
-    <hr class="section-divider">
-
-    <!-- E. CAUSE -->
-    <section class="dash-section" id="sec-cause">
-      <div class="sec-hdr">
-        <span class="sec-icon">⚠️</span>
-        <div class="sec-hdr-text">
-          <h2>วิเคราะห์สาเหตุขาดเกิน</h2>
-          <p>วิเคราะห์สาเหตุของการขาดเกิน</p>
-        </div>
-      </div>
+      <!-- === ⚠️ สาเหตุขาดเกิน === -->
+      <div class="sub-sec-hdr"><h3>⚠️ วิเคราะห์สาเหตุขาดเกิน</h3></div>
 
       <div class="chart-grid g1">
         <div class="chart-card">
@@ -565,6 +521,7 @@
         </div>
         <div class="pagination" id="pgCA"></div>
       </div>
+
     </section>
 
     <hr class="section-divider">
