@@ -66,7 +66,7 @@
 }
 
 .dash-section.active .sec-hdr  { flex-shrink: 0; margin-bottom: 0; padding-bottom: 6px; }
-.dash-section.active .kpi-grid  { flex-shrink: 0; margin-bottom: 0; max-height: 68px; }
+.dash-section.active .kpi-grid  { flex-shrink: 0; margin-bottom: 0; max-height: 148px; }
 .dash-section.active .kpi-card  { padding: 7px 10px; gap: 8px; }
 .dash-section.active .kpi-ico   { width: 32px; height: 32px; font-size: 17px; border-radius: 7px; }
 .dash-section.active .kpi-label { font-size: 10px; }
@@ -156,7 +156,7 @@
 
 /* ── KPI grid: always 1 row (reduce min-width) ── */
 .dash-section.active .kpi-grid {
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
 }
 
 /* ── Overview: bottom 3-chart row gets more height ── */
