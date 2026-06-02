@@ -291,7 +291,7 @@ function mkRadar(id, labels, values) {
 }
 
 /* ─── ApexCharts vertical bar with gradient fill and rounded corners ─── */
-function mkBarGradient(id, labels, values) {
+function mkBarGradient(id, labels, values, seriesName = 'เอกสารขาดเกินสาขา') {
   const el = document.getElementById(id);
   if (!el) return;
   if (charts[id] && charts[id].destroy) { charts[id].destroy(); }
@@ -301,7 +301,7 @@ function mkBarGradient(id, labels, values) {
   const maxIdx = values.indexOf(Math.max(...values));
 
   charts[id] = new ApexCharts(el, {
-    series: [{ name: 'เอกสารขาดเกินสาขา', data: values }],
+    series: [{ name: seriesName, data: values }],
     annotations: {
       points: [{
         x: labels[maxIdx],
@@ -413,10 +413,7 @@ function renderCharts() {
 
   mkBarGradient('cOvBrTop', brR008Top10.map(d => short(d.branch, 14)), brR008Top10.map(d => d.r008DocCount));
 
-  mkRadarMulti('cOvJTDonut', jt.slice(0, 6).map(d => d.jobType), [
-    { name: 'เอกสารทั้งหมด', data: jt.slice(0, 6).map(d => d.totalDocCount) },
-    { name: 'ขาด/เกิน',      data: jt.slice(0, 6).map(d => d.r008DocCount)  },
-  ]);
+  mkBarGradient('cOvJTDonut', jt.slice(0, 6).map(d => d.jobType), jt.slice(0, 6).map(d => d.r008DocCount), 'เอกสารขาดเกิน');
 
   const ca5R008 = topN(ca, 'r008DocCount', 5);
   mkRadar('cOvCauseBar', ca5R008.map(d => short(d.cause, 20)), ca5R008.map(d => d.r008DocCount));
