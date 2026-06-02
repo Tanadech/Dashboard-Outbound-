@@ -1,13 +1,16 @@
 /* ─── Shared KPI card HTML builder ─── */
 function buildKpiCard(c) {
   const valStyle = c.fs
-    ? `font-size:${c.fs};line-height:1.7`
-    : c.ml ? 'font-size:15px;line-height:1.8' : '';
+    ? `font-size:${c.fs};line-height:1.4`
+    : c.ml ? 'font-size:12px;line-height:1.5' : '';
   return `
-    <div class="kpi-card ${c.c}" data-ico="${c.ico}">
-      <div class="kpi-label">${c.label}</div>
-      <div class="kpi-value" style="${valStyle}">${c.val}</div>
-      <div class="kpi-sub">${c.sub}</div>
+    <div class="kpi-card ${c.c}">
+      <div class="kpi-ico">${c.ico}</div>
+      <div class="kpi-body">
+        <div class="kpi-label">${c.label}</div>
+        <div class="kpi-value" style="${valStyle}">${c.val}</div>
+        <div class="kpi-sub">${c.sub}</div>
+      </div>
     </div>`;
 }
 

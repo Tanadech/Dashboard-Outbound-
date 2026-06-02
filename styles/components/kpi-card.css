@@ -1,7 +1,7 @@
 .kpi-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 10px;
   width: 100%;
   margin-bottom: 20px;
 }
@@ -9,21 +9,13 @@
 .kpi-card {
   background: var(--card);
   border-radius: 12px;
-  padding: 18px 18px 14px;
+  padding: 12px 14px;
   box-shadow: var(--shadow);
   border-left: 4px solid transparent;
-  position: relative;
-  overflow: hidden;
   min-width: 0;
-}
-.kpi-card::after {
-  content: attr(data-ico);
-  position: absolute;
-  right: 12px;
-  bottom: 10px;
-  font-size: 30px;
-  opacity: 0.70;
-  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 /* Color variants */
@@ -35,15 +27,48 @@
 .kpi-card.c-teal   { border-left-color: var(--teal); }
 .kpi-card.c-amber  { border-left-color: var(--amber); }
 
-.kpi-label { font-size: 13px; color: var(--text-3); font-weight: 500; }
+.kpi-ico {
+  font-size: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.kpi-card.c-blue   .kpi-ico { background: rgba(59,  91,  219, 0.12); }
+.kpi-card.c-red    .kpi-ico { background: rgba(201, 42,  42,  0.12); }
+.kpi-card.c-orange .kpi-ico { background: rgba(232, 89,  12,  0.12); }
+.kpi-card.c-purple .kpi-ico { background: rgba(112, 72,  232, 0.12); }
+.kpi-card.c-green  .kpi-ico { background: rgba(47,  158, 68,  0.12); }
+.kpi-card.c-teal   .kpi-ico { background: rgba(12,  133, 153, 0.12); }
+.kpi-card.c-amber  .kpi-ico { background: rgba(245, 159, 0,   0.12); }
+
+.kpi-body { flex: 1; min-width: 0; }
+.kpi-label {
+  font-size: 12px;
+  color: var(--text-3);
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .kpi-value {
-  font-size: 28px;
+  font-size: 22px;
   font-weight: 700;
-  line-height: 1.25;
-  margin: 6px 0 3px;
+  line-height: 1.2;
+  margin: 2px 0;
   word-break: break-word;
 }
-.kpi-sub { font-size: 12px; color: var(--text-3); }
+.kpi-sub {
+  font-size: 11px;
+  color: var(--text-3);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 /* KPI value color per card variant */
 .kpi-card.c-blue   .kpi-value { color: var(--blue); }

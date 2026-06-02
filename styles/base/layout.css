@@ -66,11 +66,12 @@
 }
 
 .dash-section.active .sec-hdr  { flex-shrink: 0; margin-bottom: 0; padding-bottom: 6px; }
-.dash-section.active .kpi-grid { flex-shrink: 0; margin-bottom: 0; }
-.dash-section.active .kpi-card { padding: 10px 14px 8px; }
-.dash-section.active .kpi-value { font-size: 20px; margin: 2px 0 2px; }
-.dash-section.active .kpi-sub  { font-size: 11px; }
-.dash-section.active .kpi-label { font-size: 12px; }
+.dash-section.active .kpi-grid  { flex-shrink: 0; margin-bottom: 0; max-height: 68px; }
+.dash-section.active .kpi-card  { padding: 7px 10px; gap: 8px; }
+.dash-section.active .kpi-ico   { width: 32px; height: 32px; font-size: 17px; border-radius: 7px; }
+.dash-section.active .kpi-label { font-size: 10px; }
+.dash-section.active .kpi-value { font-size: 15px; margin: 1px 0; }
+.dash-section.active .kpi-sub   { font-size: 9px; }
 
 .dash-section.active .chart-grid {
   flex: 1;
@@ -157,7 +158,6 @@
 .dash-section.active .kpi-grid {
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
 }
-.dash-section.active .kpi-card::after { font-size: 22px; }
 
 /* ── Overview: bottom 3-chart row gets more height ── */
 #sec-overview.active .chart-grid:first-of-type { flex: 1; }
