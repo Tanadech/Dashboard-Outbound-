@@ -152,3 +152,30 @@
 #sec-detail.active .tbl-card {
   flex: 1;
 }
+
+/* ── KPI grid: always 1 row (reduce min-width) ── */
+.dash-section.active .kpi-grid {
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+.dash-section.active .kpi-card::after { font-size: 22px; }
+
+/* ── Overview: bottom 3-chart row gets more height ── */
+#sec-overview.active .chart-grid:first-of-type { flex: 1; }
+#sec-overview.active .chart-grid:last-of-type  { flex: 1.5; }
+
+/* ── Warehouse / Cause / JobType: chart row taller than table ── */
+#sec-warehouse.active .chart-grid { flex: 2; }
+#sec-cause.active     .chart-grid { flex: 2; }
+#sec-jobtype.active   .chart-grid { flex: 2; }
+
+/* ── Branch: top 3 charts taller than bottom side-row ── */
+#sec-branch.active   .chart-grid { flex: 2; }
+
+/* ── Recorder: top 4 charts taller than bottom side-row ── */
+#sec-recorder.active .chart-grid { flex: 2; }
+
+/* ── Compact sec-hdr ── */
+.dash-section.active .sec-hdr { padding-bottom: 4px; }
+.dash-section.active .sec-hdr .sec-icon { font-size: 18px; }
+.dash-section.active .sec-hdr-text h2  { font-size: 15px; }
+.dash-section.active .sec-hdr-text p   { font-size: 12px; margin-top: 0; }
