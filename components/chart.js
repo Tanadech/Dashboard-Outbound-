@@ -158,6 +158,70 @@ function mkRadarMulti(id, labels, seriesArr) {
   charts[id].render();
 }
 
+/* ─── Mixed bar+line chart: normal vs issue deliveries over time ─── */
+function mkWHTimeline(id, dates, series, whList) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (charts[id] && charts[id].destroy) { charts[id].destroy(); }
+  delete charts[id];
+  if (!dates.length) return;
+
+  const barColors  = COLORS.slice(0, whList.length).map(c => c + '99');
+  const lineColors = COLORS.slice(0, whList.length);
+  const allColors  = [...barColors, ...lineColors];
+
+  const strokes = [
+    ...whList.map(() => 0),
+    ...whList.map(() => 2.5),
+  ];
+  const markers = {
+    size: [...whList.map(() => 0), ...whList.map(() => 3)],
+  };
+
+  charts[id] = new ApexCharts(el, {
+    series,
+    chart: {
+      type: 'bar',
+      height: '100%',
+      fontFamily: 'Sarabun, sans-serif',
+      toolbar: { show: false },
+      animations: { enabled: false },
+      stacked: false,
+    },
+    plotOptions: { bar: { columnWidth: '70%', borderRadius: 2 } },
+    dataLabels: { enabled: false },
+    stroke: { width: strokes, curve: 'smooth' },
+    markers,
+    colors: allColors,
+    xaxis: {
+      categories: dates,
+      labels: {
+        rotate: -45,
+        style: { fontFamily: 'Sarabun, sans-serif', fontSize: '10px' },
+        formatter: v => {
+          const d = new Date(v);
+          return isNaN(d) ? v : `${d.getDate()}/${d.getMonth()+1}`;
+        },
+      },
+      tickAmount: Math.min(dates.length, 20),
+    },
+    yaxis: {
+      title: { text: 'จำนวนเอกสาร (ใบ)', style: { fontFamily: 'Sarabun, sans-serif', fontSize: '11px' } },
+    },
+    legend: {
+      position: 'top',
+      fontFamily: 'Sarabun, sans-serif',
+      fontSize: '11px',
+    },
+    grid: { borderColor: '#f1f1f1', strokeDashArray: 3 },
+    tooltip: {
+      shared: true,
+      y: { formatter: val => (val || 0).toLocaleString() + ' ใบ' },
+    },
+  });
+  charts[id].render();
+}
+
 /* ─── ApexCharts clean horizontal bar chart ─── */
 function mkBarH(id, labels, seriesArr, colors = COLORS, unit = 'ใบ') {
   const el = document.getElementById(id);
@@ -438,6 +502,9 @@ function renderCharts() {
   ], ['#c92a2a'], '%');
 
   mkRadial('cWHDonut', wh.map(d => d.warehouse), wh.map(d => d.r008DocCount));
+
+  const whTime = aggWHTime(filtered);
+  mkWHTimeline('cWHTimeline', whTime.dates, whTime.series, whTime.whList);
 
 
   /* ── Branch ── */
