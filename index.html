@@ -19,7 +19,7 @@
   <!-- Base styles -->
   <link rel="stylesheet" href="styles/base/reset.css?v=2">
   <link rel="stylesheet" href="styles/base/colors.css?v=2">
-  <link rel="stylesheet" href="styles/base/layout.css?v=3">
+  <link rel="stylesheet" href="styles/base/layout.css?v=4">
 
   <!-- Component styles -->
   <link rel="stylesheet" href="styles/components/header.css?v=2">
@@ -335,20 +335,9 @@
       </div>
 
       <!-- === 🏭 คลังสินค้า === -->
-      <div class="sub-sec-hdr"><h3>🏭 วิเคราะห์คลังสินค้า</h3></div>
+      <div class="sub-sec-hdr c-warehouse"><h3>🏭 วิเคราะห์คลังสินค้า</h3></div>
 
       <div class="kpi-grid" id="kpiWH"></div>
-
-      <div class="chart-grid">
-        <div class="chart-card">
-          <h3>📊 จำนวนขาด/เกิน แยกตามคลัง</h3>
-          <div class="chart-box h320"><canvas id="cWHBar"></canvas></div>
-        </div>
-        <div class="chart-card">
-          <h3>🍩 สัดส่วนปัญหาจำนวนสินค้าตามคลัง</h3>
-          <div class="chart-box h320"><div id="cWHDonut"></div></div>
-        </div>
-      </div>
 
       <div class="tbl-card">
         <h3>📋 สรุปจำนวนขาด/เกิน แยกตามคลังสินค้า</h3>
@@ -375,14 +364,7 @@
       </div>
 
       <!-- === 🏪 สาขา === -->
-      <div class="sub-sec-hdr"><h3>🏪 วิเคราะห์สาขา</h3></div>
-
-      <div class="chart-grid g1">
-        <div class="chart-card">
-          <h3>🏆 Top 10 สาขาที่มีปัญหารวมสูงสุด</h3>
-          <div class="chart-box h380"><canvas id="cBrTop"></canvas></div>
-        </div>
-      </div>
+      <div class="sub-sec-hdr c-branch"><h3>🏪 วิเคราะห์สาขา</h3></div>
 
       <div class="chart-grid">
         <div class="chart-card">
@@ -430,7 +412,7 @@
       </div>
 
       <!-- === 🧾 ประเภทงาน === -->
-      <div class="sub-sec-hdr"><h3>🧾 วิเคราะห์ประเภทงาน</h3></div>
+      <div class="sub-sec-hdr c-jobtype"><h3>🧾 วิเคราะห์ประเภทงาน</h3></div>
 
       <div class="kpi-grid" id="kpiJT"></div>
 
@@ -442,10 +424,6 @@
         <div class="chart-card">
           <h3>📊 จำนวนขาด/เกิน แยกตามประเภทงาน</h3>
           <div class="chart-box h300"><canvas id="cJTBar"></canvas></div>
-        </div>
-        <div class="chart-card fw">
-          <h3>📈 Top ประเภทงานที่มีปัญหาสูงสุด</h3>
-          <div class="chart-box h280"><canvas id="cJTTop"></canvas></div>
         </div>
       </div>
 
@@ -476,14 +454,7 @@
       </div>
 
       <!-- === ⚠️ สาเหตุขาดเกิน === -->
-      <div class="sub-sec-hdr"><h3>⚠️ วิเคราะห์สาเหตุขาดเกิน</h3></div>
-
-      <div class="chart-grid g1">
-        <div class="chart-card">
-          <h3>📊 Top 10 สาเหตุขาดเกินสาขา ที่มีปัญหารวมสูงสุด</h3>
-          <div class="chart-box h360"><canvas id="cCATop"></canvas></div>
-        </div>
-      </div>
+      <div class="sub-sec-hdr c-cause"><h3>⚠️ วิเคราะห์สาเหตุขาดเกิน</h3></div>
 
       <div class="chart-grid">
         <div class="chart-card">
@@ -660,8 +631,8 @@
 <script src="components/loading.js?v=2"></script>
 <script src="components/pagination.js?v=2"></script>
 <script src="components/nav.js?v=2"></script>
-<script src="components/chart.js?v=4"></script>
-<script src="components/kpi.js?v=2"></script>
+<script src="components/chart.js?v=5"></script>
+<script src="components/kpi.js?v=3"></script>
 <script src="components/table-warehouse.js?v=5"></script>
 <script src="components/table-branch.js?v=6"></script>
 <script src="components/table-jobtype.js?v=4"></script>

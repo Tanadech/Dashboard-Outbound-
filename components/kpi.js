@@ -56,7 +56,8 @@ function renderKPI() {
   ].map(buildKpiCard).join('');
 
   /* Warehouse KPIs */
-  document.getElementById('kpiWH').innerHTML = [
+  const kpiWHEl = document.getElementById('kpiWH');
+  if (kpiWHEl) kpiWHEl.innerHTML = [
     { c: 'c-red',    ico: '📉', label: 'คลังขาดสูงสุด',       val: topN(wh, 'shortageTotal', 1)[0]?.warehouse || '-', sub: `ขาด ${(topN(wh, 'shortageTotal', 1)[0]?.shortageTotal || 0).toLocaleString()} ชิ้น` },
     { c: 'c-blue',   ico: '📈', label: 'คลังเกินสูงสุด',       val: topN(wh, 'overageTotal',  1)[0]?.warehouse || '-', sub: `เกิน ${(topN(wh, 'overageTotal', 1)[0]?.overageTotal || 0).toLocaleString()} ชิ้น` },
     { c: 'c-purple', ico: '⚠️', label: 'คลังปัญหารวมสูงสุด',  val: wh[0]?.warehouse || '-',                            sub: `ปัญหา ${(wh[0]?.issueTotal || 0).toLocaleString()} ชิ้น` }

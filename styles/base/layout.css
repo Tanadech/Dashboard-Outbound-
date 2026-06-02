@@ -45,15 +45,23 @@
 }
 
 .sub-sec-hdr {
-  margin: 32px 0 16px;
-  padding: 10px 14px;
-  background: var(--bg);
+  margin: 36px 0 18px;
+  padding: 11px 16px;
+  background: linear-gradient(90deg, rgba(0,0,0,.03) 0%, transparent 100%);
   border-left: 4px solid var(--blue);
   border-radius: 0 8px 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 .sub-sec-hdr h3 {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--text-1);
   margin: 0;
+  letter-spacing: .01em;
 }
+.sub-sec-hdr.c-warehouse { border-left-color: var(--teal); }
+.sub-sec-hdr.c-branch    { border-left-color: var(--purple); }
+.sub-sec-hdr.c-jobtype   { border-left-color: var(--orange); }
+.sub-sec-hdr.c-cause     { border-left-color: var(--red); }
