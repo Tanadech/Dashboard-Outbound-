@@ -322,7 +322,12 @@ function mkBarGradient(id, labels, values, seriesName = 'เอกสารข�
       animations: { enabled: true, speed: 600 },
     },
     plotOptions: { bar: { borderRadius: 8, columnWidth: '55%' } },
-    dataLabels: { enabled: false },
+    dataLabels: {
+      enabled: true,
+      offsetY: -6,
+      style: { fontSize: '11px', fontFamily: 'Sarabun, sans-serif', fontWeight: '700', colors: ['#444'] },
+      formatter: val => val > 0 ? val.toLocaleString() : '',
+    },
     stroke: { width: 0 },
     grid: { row: { colors: ['#fff', '#f2f2f2'] } },
     xaxis: {
