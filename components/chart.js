@@ -112,6 +112,61 @@ function mkRadial(id, labels, values) {
   charts[id].render();
 }
 
+/* ─── RadialBar showing problem rate: r008DocCount / totalDocCount × 100% ─── */
+function mkRadialRate(id, labels, r008Counts, totalCounts) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (charts[id] && charts[id].destroy) { charts[id].destroy(); }
+  delete charts[id];
+  if (!labels.length) return;
+
+  const maxShow = Math.min(labels.length, 8);
+  const lbls  = labels.slice(0, maxShow);
+  const r008  = r008Counts.slice(0, maxShow);
+  const tots  = totalCounts.slice(0, maxShow);
+  const pcts  = tots.map((t, i) => t > 0 ? +(r008[i] / t * 100).toFixed(1) : 0);
+
+  charts[id] = new ApexCharts(el, {
+    series: pcts,
+    chart: {
+      type: 'radialBar',
+      height: '100%',
+      fontFamily: 'Sarabun, sans-serif',
+      toolbar: { show: false },
+      animations: { enabled: true, speed: 600 },
+    },
+    plotOptions: {
+      radialBar: {
+        offsetY: 0,
+        startAngle: 0,
+        endAngle: 270,
+        hollow: { margin: 5, size: '28%', background: 'transparent' },
+        track: { background: '#e9ecef', strokeWidth: '90%', margin: 4 },
+        dataLabels: { name: { show: false }, value: { show: false } },
+        barLabels: {
+          enabled: true,
+          useSeriesColors: true,
+          offsetX: -8,
+          fontSize: '13px',
+          fontFamily: 'Sarabun, sans-serif',
+          fontWeight: 600,
+          formatter: (name, opts) =>
+            `${name}: ${pcts[opts.seriesIndex]}%`,
+        },
+      },
+    },
+    colors: COLORS.slice(0, maxShow),
+    labels: lbls,
+    tooltip: {
+      y: {
+        formatter: (_, { seriesIndex }) =>
+          `${r008[seriesIndex].toLocaleString()} / ${tots[seriesIndex].toLocaleString()} ใบ (${pcts[seriesIndex]}%)`,
+      },
+    },
+  });
+  charts[id].render();
+}
+
 /* ─── Create or replace an ApexCharts radar (polygon fill) on a div element ─── */
 function mkRadar(id, labels, values) {
   const el = document.getElementById(id);
@@ -272,11 +327,11 @@ function renderCharts() {
      barDS('เอกสารขาดเกินสาขา',   wh.map(d => d.r008DocCount),  2)],
     { scales: scBoth });
 
-  mkRadial('cOvWHDonut', wh.slice(0, 8).map(d => d.warehouse), wh.slice(0, 8).map(d => d.totalDocCount));
+  mkRadialRate('cOvWHDonut', wh.slice(0, 8).map(d => d.warehouse), wh.slice(0, 8).map(d => d.r008DocCount), wh.slice(0, 8).map(d => d.totalDocCount));
 
   mkBarGradient('cOvBrTop', brR008Top10.map(d => short(d.branch, 14)), brR008Top10.map(d => d.r008DocCount));
 
-  mkRadial('cOvJTDonut', jt.slice(0, 6).map(d => d.jobType), jt.slice(0, 6).map(d => d.totalDocCount));
+  mkRadialRate('cOvJTDonut', jt.slice(0, 6).map(d => d.jobType), jt.slice(0, 6).map(d => d.r008DocCount), jt.slice(0, 6).map(d => d.totalDocCount));
 
   const ca5R008 = topN(ca, 'r008DocCount', 5);
   mkRadar('cOvCauseBar', ca5R008.map(d => short(d.cause, 20)), ca5R008.map(d => d.r008DocCount));
