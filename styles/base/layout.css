@@ -43,17 +43,3 @@
   border-top: 2px dashed var(--border);
   margin: 10px 0 32px;
 }
-
-.sub-sec-hdr {
-  margin: 32px 0 16px;
-  padding: 10px 14px;
-  background: var(--bg);
-  border-left: 4px solid var(--blue);
-  border-radius: 0 8px 8px 0;
-}
-.sub-sec-hdr h3 {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--text-1);
-  margin: 0;
-}
