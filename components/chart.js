@@ -159,7 +159,7 @@ function mkRadarMulti(id, labels, seriesArr) {
 }
 
 /* ─── ApexCharts clean horizontal bar chart ─── */
-function mkBarH(id, labels, seriesArr) {
+function mkBarH(id, labels, seriesArr, colors = COLORS) {
   const el = document.getElementById(id);
   if (!el) return;
   if (charts[id] && charts[id].destroy) { charts[id].destroy(); }
@@ -179,7 +179,7 @@ function mkBarH(id, labels, seriesArr) {
       bar: { horizontal: true, borderRadius: 2, barHeight: '65%' },
     },
     dataLabels: { enabled: false },
-    colors: COLORS.slice(0, seriesArr.length),
+    colors: colors.slice(0, seriesArr.length),
     xaxis: {
       categories: labels,
       labels: { style: { fontFamily: 'Sarabun, sans-serif', fontSize: '12px' } },
@@ -291,7 +291,7 @@ function mkRadar(id, labels, values) {
 }
 
 /* ─── ApexCharts vertical bar with gradient fill and rounded corners ─── */
-function mkBarGradient(id, labels, values, seriesName = 'เอกสารขาดเกินสาขา') {
+function mkBarGradient(id, labels, values, seriesName = 'เอกสารขาดเกินสาขา', color = COLORS[3]) {
   const el = document.getElementById(id);
   if (!el) return;
   if (charts[id] && charts[id].destroy) { charts[id].destroy(); }
@@ -307,9 +307,9 @@ function mkBarGradient(id, labels, values, seriesName = 'เอกสารข�
         x: labels[maxIdx],
         seriesIndex: 0,
         label: {
-          borderColor: COLORS[3],
+          borderColor: color,
           offsetY: 0,
-          style: { color: '#fff', background: COLORS[3], fontFamily: 'Sarabun, sans-serif', fontSize: '11px' },
+          style: { color: '#fff', background: color, fontFamily: 'Sarabun, sans-serif', fontSize: '11px' },
           text: `สูงสุด: ${values[maxIdx].toLocaleString()} ใบ`,
         },
       }],
@@ -340,7 +340,7 @@ function mkBarGradient(id, labels, values, seriesName = 'เอกสารข�
         inverseColors: true, opacityFrom: 0.85, opacityTo: 0.85, stops: [50, 0, 100],
       },
     },
-    colors: [COLORS[3]],
+    colors: [color],
     tooltip: { y: { formatter: val => val.toLocaleString() + ' ใบ' } },
   });
   charts[id].render();
@@ -407,13 +407,13 @@ function renderCharts() {
   mkBarH('cOvWHBar', wh.map(d => d.warehouse), [
     { name: 'เอกสารทั้งหมด',     data: wh.map(d => d.totalDocCount) },
     { name: 'เอกสารขาดเกินสาขา', data: wh.map(d => d.r008DocCount)  },
-  ]);
+  ], ['#3b5bdb', '#e8590c']);
 
   mkRadial('cOvWHDonut', wh.slice(0, 8).map(d => d.warehouse), wh.slice(0, 8).map(d => d.r008DocCount));
 
-  mkBarGradient('cOvBrTop', brR008Top10.map(d => short(d.branch, 14)), brR008Top10.map(d => d.r008DocCount));
+  mkBarGradient('cOvBrTop', brR008Top10.map(d => short(d.branch, 14)), brR008Top10.map(d => d.r008DocCount), 'เอกสารขาดเกินสาขา', '#0c8599');
 
-  mkBarGradient('cOvJTDonut', jt.slice(0, 6).map(d => d.jobType), jt.slice(0, 6).map(d => d.r008DocCount), 'เอกสารขาดเกิน');
+  mkBarGradient('cOvJTDonut', jt.slice(0, 6).map(d => d.jobType), jt.slice(0, 6).map(d => d.r008DocCount), 'เอกสารขาดเกิน', '#f59f00');
 
   const ca5R008 = topN(ca, 'r008DocCount', 5);
   mkRadar('cOvCauseBar', ca5R008.map(d => short(d.cause, 20)), ca5R008.map(d => d.r008DocCount));
