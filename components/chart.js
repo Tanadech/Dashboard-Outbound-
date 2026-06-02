@@ -132,7 +132,7 @@ function mkRadar(id, labels, values) {
     dataLabels: { enabled: true, style: { fontSize: '12px', fontFamily: 'Sarabun, sans-serif' } },
     plotOptions: {
       radar: {
-        size: 160,
+        size: 120,
         polygons: {
           strokeColors: '#e9e9e9',
           fill: { colors: ['#f8f8f8', '#fff'] },
