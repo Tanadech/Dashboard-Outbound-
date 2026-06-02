@@ -367,7 +367,7 @@ function renderCharts() {
 
   mkBarGradient('cOvBrTop', brR008Top10.map(d => short(d.branch, 14)), brR008Top10.map(d => d.r008DocCount));
 
-  mkRadialRate('cOvJTDonut', jt.slice(0, 6).map(d => d.jobType), jt.slice(0, 6).map(d => d.r008DocCount), jt.slice(0, 6).map(d => d.totalDocCount));
+  mkRadar('cOvJTDonut', jt.slice(0, 6).map(d => d.jobType), jt.slice(0, 6).map(d => d.r008DocCount));
 
   const ca5R008 = topN(ca, 'r008DocCount', 5);
   mkRadar('cOvCauseBar', ca5R008.map(d => short(d.cause, 20)), ca5R008.map(d => d.r008DocCount));
