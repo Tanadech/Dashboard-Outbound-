@@ -409,7 +409,7 @@ function renderCharts() {
     { name: 'เอกสารขาดเกินสาขา', data: wh.map(d => d.r008DocCount)  },
   ]);
 
-  mkRadialRate('cOvWHDonut', wh.slice(0, 8).map(d => d.warehouse), wh.slice(0, 8).map(d => d.r008DocCount), wh.slice(0, 8).map(d => d.totalDocCount));
+  mkRadial('cOvWHDonut', wh.slice(0, 8).map(d => d.warehouse), wh.slice(0, 8).map(d => d.r008DocCount));
 
   mkBarGradient('cOvBrTop', brR008Top10.map(d => short(d.branch, 14)), brR008Top10.map(d => d.r008DocCount));
 
