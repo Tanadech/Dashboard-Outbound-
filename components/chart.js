@@ -159,7 +159,7 @@ function mkRadarMulti(id, labels, seriesArr) {
 }
 
 /* ─── ApexCharts clean horizontal bar chart ─── */
-function mkBarH(id, labels, seriesArr, colors = COLORS) {
+function mkBarH(id, labels, seriesArr, colors = COLORS, unit = 'ใบ') {
   const el = document.getElementById(id);
   if (!el) return;
   if (charts[id] && charts[id].destroy) { charts[id].destroy(); }
@@ -193,7 +193,7 @@ function mkBarH(id, labels, seriesArr, colors = COLORS) {
     },
     grid: { borderColor: '#f1f1f1', strokeDashArray: 4 },
     legend: { fontFamily: 'Sarabun, sans-serif', fontSize: '12px' },
-    tooltip: { y: { formatter: val => val.toLocaleString() + ' ใบ' } },
+    tooltip: { y: { formatter: val => val.toLocaleString() + ' ' + unit } },
   });
   charts[id].render();
 }
@@ -428,12 +428,16 @@ function renderCharts() {
   mkRadar('cOvCauseBar', ca5R008.map(d => short(d.cause, 20)), ca5R008.map(d => d.r008DocCount));
 
   /* ── Warehouse ── */
-  mkChart('cWHBar', 'bar', wh.map(d => d.warehouse),
-    [barDS('จำนวนขาด', wh.map(d => d.shortageTotal), 2),
-     barDS('จำนวนเกิน', wh.map(d => d.overageTotal),  0)],
-    { scales: scBoth });
+  mkBarH('cWHBar', wh.map(d => d.warehouse), [
+    { name: 'จำนวนขาด', data: wh.map(d => d.shortageTotal) },
+    { name: 'จำนวนเกิน', data: wh.map(d => d.overageTotal)  },
+  ], ['#e8590c', '#3b5bdb']);
 
-  mkRadial('cWHDonut', wh.map(d => d.warehouse), wh.map(d => d.issueTotal));
+  mkBarH('cWHRate', wh.map(d => d.warehouse), [
+    { name: '% เอกสารขาดเกิน', data: wh.map(d => parseFloat(d.percentage)) },
+  ], ['#c92a2a'], '%');
+
+  mkRadial('cWHDonut', wh.map(d => d.warehouse), wh.map(d => d.r008DocCount));
 
 
   /* ── Branch ── */

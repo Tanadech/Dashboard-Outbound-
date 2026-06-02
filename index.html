@@ -323,14 +323,18 @@
 
       <div class="kpi-grid" id="kpiWH"></div>
 
-      <div class="chart-grid">
+      <div class="chart-grid g3">
         <div class="chart-card">
-          <h3>📊 จำนวนขาด/เกิน แยกตามคลัง</h3>
-          <div class="chart-box h320"><canvas id="cWHBar"></canvas></div>
+          <h3>📊 ขาด / เกิน (ชิ้น) แยกตามคลัง</h3>
+          <div class="chart-box h300"><div id="cWHBar"></div></div>
         </div>
         <div class="chart-card">
-          <h3>🍩 สัดส่วนปัญหาจำนวนสินค้าตามคลัง</h3>
-          <div class="chart-box h320"><div id="cWHDonut"></div></div>
+          <h3>📈 % เอกสารขาดเกิน ต่อเอกสารทั้งหมด</h3>
+          <div class="chart-box h300"><div id="cWHRate"></div></div>
+        </div>
+        <div class="chart-card">
+          <h3>🍩 สัดส่วนเอกสารขาดเกินตามคลัง</h3>
+          <div class="chart-box h300"><div id="cWHDonut"></div></div>
         </div>
       </div>
 
@@ -657,7 +661,7 @@
 <script src="components/loading.js?v=2"></script>
 <script src="components/pagination.js?v=2"></script>
 <script src="components/nav.js?v=3"></script>
-<script src="components/chart.js?v=14"></script>
+<script src="components/chart.js?v=15"></script>
 <script src="components/kpi.js?v=3"></script>
 <script src="components/table-warehouse.js?v=5"></script>
 <script src="components/table-branch.js?v=6"></script>
