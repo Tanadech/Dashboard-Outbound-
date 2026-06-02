@@ -22,7 +22,7 @@
   <link rel="stylesheet" href="styles/base/layout.css?v=9">
 
   <!-- Component styles -->
-  <link rel="stylesheet" href="styles/components/header.css?v=2">
+  <link rel="stylesheet" href="styles/components/header.css?v=3">
   <link rel="stylesheet" href="styles/components/nav-bar.css?v=2">
   <link rel="stylesheet" href="styles/components/filter-bar.css?v=2">
   <link rel="stylesheet" href="styles/components/button.css?v=2">
@@ -223,64 +223,36 @@
   <!-- ===== STICKY HEADER + NAV ===== -->
   <div id="stickyWrap">
 
-    <!-- Top Header -->
+    <!-- Combined header + filters (single row) -->
     <div id="topHeader">
-      <div class="th-left">
-        <h1>📦 Dashboard Outbound สินค้าขาดเกินที่สาขา</h1>
-        <p>วิเคราะห์จำนวนขาด/เกิน แยกตามคลัง สาขา ประเภทงาน และสาเหตุ</p>
+      <div class="th-brand">
+        <span>📦</span>
+        <strong>Dashboard Outbound</strong>
       </div>
-      <div class="th-right">
-        <span id="fileStatusLabel">ยังไม่ได้เลือกไฟล์</span>
-        <label class="btn btn-primary btn-file">
-          📂 นำเข้าไฟล์
+      <div class="th-filters">
+        <select id="fWH" onchange="applyFilters()"><option value="">คลังทั้งหมด</option></select>
+        <select id="fBR" onchange="applyFilters()"><option value="">สาขาทั้งหมด</option></select>
+        <select id="fJT" onchange="applyFilters()"><option value="">ประเภทงานทั้งหมด</option></select>
+        <select id="fCA" onchange="applyFilters()"><option value="">สาเหตุทั้งหมด</option></select>
+        <input type="text" id="fSearch" placeholder="ค้นหาเลขที่ / สาขา / คลัง" oninput="applyFilters()">
+        <input type="date" id="fDateFrom" onchange="applyFilters()" title="วันที่เริ่มต้น">
+        <span class="date-sep">—</span>
+        <input type="date" id="fDateTo" onchange="applyFilters()" title="วันที่สิ้นสุด">
+        <span class="qf-sep">|</span>
+        <button class="btn btn-qf" onclick="setQuickDate('today',this)">วันนี้</button>
+        <button class="btn btn-qf" onclick="setQuickDate('7d',this)">7 วัน</button>
+        <button class="btn btn-qf" onclick="setQuickDate('month',this)">เดือนนี้</button>
+        <button class="btn btn-qf" onclick="setQuickDate('year',this)">ปีนี้</button>
+      </div>
+      <div class="th-actions">
+        <span id="fileStatusLabel"></span>
+        <button class="btn btn-ghost btn-compact" onclick="resetFilters()">🔄</button>
+        <button class="btn btn-green btn-compact" onclick="exportCSV()">⬇️ Export</button>
+        <button class="btn btn-ghost btn-compact" onclick="window.print()">🖨️</button>
+        <label class="btn btn-primary btn-compact btn-file">
+          📂 นำเข้า
           <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" style="display:none" onchange="handleFile(this)">
         </label>
-      </div>
-    </div>
-
-    <!-- Filter Bar -->
-    <div id="filterBar">
-      <div class="fg">
-        <label>คลังสินค้า</label>
-        <select id="fWH" onchange="applyFilters()"><option value="">ทั้งหมด</option></select>
-      </div>
-      <div class="fg">
-        <label>สาขา</label>
-        <select id="fBR" onchange="applyFilters()"><option value="">ทั้งหมด</option></select>
-      </div>
-      <div class="fg">
-        <label>ประเภทงาน</label>
-        <select id="fJT" onchange="applyFilters()"><option value="">ทั้งหมด</option></select>
-      </div>
-      <div class="fg">
-        <label>สาเหตุขาดเกิน</label>
-        <select id="fCA" onchange="applyFilters()"><option value="">ทั้งหมด</option></select>
-      </div>
-      <div class="fg wide">
-        <label>ค้นหา</label>
-        <input type="text" id="fSearch" placeholder="เลขที่เอกสาร / สาขา / คลัง" oninput="applyFilters()">
-      </div>
-      <div class="fg">
-        <label>วันที่เริ่มต้น</label>
-        <input type="date" id="fDateFrom" onchange="applyFilters()">
-      </div>
-      <div class="fg">
-        <label>วันที่สิ้นสุด</label>
-        <input type="date" id="fDateTo" onchange="applyFilters()">
-      </div>
-      <div class="fb-actions">
-        <button class="btn btn-ghost" onclick="resetFilters()">🔄 รีเซ็ต</button>
-        <button class="btn btn-green" onclick="exportCSV()">⬇️ Export CSV</button>
-        <button class="btn btn-ghost" onclick="window.print()">🖨️ Print / PDF</button>
-      </div>
-      <div class="qf-row">
-        <span class="qf-label">⚡ ช่วงเวลาเร็ว:</span>
-        <button class="btn btn-qf" onclick="setQuickDate('today',this)">วันนี้</button>
-        <button class="btn btn-qf" onclick="setQuickDate('7d',this)">7 วันล่าสุด</button>
-        <button class="btn btn-qf" onclick="setQuickDate('month',this)">เดือนนี้</button>
-        <button class="btn btn-qf" onclick="setQuickDate('prevmonth',this)">เดือนก่อน</button>
-        <button class="btn btn-qf" onclick="setQuickDate('year',this)">ปีนี้</button>
-        <button class="btn btn-qf" onclick="setQuickDate('clear',this)">🔄 ล้างช่วงเวลา</button>
       </div>
     </div>
 
