@@ -153,6 +153,62 @@ function mkRadar(id, labels, values) {
   charts[id].render();
 }
 
+/* ─── ApexCharts vertical bar with gradient fill and rounded corners ─── */
+function mkBarGradient(id, labels, values) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (charts[id] && charts[id].destroy) { charts[id].destroy(); }
+  delete charts[id];
+  if (!values.length) return;
+
+  const maxIdx = values.indexOf(Math.max(...values));
+
+  charts[id] = new ApexCharts(el, {
+    series: [{ name: 'เอกสารขาดเกินสาขา', data: values }],
+    annotations: {
+      points: [{
+        x: labels[maxIdx],
+        seriesIndex: 0,
+        label: {
+          borderColor: COLORS[3],
+          offsetY: 0,
+          style: { color: '#fff', background: COLORS[3], fontFamily: 'Sarabun, sans-serif', fontSize: '11px' },
+          text: `สูงสุด: ${values[maxIdx].toLocaleString()} ใบ`,
+        },
+      }],
+    },
+    chart: {
+      type: 'bar',
+      height: '100%',
+      fontFamily: 'Sarabun, sans-serif',
+      toolbar: { show: false },
+      animations: { enabled: true, speed: 600 },
+    },
+    plotOptions: { bar: { borderRadius: 8, columnWidth: '55%' } },
+    dataLabels: { enabled: false },
+    stroke: { width: 0 },
+    grid: { row: { colors: ['#fff', '#f2f2f2'] } },
+    xaxis: {
+      categories: labels,
+      tickPlacement: 'on',
+      labels: { rotate: -45, style: { fontFamily: 'Sarabun, sans-serif', fontSize: '11px' } },
+    },
+    yaxis: {
+      title: { text: 'เอกสารขาดเกิน (ใบ)', style: { fontFamily: 'Sarabun, sans-serif', fontSize: '11px' } },
+    },
+    fill: {
+      type: 'gradient',
+      gradient: {
+        shade: 'light', type: 'horizontal', shadeIntensity: 0.25,
+        inverseColors: true, opacityFrom: 0.85, opacityTo: 0.85, stops: [50, 0, 100],
+      },
+    },
+    colors: [COLORS[3]],
+    tooltip: { y: { formatter: val => val.toLocaleString() + ' ใบ' } },
+  });
+  charts[id].render();
+}
+
 /* ─── Create or replace a Chart.js instance on a canvas element ─── */
 function mkChart(id, type, labels, datasets, opts = {}) {
   const el = document.getElementById(id);
@@ -218,9 +274,7 @@ function renderCharts() {
 
   mkRadial('cOvWHDonut', wh.slice(0, 8).map(d => d.warehouse), wh.slice(0, 8).map(d => d.totalDocCount));
 
-  mkChart('cOvBrTop', 'bar', brR008Top10.map(d => short(d.branch)),
-    [barDS('เอกสารขาดเกินสาขา', brR008Top10.map(d => d.r008DocCount), 3)],
-    { indexAxis: 'y', scales: { x: { beginAtZero: true } } });
+  mkBarGradient('cOvBrTop', brR008Top10.map(d => short(d.branch, 14)), brR008Top10.map(d => d.r008DocCount));
 
   mkRadial('cOvJTDonut', jt.slice(0, 6).map(d => d.jobType), jt.slice(0, 6).map(d => d.totalDocCount));
 
