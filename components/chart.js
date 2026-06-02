@@ -112,6 +112,46 @@ function mkRadial(id, labels, values) {
   charts[id].render();
 }
 
+/* ─── Create or replace an ApexCharts radar (polygon fill) on a div element ─── */
+function mkRadar(id, labels, values) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (charts[id] && charts[id].destroy) { charts[id].destroy(); }
+  delete charts[id];
+  if (!values.length) return;
+
+  charts[id] = new ApexCharts(el, {
+    series: [{ name: 'เอกสารขาดเกินสาขา', data: values }],
+    chart: {
+      type: 'radar',
+      height: '100%',
+      fontFamily: 'Sarabun, sans-serif',
+      toolbar: { show: false },
+      animations: { enabled: true, speed: 600 },
+    },
+    dataLabels: { enabled: true, style: { fontSize: '12px', fontFamily: 'Sarabun, sans-serif' } },
+    plotOptions: {
+      radar: {
+        polygons: {
+          strokeColors: '#e9e9e9',
+          fill: { colors: ['#f8f8f8', '#fff'] },
+        },
+      },
+    },
+    colors: ['#FF4560'],
+    markers: { size: 4, colors: ['#fff'], strokeColor: '#FF4560', strokeWidth: 2 },
+    tooltip: { y: { formatter: val => val.toLocaleString() } },
+    xaxis: {
+      categories: labels,
+      labels: { style: { fontFamily: 'Sarabun, sans-serif', fontSize: '12px' } },
+    },
+    yaxis: {
+      labels: { formatter: (val, i) => i % 2 === 0 ? val.toLocaleString() : '' },
+    },
+  });
+  charts[id].render();
+}
+
 /* ─── Create or replace a Chart.js instance on a canvas element ─── */
 function mkChart(id, type, labels, datasets, opts = {}) {
   const el = document.getElementById(id);
@@ -184,9 +224,7 @@ function renderCharts() {
   mkRadial('cOvJTDonut', jt.slice(0, 6).map(d => d.jobType), jt.slice(0, 6).map(d => d.totalDocCount));
 
   const ca5R008 = topN(ca, 'r008DocCount', 5);
-  mkChart('cOvCauseBar', 'bar', ca5R008.map(d => short(d.cause)),
-    [barDS('เอกสารขาดเกินสาขา', ca5R008.map(d => d.r008DocCount), 4)],
-    { indexAxis: 'y', scales: { x: { beginAtZero: true } } });
+  mkRadar('cOvCauseBar', ca5R008.map(d => short(d.cause, 20)), ca5R008.map(d => d.r008DocCount));
 
   /* ── Warehouse ── */
   mkChart('cWHBar', 'bar', wh.map(d => d.warehouse),
