@@ -49,18 +49,13 @@ const RAW_URL = 'https://raw.githubusercontent.com/Tanadech/Dashboard-Outbound-/
 /* ─── Auto-fetch data/data.json from GitHub Pages on page load ─── */
 async function autoLoadData() {
   loading(true);
+  let json;
   try {
     let res = await fetch('./data/data.json?t=' + Date.now());
     if (!res.ok) res = await fetch(RAW_URL + '?t=' + Date.now());
     if (!res.ok) throw new Error('HTTP ' + res.status);
-    const json = await res.json();
+    json = await res.json();
     if (!Array.isArray(json) || json.length === 0) throw new Error('ไม่มีข้อมูล');
-
-    processData(json);
-
-    const lbl = document.getElementById('fileStatusLabel');
-    lbl.textContent = '✅ โหลดข้อมูลอัตโนมัติ — ' + new Date().toLocaleTimeString('th-TH');
-    lbl.className = 'ok';
   } catch (err) {
     loading(false);
     document.getElementById('kpiMain').innerHTML = `
@@ -70,7 +65,12 @@ async function autoLoadData() {
         <p>กรุณารัน <strong>update-data.bat</strong> เพื่อแปลงไฟล์ Excel ก่อน<br>
            หรือกดปุ่ม <strong>"นำเข้าไฟล์"</strong> เพื่ออัปโหลดด้วยตนเอง</p>
       </div>`;
+    return;
   }
+  processData(json);
+  const lbl = document.getElementById('fileStatusLabel');
+  lbl.textContent = '✅ โหลดข้อมูลอัตโนมัติ — ' + new Date().toLocaleTimeString('th-TH');
+  lbl.className = 'ok';
 }
 
 /* ─── Re-render every dashboard section after data/filter change ─── */
