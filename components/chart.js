@@ -188,7 +188,19 @@ function renderCharts() {
     [barDS('เอกสารขาดเกินสาขา', ca5R008.map(d => d.r008DocCount), 4)],
     { indexAxis: 'y', scales: { x: { beginAtZero: true } } });
 
+  /* ── Warehouse ── */
+  mkChart('cWHBar', 'bar', wh.map(d => d.warehouse),
+    [barDS('จำนวนขาด', wh.map(d => d.shortageTotal), 2),
+     barDS('จำนวนเกิน', wh.map(d => d.overageTotal),  0)],
+    { scales: scBoth });
+
+  mkRadial('cWHDonut', wh.map(d => d.warehouse), wh.map(d => d.issueTotal));
+
+
   /* ── Branch ── */
+  mkChart('cBrTop', 'bar', brTop10.map(d => short(d.branch)),
+    [barDS('ปัญหารวม', brTop10.map(d => d.issueTotal), 3)],
+    { indexAxis: 'y', scales: { x: { beginAtZero: true } } });
 
   const brShort10 = topN(br, 'shortageTotal', 10);
   mkChart('cBrShort', 'bar', brShort10.map(d => short(d.branch)),
@@ -256,7 +268,15 @@ function renderCharts() {
      barDS('จำนวนเกิน', jt.map(d => d.overageTotal),  0)],
     { scales: scBoth });
 
+  mkChart('cJTTop', 'bar', jt.map(d => d.jobType),
+    [barDS('ปัญหารวม', jt.map(d => d.issueTotal), 1)],
+    { indexAxis: 'y', scales: { x: { beginAtZero: true } } });
+
   /* ── Cause ── */
+  mkChart('cCATop', 'bar', caTop10.map(d => short(d.cause, 22)),
+    [barDS('ปัญหารวม', caTop10.map(d => d.issueTotal), 4)],
+    { indexAxis: 'y', scales: { x: { beginAtZero: true } } });
+
   mkRadial('cCADonut', caTop10.map(d => short(d.cause, 20)), caTop10.map(d => d.issueTotal));
 
   mkChart('cCAStacked', 'bar', caTop10.map(d => short(d.cause, 16)),
