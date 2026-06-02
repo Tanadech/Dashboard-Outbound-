@@ -83,7 +83,11 @@ function renderAll() {
   renderCA();
   renderREC();
   renderDT();
+  if (typeof showPage === 'function') showPage(location.hash || '#sec-overview');
 }
 
 /* ─── Auto-load data on page open ─── */
-document.addEventListener('DOMContentLoaded', autoLoadData);
+document.addEventListener('DOMContentLoaded', () => {
+  if (typeof showPage === 'function') showPage(location.hash || '#sec-overview');
+  autoLoadData();
+});

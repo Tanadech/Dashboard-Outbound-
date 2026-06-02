@@ -1,15 +1,33 @@
 (function () {
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (!e.isIntersecting) return;
-      const id = e.target.id;
-      document.querySelectorAll('#navBar a').forEach(a => {
-        a.classList.toggle('active', a.getAttribute('href') === '#' + id);
-      });
+  function showPage(hash) {
+    if (!hash || !document.querySelector(hash)) hash = '#sec-overview';
+
+    document.querySelectorAll('.dash-section').forEach(s => s.classList.remove('active'));
+    const target = document.querySelector(hash);
+    if (target) {
+      target.classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    document.querySelectorAll('#navBar a').forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === hash);
     });
-  }, { rootMargin: '-20% 0px -70% 0px' });
+
+    if (typeof renderCharts === 'function') renderCharts();
+  }
 
   document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.dash-section').forEach(s => observer.observe(s));
+    document.querySelectorAll('#navBar a').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const hash = a.getAttribute('href');
+        history.pushState(null, '', hash);
+        showPage(hash);
+      });
+    });
+
+    window.addEventListener('popstate', () => showPage(location.hash));
   });
+
+  window.showPage = showPage;
 })();

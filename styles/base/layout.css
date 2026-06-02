@@ -21,9 +21,12 @@
 }
 
 .dash-section {
+  display: none;
   width: 100%;
   margin-bottom: 36px;
-  scroll-margin-top: 200px;
+}
+.dash-section.active {
+  display: block;
 }
 
 .sec-hdr {
