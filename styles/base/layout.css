@@ -164,7 +164,19 @@
 #sec-overview.active .chart-grid:last-of-type  { flex: 1.5; }
 
 /* ── Warehouse / Cause / JobType: chart row taller than table ── */
-#sec-warehouse.active .chart-grid { flex: 2; }
+#sec-warehouse.active .chart-grid    { flex: 1.2; }
+#sec-warehouse.active .wh-timeline-card {
+  flex: 1.5;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+#sec-warehouse.active .wh-timeline-card .chart-box {
+  flex: 1;
+  min-height: 0;
+  height: 100% !important;
+}
+#sec-warehouse.active .tbl-card      { flex: 0 0 230px; }
 #sec-cause.active     .chart-grid { flex: 2; }
 #sec-jobtype.active   .chart-grid { flex: 2; }
 
