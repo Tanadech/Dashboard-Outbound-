@@ -41,9 +41,6 @@ function renderKPI() {
   const tBR = [...br].sort((a, b) => b.r008DocCount - a.r008DocCount)[0] || { branch: 'N/A', r008DocCount: 0 };
   const tJT = [...jt].sort((a, b) => b.r008DocCount - a.r008DocCount)[0] || { jobType: 'N/A', r008DocCount: 0 };
 
-  document.getElementById('overviewSub').textContent =
-    `รายการ ${filtered.length.toLocaleString()} รายการ | เอกสารทั้งหมด ${totalAllDocs.size.toLocaleString()} ใบ | เอกสารขาดเกิน ${r008Set.size.toLocaleString()} ใบ`;
-
   /* Overview KPIs */
   const whCards = wh.map(w => ({ c: 'c-amber', ico: '🏭', label: `คลัง ${w.warehouse}`, val: w.totalDocCount.toLocaleString(), sub: 'เอกสารทั้งหมด' }));
   document.getElementById('kpiMain').innerHTML = [
