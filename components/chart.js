@@ -112,6 +112,52 @@ function mkRadial(id, labels, values) {
   charts[id].render();
 }
 
+/* ─── ApexCharts radar with multiple series ─── */
+function mkRadarMulti(id, labels, seriesArr) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (charts[id] && charts[id].destroy) { charts[id].destroy(); }
+  delete charts[id];
+  if (!labels.length) return;
+
+  charts[id] = new ApexCharts(el, {
+    series: seriesArr,
+    chart: {
+      type: 'radar',
+      height: '100%',
+      fontFamily: 'Sarabun, sans-serif',
+      toolbar: { show: false },
+      animations: { enabled: true, speed: 600 },
+    },
+    dataLabels: { enabled: true, style: { fontSize: '11px', fontFamily: 'Sarabun, sans-serif' } },
+    plotOptions: {
+      radar: {
+        size: 110,
+        polygons: {
+          strokeColors: '#e9e9e9',
+          fill: { colors: ['#f8f8f8', '#fff'] },
+        },
+      },
+    },
+    colors: [COLORS[0], COLORS[2]],
+    markers: { size: 3, strokeWidth: 2 },
+    tooltip: { y: { formatter: val => val.toLocaleString() + ' ใบ' } },
+    xaxis: {
+      categories: labels,
+      labels: { style: { fontFamily: 'Sarabun, sans-serif', fontSize: '11px' } },
+    },
+    yaxis: {
+      labels: { formatter: (val, i) => i % 2 === 0 ? val.toLocaleString() : '' },
+    },
+    legend: {
+      position: 'top',
+      fontFamily: 'Sarabun, sans-serif',
+      fontSize: '12px',
+    },
+  });
+  charts[id].render();
+}
+
 /* ─── ApexCharts clean horizontal bar chart ─── */
 function mkBarH(id, labels, seriesArr) {
   const el = document.getElementById(id);
@@ -367,7 +413,10 @@ function renderCharts() {
 
   mkBarGradient('cOvBrTop', brR008Top10.map(d => short(d.branch, 14)), brR008Top10.map(d => d.r008DocCount));
 
-  mkRadar('cOvJTDonut', jt.slice(0, 6).map(d => d.jobType), jt.slice(0, 6).map(d => d.r008DocCount));
+  mkRadarMulti('cOvJTDonut', jt.slice(0, 6).map(d => d.jobType), [
+    { name: 'เอกสารทั้งหมด', data: jt.slice(0, 6).map(d => d.totalDocCount) },
+    { name: 'ขาด/เกิน',      data: jt.slice(0, 6).map(d => d.r008DocCount)  },
+  ]);
 
   const ca5R008 = topN(ca, 'r008DocCount', 5);
   mkRadar('cOvCauseBar', ca5R008.map(d => short(d.cause, 20)), ca5R008.map(d => d.r008DocCount));
