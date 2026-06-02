@@ -12,6 +12,7 @@
   <!-- External libraries -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.49.0/dist/apexcharts.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
@@ -318,7 +319,7 @@
         </div>
         <div class="chart-card">
           <h3>🍩 สัดส่วนปัญหาตามคลัง</h3>
-          <div class="chart-box h260"><canvas id="cOvWHDonut"></canvas></div>
+          <div class="chart-box h260"><div id="cOvWHDonut"></div></div>
         </div>
       </div>
 
@@ -329,7 +330,7 @@
         </div>
         <div class="chart-card">
           <h3>🧾 สัดส่วนตามประเภทงาน</h3>
-          <div class="chart-box h260"><canvas id="cOvJTDonut"></canvas></div>
+          <div class="chart-box h260"><div id="cOvJTDonut"></div></div>
         </div>
         <div class="chart-card">
           <h3>⚠️ Top 5 สาเหตุขาดเกินสาขา</h3>
@@ -359,7 +360,7 @@
         </div>
         <div class="chart-card">
           <h3>🍩 สัดส่วนปัญหาจำนวนสินค้าตามคลัง</h3>
-          <div class="chart-box h320"><canvas id="cWHDonut"></canvas></div>
+          <div class="chart-box h320"><div id="cWHDonut"></div></div>
         </div>
       </div>
 
@@ -470,7 +471,7 @@
       <div class="chart-grid">
         <div class="chart-card">
           <h3>🍩 สัดส่วนปัญหาตามประเภทงาน</h3>
-          <div class="chart-box h300"><canvas id="cJTDonut"></canvas></div>
+          <div class="chart-box h300"><div id="cJTDonut"></div></div>
         </div>
         <div class="chart-card">
           <h3>📊 จำนวนขาด/เกิน แยกตามประเภทงาน</h3>
@@ -531,7 +532,7 @@
       <div class="chart-grid">
         <div class="chart-card">
           <h3>🍩 สัดส่วนตามสาเหตุขาดเกิน</h3>
-          <div class="chart-box h300"><canvas id="cCADonut"></canvas></div>
+          <div class="chart-box h300"><div id="cCADonut"></div></div>
         </div>
         <div class="chart-card">
           <h3>📊 Stacked: ขาด/เกิน แยกตามสาเหตุ</h3>
@@ -598,7 +599,7 @@
         </div>
         <div class="chart-card">
           <h3>🍩 สัดส่วนเอกสารขาดเกินสาขา ตามผู้บันทึก (Top 10)</h3>
-          <div class="chart-box h320"><canvas id="cRECDonut"></canvas></div>
+          <div class="chart-box h320"><div id="cRECDonut"></div></div>
         </div>
       </div>
 
@@ -702,7 +703,7 @@
 <script src="components/loading.js?v=2"></script>
 <script src="components/pagination.js?v=2"></script>
 <script src="components/nav.js?v=2"></script>
-<script src="components/chart.js?v=3"></script>
+<script src="components/chart.js?v=4"></script>
 <script src="components/kpi.js?v=2"></script>
 <script src="components/table-warehouse.js?v=5"></script>
 <script src="components/table-branch.js?v=6"></script>

@@ -57,6 +57,61 @@ function buildDL(type, isHorizontal, isDoughnut, isStacked) {
   };
 }
 
+/* ─── Create or replace an ApexCharts radialBar on a div element ─── */
+function mkRadial(id, labels, values) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (charts[id] && charts[id].destroy) { charts[id].destroy(); }
+  delete charts[id];
+  if (!values.length) return;
+
+  const maxShow = Math.min(labels.length, 8);
+  const lbls    = labels.slice(0, maxShow);
+  const vals    = values.slice(0, maxShow);
+  const total   = vals.reduce((a, b) => a + b, 0);
+  const pcts    = vals.map(v => total > 0 ? +(v / total * 100).toFixed(1) : 0);
+
+  charts[id] = new ApexCharts(el, {
+    series: pcts,
+    chart: {
+      type: 'radialBar',
+      height: '100%',
+      fontFamily: 'Sarabun, sans-serif',
+      toolbar: { show: false },
+      animations: { enabled: true, speed: 600 },
+    },
+    plotOptions: {
+      radialBar: {
+        offsetY: 0,
+        startAngle: 0,
+        endAngle: 270,
+        hollow: { margin: 5, size: '28%', background: 'transparent' },
+        track: { background: '#e9ecef', strokeWidth: '90%', margin: 4 },
+        dataLabels: { name: { show: false }, value: { show: false } },
+        barLabels: {
+          enabled: true,
+          useSeriesColors: true,
+          offsetX: -8,
+          fontSize: '13px',
+          fontFamily: 'Sarabun, sans-serif',
+          fontWeight: 600,
+          formatter: (name, opts) =>
+            `${name}: ${vals[opts.seriesIndex].toLocaleString()}`,
+        },
+      },
+    },
+    colors: COLORS.slice(0, maxShow),
+    labels: lbls,
+    tooltip: {
+      y: {
+        formatter: (_, { seriesIndex }) =>
+          `${vals[seriesIndex].toLocaleString()} (${pcts[seriesIndex]}%)`,
+      },
+    },
+  });
+  charts[id].render();
+}
+
 /* ─── Create or replace a Chart.js instance on a canvas element ─── */
 function mkChart(id, type, labels, datasets, opts = {}) {
   const el = document.getElementById(id);
@@ -120,17 +175,13 @@ function renderCharts() {
      barDS('เอกสารขาดเกินสาขา',   wh.map(d => d.r008DocCount),  2)],
     { scales: scBoth });
 
-  mkChart('cOvWHDonut', 'doughnut',
-    wh.slice(0, 8).map(d => d.warehouse),
-    donutDS(wh.slice(0, 8).map(d => d.totalDocCount)));
+  mkRadial('cOvWHDonut', wh.slice(0, 8).map(d => d.warehouse), wh.slice(0, 8).map(d => d.totalDocCount));
 
   mkChart('cOvBrTop', 'bar', brR008Top10.map(d => short(d.branch)),
     [barDS('เอกสารขาดเกินสาขา', brR008Top10.map(d => d.r008DocCount), 3)],
     { indexAxis: 'y', scales: { x: { beginAtZero: true } } });
 
-  mkChart('cOvJTDonut', 'doughnut',
-    jt.slice(0, 6).map(d => d.jobType),
-    donutDS(jt.slice(0, 6).map(d => d.totalDocCount)));
+  mkRadial('cOvJTDonut', jt.slice(0, 6).map(d => d.jobType), jt.slice(0, 6).map(d => d.totalDocCount));
 
   const ca5R008 = topN(ca, 'r008DocCount', 5);
   mkChart('cOvCauseBar', 'bar', ca5R008.map(d => short(d.cause)),
@@ -143,9 +194,7 @@ function renderCharts() {
      barDS('จำนวนเกิน', wh.map(d => d.overageTotal),  0)],
     { scales: scBoth });
 
-  mkChart('cWHDonut', 'doughnut',
-    wh.map(d => d.warehouse),
-    donutDS(wh.map(d => d.issueTotal)));
+  mkRadial('cWHDonut', wh.map(d => d.warehouse), wh.map(d => d.issueTotal));
 
 
   /* ── Branch ── */
@@ -212,7 +261,7 @@ function renderCharts() {
     });
 
   /* ── Job Type ── */
-  mkChart('cJTDonut', 'doughnut', jt.map(d => d.jobType), donutDS(jt.map(d => d.issueTotal)));
+  mkRadial('cJTDonut', jt.map(d => d.jobType), jt.map(d => d.issueTotal));
 
   mkChart('cJTBar', 'bar', jt.map(d => d.jobType),
     [barDS('จำนวนขาด', jt.map(d => d.shortageTotal), 2),
@@ -228,9 +277,7 @@ function renderCharts() {
     [barDS('ปัญหารวม', caTop10.map(d => d.issueTotal), 4)],
     { indexAxis: 'y', scales: { x: { beginAtZero: true } } });
 
-  mkChart('cCADonut', 'doughnut',
-    caTop10.map(d => short(d.cause)),
-    donutDS(caTop10.map(d => d.issueTotal)));
+  mkRadial('cCADonut', caTop10.map(d => short(d.cause, 20)), caTop10.map(d => d.issueTotal));
 
   mkChart('cCAStacked', 'bar', caTop10.map(d => short(d.cause, 16)),
     [barDS('จำนวนขาด', caTop10.map(d => d.shortageTotal), 2),
@@ -275,9 +322,7 @@ function renderCharts() {
     [barDS('จำนวนเกิน', recO10.map(d => d.overageTotal), 0)],
     { indexAxis: 'y', scales: { x: { beginAtZero: true } }, plugins: recTooltip(recO10) });
 
-  mkChart('cRECDonut', 'doughnut',
-    recT10.map(d => short(d.recorder, 18)),
-    donutDS(recT10.map(d => d.r008DocCount)));
+  mkRadial('cRECDonut', recT10.map(d => short(d.recorder, 18)), recT10.map(d => d.r008DocCount));
 
   mkChart('cRECStacked', 'bar', recI10.map(d => short(d.recorder, 20)),
     [barDS('จำนวนขาด', recI10.map(d => d.shortageTotal), 2),
