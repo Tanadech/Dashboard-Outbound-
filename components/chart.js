@@ -178,7 +178,11 @@ function mkBarH(id, labels, seriesArr, colors = COLORS) {
     plotOptions: {
       bar: { horizontal: true, borderRadius: 2, barHeight: '65%' },
     },
-    dataLabels: { enabled: false },
+    dataLabels: {
+      enabled: true,
+      style: { fontSize: '11px', fontFamily: 'Sarabun, sans-serif', fontWeight: '700', colors: ['#444'] },
+      formatter: val => val > 0 ? val.toLocaleString() : '',
+    },
     colors: colors.slice(0, seriesArr.length),
     xaxis: {
       categories: labels,
