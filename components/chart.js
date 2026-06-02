@@ -112,6 +112,42 @@ function mkRadial(id, labels, values) {
   charts[id].render();
 }
 
+/* ─── ApexCharts clean horizontal bar chart ─── */
+function mkBarH(id, labels, seriesArr) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (charts[id] && charts[id].destroy) { charts[id].destroy(); }
+  delete charts[id];
+  if (!labels.length) return;
+
+  charts[id] = new ApexCharts(el, {
+    series: seriesArr,
+    chart: {
+      type: 'bar',
+      height: '100%',
+      fontFamily: 'Sarabun, sans-serif',
+      toolbar: { show: false },
+      animations: { enabled: true, speed: 600 },
+    },
+    plotOptions: {
+      bar: { horizontal: true, borderRadius: 2, barHeight: '65%' },
+    },
+    dataLabels: { enabled: false },
+    colors: COLORS.slice(0, seriesArr.length),
+    xaxis: {
+      categories: labels,
+      labels: { style: { fontFamily: 'Sarabun, sans-serif', fontSize: '12px' } },
+    },
+    yaxis: {
+      labels: { style: { fontFamily: 'Sarabun, sans-serif', fontSize: '12px' } },
+    },
+    grid: { borderColor: '#f1f1f1', strokeDashArray: 4 },
+    legend: { fontFamily: 'Sarabun, sans-serif', fontSize: '12px' },
+    tooltip: { y: { formatter: val => val.toLocaleString() + ' ใบ' } },
+  });
+  charts[id].render();
+}
+
 /* ─── RadialBar showing problem rate: r008DocCount / totalDocCount × 100% ─── */
 function mkRadialRate(id, labels, r008Counts, totalCounts) {
   const el = document.getElementById(id);
@@ -322,10 +358,10 @@ function renderCharts() {
   const scBoth = { x: { beginAtZero: true }, y: { beginAtZero: true } };
 
   /* ── Overview ── */
-  mkChart('cOvWHBar', 'bar', wh.map(d => d.warehouse),
-    [barDS('เอกสารทั้งหมด', wh.map(d => d.totalDocCount), 0),
-     barDS('เอกสารขาดเกินสาขา',   wh.map(d => d.r008DocCount),  2)],
-    { scales: scBoth });
+  mkBarH('cOvWHBar', wh.map(d => d.warehouse), [
+    { name: 'เอกสารทั้งหมด',     data: wh.map(d => d.totalDocCount) },
+    { name: 'เอกสารขาดเกินสาขา', data: wh.map(d => d.r008DocCount)  },
+  ]);
 
   mkRadialRate('cOvWHDonut', wh.slice(0, 8).map(d => d.warehouse), wh.slice(0, 8).map(d => d.r008DocCount), wh.slice(0, 8).map(d => d.totalDocCount));
 
