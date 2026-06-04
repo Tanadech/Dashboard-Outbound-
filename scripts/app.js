@@ -76,7 +76,6 @@ async function autoLoadData() {
 /* ─── Re-render every dashboard section after data/filter change ─── */
 function renderAll() {
   renderKPI();
-  renderCharts();
   renderWH();
   renderBR();
   renderJT();

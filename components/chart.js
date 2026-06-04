@@ -466,176 +466,187 @@ function donutDS(data) {
 
 /* ─── Render all charts for every dashboard section ─── */
 function renderCharts() {
-  const wh  = aggWH(filtered);
-  const br  = aggBR(filtered);
-  const jt  = aggJT(filtered);
-  const ca  = aggCA(filtered);
+  const activeId = document.querySelector('.dash-section.active')?.id || 'sec-overview';
+  const scBoth   = { x: { beginAtZero: true }, y: { beginAtZero: true } };
 
-  const brTop10     = topN(br, 'issueTotal',   10);
-  const brR008Top10 = topN(br, 'r008DocCount', 10);
-  const caTop10     = topN(ca, 'issueTotal',   10);
-  const scBoth = { x: { beginAtZero: true }, y: { beginAtZero: true } };
+  if (activeId === 'sec-overview') {
+    const wh          = aggWH(filtered);
+    const br          = aggBR(filtered);
+    const jt          = aggJT(filtered);
+    const ca          = aggCA(filtered);
+    const brR008Top10 = topN(br, 'r008DocCount', 10);
+    const ca5R008     = topN(ca, 'r008DocCount', 5);
 
-  /* ── Overview ── */
-  mkBarH('cOvWHBar', wh.map(d => d.warehouse), [
-    { name: 'เอกสารทั้งหมด',     data: wh.map(d => d.totalDocCount) },
-    { name: 'เอกสารขาดเกินสาขา', data: wh.map(d => d.r008DocCount)  },
-  ], ['#3b5bdb', '#e8590c']);
+    mkBarH('cOvWHBar', wh.map(d => d.warehouse), [
+      { name: 'เอกสารทั้งหมด',     data: wh.map(d => d.totalDocCount) },
+      { name: 'เอกสารขาดเกินสาขา', data: wh.map(d => d.r008DocCount)  },
+    ], ['#3b5bdb', '#e8590c']);
 
-  mkRadial('cOvWHDonut', wh.slice(0, 8).map(d => d.warehouse), wh.slice(0, 8).map(d => d.r008DocCount));
+    mkRadial('cOvWHDonut', wh.slice(0, 8).map(d => d.warehouse), wh.slice(0, 8).map(d => d.r008DocCount));
+    mkBarGradient('cOvBrTop', brR008Top10.map(d => short(d.branch, 14)), brR008Top10.map(d => d.r008DocCount), 'เอกสารขาดเกินสาขา', '#0c8599');
+    mkBarGradient('cOvJTDonut', jt.slice(0, 6).map(d => d.jobType), jt.slice(0, 6).map(d => d.r008DocCount), 'เอกสารขาดเกิน', '#f59f00');
+    mkRadar('cOvCauseBar', ca5R008.map(d => short(d.cause, 20)), ca5R008.map(d => d.r008DocCount));
+  }
 
-  mkBarGradient('cOvBrTop', brR008Top10.map(d => short(d.branch, 14)), brR008Top10.map(d => d.r008DocCount), 'เอกสารขาดเกินสาขา', '#0c8599');
+  else if (activeId === 'sec-warehouse') {
+    const wh = aggWH(filtered);
 
-  mkBarGradient('cOvJTDonut', jt.slice(0, 6).map(d => d.jobType), jt.slice(0, 6).map(d => d.r008DocCount), 'เอกสารขาดเกิน', '#f59f00');
+    mkBarH('cWHBar', wh.map(d => d.warehouse), [
+      { name: 'จำนวนขาด', data: wh.map(d => d.shortageTotal) },
+      { name: 'จำนวนเกิน', data: wh.map(d => d.overageTotal)  },
+    ], ['#e8590c', '#3b5bdb']);
 
-  const ca5R008 = topN(ca, 'r008DocCount', 5);
-  mkRadar('cOvCauseBar', ca5R008.map(d => short(d.cause, 20)), ca5R008.map(d => d.r008DocCount));
+    mkBarH('cWHRate', wh.map(d => d.warehouse), [
+      { name: '% เอกสารขาดเกิน', data: wh.map(d => parseFloat(d.percentage)) },
+    ], ['#c92a2a'], '%');
 
-  /* ── Warehouse ── */
-  mkBarH('cWHBar', wh.map(d => d.warehouse), [
-    { name: 'จำนวนขาด', data: wh.map(d => d.shortageTotal) },
-    { name: 'จำนวนเกิน', data: wh.map(d => d.overageTotal)  },
-  ], ['#e8590c', '#3b5bdb']);
+    mkRadial('cWHDonut', wh.map(d => d.warehouse), wh.map(d => d.r008DocCount));
 
-  mkBarH('cWHRate', wh.map(d => d.warehouse), [
-    { name: '% เอกสารขาดเกิน', data: wh.map(d => parseFloat(d.percentage)) },
-  ], ['#c92a2a'], '%');
+    const whTime = aggWHTime(filtered);
+    mkWHTimeline('cWHTimeline', whTime.dates, whTime.series, whTime.whList);
+  }
 
-  mkRadial('cWHDonut', wh.map(d => d.warehouse), wh.map(d => d.r008DocCount));
+  else if (activeId === 'sec-branch') {
+    const br        = aggBR(filtered);
+    const brTop10   = topN(br, 'issueTotal',    10);
+    const brShort10 = topN(br, 'shortageTotal', 10);
+    const brOver10  = topN(br, 'overageTotal',  10);
 
-  const whTime = aggWHTime(filtered);
-  mkWHTimeline('cWHTimeline', whTime.dates, whTime.series, whTime.whList);
+    mkChart('cBrTop', 'bar', brTop10.map(d => short(d.branch)),
+      [barDS('ปัญหารวม', brTop10.map(d => d.issueTotal), 3)],
+      { indexAxis: 'y', scales: { x: { beginAtZero: true } } });
 
+    mkChart('cBrShort', 'bar', brShort10.map(d => short(d.branch)),
+      [barDS('จำนวนขาด', brShort10.map(d => d.shortageTotal), 2)],
+      { indexAxis: 'y', scales: { x: { beginAtZero: true } } });
 
-  /* ── Branch ── */
-  mkChart('cBrTop', 'bar', brTop10.map(d => short(d.branch)),
-    [barDS('ปัญหารวม', brTop10.map(d => d.issueTotal), 3)],
-    { indexAxis: 'y', scales: { x: { beginAtZero: true } } });
+    mkChart('cBrOver', 'bar', brOver10.map(d => short(d.branch)),
+      [barDS('จำนวนเกิน', brOver10.map(d => d.overageTotal), 0)],
+      { indexAxis: 'y', scales: { x: { beginAtZero: true } } });
 
-  const brShort10 = topN(br, 'shortageTotal', 10);
-  mkChart('cBrShort', 'bar', brShort10.map(d => short(d.branch)),
-    [barDS('จำนวนขาด', brShort10.map(d => d.shortageTotal), 2)],
-    { indexAxis: 'y', scales: { x: { beginAtZero: true } } });
-
-  const brOver10 = topN(br, 'overageTotal', 10);
-  mkChart('cBrOver', 'bar', brOver10.map(d => short(d.branch)),
-    [barDS('จำนวนเกิน', brOver10.map(d => d.overageTotal), 0)],
-    { indexAxis: 'y', scales: { x: { beginAtZero: true } } });
-
-  mkChart('cBrStacked', 'bar', brTop10.map(d => short(d.branch, 16)),
-    [barDS('จำนวนขาด', brTop10.map(d => d.shortageTotal), 2),
-     barDS('จำนวนเกิน', brTop10.map(d => d.overageTotal),  0)],
-    {
-      scales: {
-        x: {
-          stacked: true, beginAtZero: true,
-          ticks: {
-            font: { family: 'Sarabun', size: 13 },
-            callback: (value, index) => {
-              const b = brTop10[index];
-              if (!b) return value;
-              return [short(b.branch, 14), `(${short(b.topJobType || '', 12)})`];
+    mkChart('cBrStacked', 'bar', brTop10.map(d => short(d.branch, 16)),
+      [barDS('จำนวนขาด', brTop10.map(d => d.shortageTotal), 2),
+       barDS('จำนวนเกิน', brTop10.map(d => d.overageTotal),  0)],
+      {
+        scales: {
+          x: {
+            stacked: true, beginAtZero: true,
+            ticks: {
+              font: { family: 'Sarabun', size: 13 },
+              callback: (value, index) => {
+                const b = brTop10[index];
+                if (!b) return value;
+                return [short(b.branch, 14), `(${short(b.topJobType || '', 12)})`];
+              }
+            }
+          },
+          y: { stacked: true, beginAtZero: true }
+        },
+        plugins: {
+          tooltip: {
+            callbacks: {
+              title: items => {
+                const b = brTop10[items[0].dataIndex];
+                return b ? b.branch : items[0].label;
+              },
+              label: item => `${item.dataset.label}: ${(item.parsed.y || 0).toLocaleString()} ชิ้น`,
+              afterBody: items => {
+                const b = brTop10[items[0].dataIndex];
+                if (!b) return [];
+                const lines = [
+                  '',
+                  `จำนวนขาด: ${b.shortageTotal.toLocaleString()} ชิ้น`,
+                  `จำนวนเกิน: ${b.overageTotal.toLocaleString()} ชิ้น`,
+                  `เอกสารขาดเกินสาขา: ${b.r008DocCount.toLocaleString()} ใบ`,
+                  `สัดส่วน: ${b.percentage}%`,
+                  '',
+                  'Top ประเภทงาน:'
+                ];
+                (b.topJobTypes || []).forEach((jtItem, i) => {
+                  lines.push(`  ${i + 1}. ${jtItem[0]} (${jtItem[1].toLocaleString()})`);
+                });
+                return lines;
+              }
             }
           }
-        },
-        y: { stacked: true, beginAtZero: true }
-      },
-      plugins: {
-        tooltip: {
-          callbacks: {
-            title: items => {
-              const b = brTop10[items[0].dataIndex];
-              return b ? b.branch : items[0].label;
-            },
-            label: item => `${item.dataset.label}: ${(item.parsed.y || 0).toLocaleString()} ชิ้น`,
-            afterBody: items => {
-              const b = brTop10[items[0].dataIndex];
-              if (!b) return [];
-              const lines = [
-                '',
-                `จำนวนขาด: ${b.shortageTotal.toLocaleString()} ชิ้น`,
-                `จำนวนเกิน: ${b.overageTotal.toLocaleString()} ชิ้น`,
-                `เอกสารขาดเกินสาขา: ${b.r008DocCount.toLocaleString()} ใบ`,
-                `สัดส่วน: ${b.percentage}%`,
-                '',
-                'Top ประเภทงาน:'
-              ];
-              (b.topJobTypes || []).forEach((jtItem, i) => {
-                lines.push(`  ${i + 1}. ${jtItem[0]} (${jtItem[1].toLocaleString()})`);
-              });
-              return lines;
-            }
+        }
+      });
+  }
+
+  else if (activeId === 'sec-jobtype') {
+    const jt = aggJT(filtered);
+
+    mkRadial('cJTDonut', jt.map(d => d.jobType), jt.map(d => d.issueTotal));
+
+    mkChart('cJTBar', 'bar', jt.map(d => d.jobType),
+      [barDS('จำนวนขาด', jt.map(d => d.shortageTotal), 2),
+       barDS('จำนวนเกิน', jt.map(d => d.overageTotal),  0)],
+      { scales: scBoth });
+
+    mkChart('cJTTop', 'bar', jt.map(d => d.jobType),
+      [barDS('ปัญหารวม', jt.map(d => d.issueTotal), 1)],
+      { indexAxis: 'y', scales: { x: { beginAtZero: true } } });
+  }
+
+  else if (activeId === 'sec-cause') {
+    const ca      = aggCA(filtered);
+    const caTop10 = topN(ca, 'issueTotal', 10);
+
+    mkChart('cCATop', 'bar', caTop10.map(d => short(d.cause, 22)),
+      [barDS('ปัญหารวม', caTop10.map(d => d.issueTotal), 4)],
+      { indexAxis: 'y', scales: { x: { beginAtZero: true } } });
+
+    mkRadial('cCADonut', caTop10.map(d => short(d.cause, 20)), caTop10.map(d => d.issueTotal));
+
+    mkChart('cCAStacked', 'bar', caTop10.map(d => short(d.cause, 16)),
+      [barDS('จำนวนขาด', caTop10.map(d => d.shortageTotal), 2),
+       barDS('จำนวนเกิน', caTop10.map(d => d.overageTotal),  0)],
+      { scales: { x: { stacked: true, beginAtZero: true }, y: { stacked: true, beginAtZero: true } } });
+  }
+
+  else if (activeId === 'sec-recorder') {
+    const rec    = aggREC(filtered);
+    const recT10 = topN(rec, 'r008DocCount',  10);
+    const recS10 = topN(rec, 'shortageTotal', 10);
+    const recO10 = topN(rec, 'overageTotal',  10);
+    const recI10 = topN(rec, 'issueTotal',    10);
+
+    const recTooltip = arr => ({
+      tooltip: {
+        callbacks: {
+          title: items => arr[items[0].dataIndex]?.recorder || items[0].label,
+          afterBody: items => {
+            const v = arr[items[0].dataIndex];
+            if (!v) return [];
+            return ['',
+              `เอกสารทั้งหมด: ${v.totalDocCount.toLocaleString()} ใบ`,
+              `เอกสารขาดเกินสาขา: ${v.r008DocCount.toLocaleString()} ใบ`,
+              `จำนวนขาด: ${v.shortageTotal.toLocaleString()} ชิ้น`,
+              `จำนวนเกิน: ${v.overageTotal.toLocaleString()} ชิ้น`,
+              `ปัญหารวม: ${v.issueTotal.toLocaleString()} ชิ้น`,
+              `สัดส่วน: ${v.percentage}%`];
           }
         }
       }
     });
 
-  /* ── Job Type ── */
-  mkRadial('cJTDonut', jt.map(d => d.jobType), jt.map(d => d.issueTotal));
+    mkChart('cRECTop', 'bar', recT10.map(d => short(d.recorder, 20)),
+      [barDS('เอกสารขาดเกินสาขา', recT10.map(d => d.r008DocCount), 3)],
+      { indexAxis: 'y', scales: { x: { beginAtZero: true } }, plugins: recTooltip(recT10) });
 
-  mkChart('cJTBar', 'bar', jt.map(d => d.jobType),
-    [barDS('จำนวนขาด', jt.map(d => d.shortageTotal), 2),
-     barDS('จำนวนเกิน', jt.map(d => d.overageTotal),  0)],
-    { scales: scBoth });
+    mkChart('cRECShort', 'bar', recS10.map(d => short(d.recorder, 20)),
+      [barDS('จำนวนขาด', recS10.map(d => d.shortageTotal), 2)],
+      { indexAxis: 'y', scales: { x: { beginAtZero: true } }, plugins: recTooltip(recS10) });
 
-  mkChart('cJTTop', 'bar', jt.map(d => d.jobType),
-    [barDS('ปัญหารวม', jt.map(d => d.issueTotal), 1)],
-    { indexAxis: 'y', scales: { x: { beginAtZero: true } } });
+    mkChart('cRECOver', 'bar', recO10.map(d => short(d.recorder, 20)),
+      [barDS('จำนวนเกิน', recO10.map(d => d.overageTotal), 0)],
+      { indexAxis: 'y', scales: { x: { beginAtZero: true } }, plugins: recTooltip(recO10) });
 
-  /* ── Cause ── */
-  mkChart('cCATop', 'bar', caTop10.map(d => short(d.cause, 22)),
-    [barDS('ปัญหารวม', caTop10.map(d => d.issueTotal), 4)],
-    { indexAxis: 'y', scales: { x: { beginAtZero: true } } });
+    mkRadial('cRECDonut', recT10.map(d => short(d.recorder, 18)), recT10.map(d => d.r008DocCount));
 
-  mkRadial('cCADonut', caTop10.map(d => short(d.cause, 20)), caTop10.map(d => d.issueTotal));
-
-  mkChart('cCAStacked', 'bar', caTop10.map(d => short(d.cause, 16)),
-    [barDS('จำนวนขาด', caTop10.map(d => d.shortageTotal), 2),
-     barDS('จำนวนเกิน', caTop10.map(d => d.overageTotal),  0)],
-    { scales: { x: { stacked: true, beginAtZero: true }, y: { stacked: true, beginAtZero: true } } });
-
-  /* ── Recorder ── */
-  const rec     = aggREC(filtered);
-  const recT10  = topN(rec, 'r008DocCount',  10);
-  const recS10  = topN(rec, 'shortageTotal', 10);
-  const recO10  = topN(rec, 'overageTotal',  10);
-  const recI10  = topN(rec, 'issueTotal',    10);
-
-  const recTooltip = arr => ({
-    tooltip: {
-      callbacks: {
-        title: items => arr[items[0].dataIndex]?.recorder || items[0].label,
-        afterBody: items => {
-          const v = arr[items[0].dataIndex];
-          if (!v) return [];
-          return ['',
-            `เอกสารทั้งหมด: ${v.totalDocCount.toLocaleString()} ใบ`,
-            `เอกสารขาดเกินสาขา: ${v.r008DocCount.toLocaleString()} ใบ`,
-            `จำนวนขาด: ${v.shortageTotal.toLocaleString()} ชิ้น`,
-            `จำนวนเกิน: ${v.overageTotal.toLocaleString()} ชิ้น`,
-            `ปัญหารวม: ${v.issueTotal.toLocaleString()} ชิ้น`,
-            `สัดส่วน: ${v.percentage}%`];
-        }
-      }
-    }
-  });
-
-  mkChart('cRECTop', 'bar', recT10.map(d => short(d.recorder, 20)),
-    [barDS('เอกสารขาดเกินสาขา', recT10.map(d => d.r008DocCount), 3)],
-    { indexAxis: 'y', scales: { x: { beginAtZero: true } }, plugins: recTooltip(recT10) });
-
-  mkChart('cRECShort', 'bar', recS10.map(d => short(d.recorder, 20)),
-    [barDS('จำนวนขาด', recS10.map(d => d.shortageTotal), 2)],
-    { indexAxis: 'y', scales: { x: { beginAtZero: true } }, plugins: recTooltip(recS10) });
-
-  mkChart('cRECOver', 'bar', recO10.map(d => short(d.recorder, 20)),
-    [barDS('จำนวนเกิน', recO10.map(d => d.overageTotal), 0)],
-    { indexAxis: 'y', scales: { x: { beginAtZero: true } }, plugins: recTooltip(recO10) });
-
-  mkRadial('cRECDonut', recT10.map(d => short(d.recorder, 18)), recT10.map(d => d.r008DocCount));
-
-  mkChart('cRECStacked', 'bar', recI10.map(d => short(d.recorder, 20)),
-    [barDS('จำนวนขาด', recI10.map(d => d.shortageTotal), 2),
-     barDS('จำนวนเกิน', recI10.map(d => d.overageTotal),  0)],
-    { scales: { x: { stacked: true, beginAtZero: true }, y: { stacked: true, beginAtZero: true } }, plugins: recTooltip(recI10) });
+    mkChart('cRECStacked', 'bar', recI10.map(d => short(d.recorder, 20)),
+      [barDS('จำนวนขาด', recI10.map(d => d.shortageTotal), 2),
+       barDS('จำนวนเกิน', recI10.map(d => d.overageTotal),  0)],
+      { scales: { x: { stacked: true, beginAtZero: true }, y: { stacked: true, beginAtZero: true } }, plugins: recTooltip(recI10) });
+  }
 }
