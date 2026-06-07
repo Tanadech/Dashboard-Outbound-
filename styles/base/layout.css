@@ -186,9 +186,9 @@
   margin-bottom: 0;
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
-#sec-warehouse.active .chart-grid { flex: 2; }
+#sec-warehouse.active .chart-grid { flex: 1; }
 #sec-warehouse.active .wh-bottom-row {
-  flex: 1;
+  flex: 2;
   min-height: 0;
   display: flex;
   flex-direction: row;
