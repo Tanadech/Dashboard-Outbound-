@@ -15,8 +15,7 @@ function handleFile(input) {
 
   const ext = file.name.split('.').pop().toLowerCase();
   const lbl = document.getElementById('fileStatusLabel');
-  lbl.textContent = '📄 ' + file.name + ' — ' + new Date().toLocaleTimeString('th-TH');
-  lbl.className = 'ok';
+  if (lbl) { lbl.textContent = '📄 ' + file.name + ' — ' + new Date().toLocaleTimeString('th-TH'); lbl.className = 'ok'; }
 
   if (ext === 'csv') {
     Papa.parse(file, {
@@ -69,8 +68,7 @@ async function autoLoadData() {
   }
   processData(json);
   const lbl = document.getElementById('fileStatusLabel');
-  lbl.textContent = '✅ โหลดข้อมูลอัตโนมัติ — ' + new Date().toLocaleTimeString('th-TH');
-  lbl.className = 'ok';
+  if (lbl) { lbl.textContent = '✅ โหลดข้อมูลอัตโนมัติ — ' + new Date().toLocaleTimeString('th-TH'); lbl.className = 'ok'; }
 }
 
 /* ─── Render only the active section's table ─── */
