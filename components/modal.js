@@ -249,7 +249,7 @@
         wh.map(function (d) { return d.r008DocCount; }));
       const whTime = aggWHTime(filtered);
       if (whTime.dates.length > 0) {
-        mkWHTimeline('mWHTimeline', whTime.dates, whTime.series, whTime.whList);
+        mkWHTimeline('mWHTimeline', whTime.dates, whTime.series);
       } else {
         const box = document.getElementById('mWHTimelineBox');
         if (box) box.innerHTML =

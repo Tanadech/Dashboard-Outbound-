@@ -158,25 +158,13 @@ function mkRadarMulti(id, labels, seriesArr) {
   charts[id].render();
 }
 
-/* ─── Mixed bar+line chart: normal vs issue deliveries over time ─── */
-function mkWHTimeline(id, dates, series, whList) {
+/* ─── Mixed bar+line: total / shortage / overage docs per day ─── */
+function mkWHTimeline(id, dates, series) {
   const el = document.getElementById(id);
   if (!el) return;
   if (charts[id] && charts[id].destroy) { charts[id].destroy(); }
   delete charts[id];
   if (!dates.length) return;
-
-  const barColors  = COLORS.slice(0, whList.length).map(c => c + '99');
-  const lineColors = COLORS.slice(0, whList.length);
-  const allColors  = [...barColors, ...lineColors];
-
-  const strokes = [
-    ...whList.map(() => 0),
-    ...whList.map(() => 2.5),
-  ];
-  const markers = {
-    size: [...whList.map(() => 0), ...whList.map(() => 3)],
-  };
 
   charts[id] = new ApexCharts(el, {
     series,
@@ -188,11 +176,11 @@ function mkWHTimeline(id, dates, series, whList) {
       animations: { enabled: false },
       stacked: false,
     },
-    plotOptions: { bar: { columnWidth: '70%', borderRadius: 2 } },
+    plotOptions: { bar: { columnWidth: '55%', borderRadius: 2 } },
     dataLabels: { enabled: false },
-    stroke: { width: strokes, curve: 'smooth' },
-    markers,
-    colors: allColors,
+    stroke: { width: [0, 2.5, 2.5], curve: 'smooth' },
+    markers: { size: [0, 3, 3] },
+    colors: ['#74c0fc', '#e8590c', '#2f9e44'],
     xaxis: {
       categories: dates,
       labels: {
@@ -208,11 +196,7 @@ function mkWHTimeline(id, dates, series, whList) {
     yaxis: {
       title: { text: 'จำนวนเอกสาร (ใบ)', style: { fontFamily: 'Sarabun, sans-serif', fontSize: '11px' } },
     },
-    legend: {
-      position: 'top',
-      fontFamily: 'Sarabun, sans-serif',
-      fontSize: '11px',
-    },
+    legend: { position: 'top', fontFamily: 'Sarabun, sans-serif', fontSize: '11px' },
     grid: { borderColor: '#f1f1f1', strokeDashArray: 3 },
     tooltip: {
       shared: true,
@@ -507,8 +491,8 @@ function renderCharts() {
     const th = document.querySelector('#sec-warehouse .wh-timeline-card h3');
     const whTime = aggWHTime(filtered);
     if (whTime.dates.length > 0) {
-      if (th) th.textContent = '📅 จำนวนเอกสารจ่ายปกติ vs เสียหาย แยกตามคลัง (รายวัน)';
-      mkWHTimeline('cWHTimeline', whTime.dates, whTime.series, whTime.whList);
+      if (th) th.textContent = '📅 เอกสารทั้งหมด / ขาด / เกิน รายวัน';
+      mkWHTimeline('cWHTimeline', whTime.dates, whTime.series);
     } else {
       if (th) th.textContent = '📊 เอกสารปกติ vs ขาดเกินสาขา แยกตามคลัง';
       mkBarH('cWHTimeline', wh.map(d => d.warehouse), [
