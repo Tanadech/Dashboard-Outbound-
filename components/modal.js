@@ -144,8 +144,8 @@
         '</tr>';
     }).join('');
     return '<div class="dm-tbl-card"><h3>📋 สรุปจำนวนขาด/เกิน แยกตามคลังสินค้า <span class="dm-tbl-hint">คลิกแถวเพื่อดูเอกสาร</span></h3>' +
-      '<table><thead><tr><th>คลัง</th><th class="num">เอกสารทั้งหมด</th><th class="num">ขาดเกิน (ใบ)</th>' +
-      '<th class="num">จำนวนขาด</th><th class="num">จำนวนเกิน</th><th class="num">%</th><th>ความเสี่ยง</th>' +
+      '<table><thead><tr><th>คลัง</th><th class="num">เอกสารทั้งหมด (เอกสาร)</th><th class="num">ขาดเกิน (เอกสาร)</th>' +
+      '<th class="num">จำนวนขาด (ชิ้น)</th><th class="num">จำนวนเกิน (ชิ้น)</th><th class="num">%</th><th>ความเสี่ยง</th>' +
       '</tr></thead><tbody>' + rows + '</tbody></table></div>';
   }
 
@@ -183,8 +183,8 @@
         '</tr>';
     }).join('');
     return '<div class="dm-tbl-card"><h3>📋 สรุปผู้บันทึก <span class="dm-tbl-hint">คลิกแถวเพื่อดูเอกสาร</span></h3>' +
-      '<table><thead><tr><th>#</th><th>ผู้บันทึก</th><th class="num">เอกสารทั้งหมด</th><th class="num">ขาดเกิน (ใบ)</th>' +
-      '<th class="num">จำนวนขาด</th><th class="num">จำนวนเกิน</th><th class="num">%</th>' +
+      '<table><thead><tr><th>#</th><th>ผู้บันทึก</th><th class="num">เอกสารทั้งหมด (เอกสาร)</th><th class="num">ขาดเกิน (เอกสาร)</th>' +
+      '<th class="num">จำนวนขาด (ชิ้น)</th><th class="num">จำนวนเกิน (ชิ้น)</th><th class="num">%</th>' +
       '</tr></thead><tbody>' + rows + '</tbody></table></div>';
   }
 
@@ -203,8 +203,8 @@
         '</tr>';
     }).join('');
     return '<div class="dm-tbl-card"><h3>📋 สรุปตามประเภทงาน <span class="dm-tbl-hint">คลิกแถวเพื่อดูเอกสาร</span></h3>' +
-      '<table><thead><tr><th>#</th><th>ประเภทงาน</th><th class="num">เอกสารทั้งหมด</th><th class="num">ขาดเกิน (ใบ)</th>' +
-      '<th class="num">จำนวนขาด</th><th class="num">จำนวนเกิน</th><th class="num">%</th><th>ความเสี่ยง</th>' +
+      '<table><thead><tr><th>#</th><th>ประเภทงาน</th><th class="num">เอกสารทั้งหมด (เอกสาร)</th><th class="num">ขาดเกิน (เอกสาร)</th>' +
+      '<th class="num">จำนวนขาด (ชิ้น)</th><th class="num">จำนวนเกิน (ชิ้น)</th><th class="num">%</th><th>ความเสี่ยง</th>' +
       '</tr></thead><tbody>' + rows + '</tbody></table></div>';
   }
 
@@ -222,8 +222,8 @@
         '</tr>';
     }).join('');
     return '<div class="dm-tbl-card"><h3>📋 สรุปตามสาเหตุขาดเกิน <span class="dm-tbl-hint">คลิกแถวเพื่อดูเอกสาร</span></h3>' +
-      '<table><thead><tr><th>#</th><th>สาเหตุ</th><th class="num">เอกสารทั้งหมด</th><th class="num">ขาดเกิน (ใบ)</th>' +
-      '<th class="num">จำนวนขาด</th><th class="num">จำนวนเกิน</th><th class="num">%</th>' +
+      '<table><thead><tr><th>#</th><th>สาเหตุ</th><th class="num">เอกสารทั้งหมด (เอกสาร)</th><th class="num">ขาดเกิน (เอกสาร)</th>' +
+      '<th class="num">จำนวนขาด (ชิ้น)</th><th class="num">จำนวนเกิน (ชิ้น)</th><th class="num">%</th>' +
       '</tr></thead><tbody>' + rows + '</tbody></table></div>';
   }
 
@@ -239,7 +239,7 @@
         wh.map(function (d) { return d.warehouse; }),
         [{ name: 'จำนวนขาด', data: wh.map(function (d) { return d.shortageTotal; }) },
          { name: 'จำนวนเกิน', data: wh.map(function (d) { return d.overageTotal;  }) }],
-        ['#e8590c', '#3b5bdb']);
+        ['#e8590c', '#3b5bdb'], 'ชิ้น');
       mkBarH('mWHRate',
         wh.map(function (d) { return d.warehouse; }),
         [{ name: '% เอกสารขาดเกิน', data: wh.map(function (d) { return parseFloat(d.percentage); }) }],
@@ -285,7 +285,7 @@
         recI10.map(function (d) { return short(d.recorder, 16); }),
         [{ name: 'จำนวนขาด', data: recI10.map(function (d) { return d.shortageTotal; }) },
          { name: 'จำนวนเกิน', data: recI10.map(function (d) { return d.overageTotal;  }) }],
-        ['#e8590c', '#3b5bdb']);
+        ['#e8590c', '#3b5bdb'], 'ชิ้น');
     }
 
     else if (sectionId === 'sec-jobtype') {
@@ -293,12 +293,12 @@
       mkBarH('mJTTop',
         jt.map(function (d) { return d.jobType; }),
         [{ name: 'ปัญหารวม', data: jt.map(function (d) { return d.issueTotal; }) }],
-        ['#2f9e44']);
+        ['#2f9e44'], 'ชิ้น');
       mkBarH('mJTBar',
         jt.map(function (d) { return d.jobType; }),
         [{ name: 'จำนวนขาด', data: jt.map(function (d) { return d.shortageTotal; }) },
          { name: 'จำนวนเกิน', data: jt.map(function (d) { return d.overageTotal;  }) }],
-        ['#e8590c', '#3b5bdb']);
+        ['#e8590c', '#3b5bdb'], 'ชิ้น');
     }
 
     else if (sectionId === 'sec-cause') {
@@ -307,12 +307,12 @@
       mkBarH('mCATop',
         caTop10.map(function (d) { return short(d.cause, 20); }),
         [{ name: 'ปัญหารวม (ชิ้น)', data: caTop10.map(function (d) { return d.issueTotal; }) }],
-        ['#f59f00']);
+        ['#f59f00'], 'ชิ้น');
       mkBarH('mCABar',
         caTop10.map(function (d) { return short(d.cause, 20); }),
         [{ name: 'จำนวนขาด', data: caTop10.map(function (d) { return d.shortageTotal; }) },
          { name: 'จำนวนเกิน', data: caTop10.map(function (d) { return d.overageTotal;  }) }],
-        ['#e8590c', '#3b5bdb']);
+        ['#e8590c', '#3b5bdb'], 'ชิ้น');
     }
   }
 })();
