@@ -1,11 +1,11 @@
 #topHeader {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   padding: 6px 16px;
   gap: 10px;
   border-bottom: 1px solid var(--border);
   background: #fff;
-  min-height: 44px;
+  min-height: 52px;
 }
 
 .th-brand {
@@ -22,12 +22,30 @@
 
 .th-filters {
   display: flex;
-  align-items: center;
-  gap: 5px;
+  align-items: flex-end;
+  gap: 6px;
   flex: 1;
   min-width: 0;
   flex-wrap: nowrap;
 }
+
+/* Label + control group */
+.th-fg {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex-shrink: 0;
+}
+.th-fg > label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-3);
+  white-space: nowrap;
+  line-height: 1;
+  user-select: none;
+}
+.th-fg-wide { flex-shrink: 1; min-width: 0; }
+
 .th-filters select,
 .th-filters input[type="text"],
 .th-filters input[type="date"] {
@@ -42,14 +60,24 @@
   outline: none;
   transition: border 0.15s;
 }
-.th-filters select          { min-width: 85px; }
-.th-filters input[type="text"] { width: 160px; }
+.th-filters select             { min-width: 90px; }
+.th-filters input[type="text"] { width: 155px; }
 .th-filters input[type="date"] { width: 128px; }
 .th-filters select:focus,
-.th-filters input:focus     { border-color: var(--blue); }
+.th-filters input:focus        { border-color: var(--blue); }
 
+.th-date-row {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.th-qf-row {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
 .th-filters .btn-qf {
-  height: 28px;
+  height: 30px;
   padding: 0 8px;
   font-size: 11px;
   flex-shrink: 0;

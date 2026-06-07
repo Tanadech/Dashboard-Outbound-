@@ -22,7 +22,7 @@
   <link rel="stylesheet" href="styles/base/layout.css?v=31">
 
   <!-- Component styles -->
-  <link rel="stylesheet" href="styles/components/header.css?v=3">
+  <link rel="stylesheet" href="styles/components/header.css?v=4">
   <link rel="stylesheet" href="styles/components/nav-bar.css?v=2">
   <link rel="stylesheet" href="styles/components/filter-bar.css?v=2">
   <link rel="stylesheet" href="styles/components/button.css?v=2">
@@ -244,19 +244,43 @@
         <strong>Dashboard Outbound</strong>
       </div>
       <div class="th-filters">
-        <select id="fWH" onchange="applyFilters()"><option value="">คลังทั้งหมด</option></select>
-        <select id="fBR" onchange="applyFilters()"><option value="">สาขาทั้งหมด</option></select>
-        <select id="fJT" onchange="applyFilters()"><option value="">ประเภทงานทั้งหมด</option></select>
-        <select id="fCA" onchange="applyFilters()"><option value="">สาเหตุทั้งหมด</option></select>
-        <input type="text" id="fSearch" placeholder="ค้นหาเลขที่ / สาขา / คลัง" oninput="applyFilters()">
-        <input type="date" id="fDateFrom" onchange="applyFilters()" title="วันที่เริ่มต้น">
-        <span class="date-sep">—</span>
-        <input type="date" id="fDateTo" onchange="applyFilters()" title="วันที่สิ้นสุด">
-        <span class="qf-sep">|</span>
-        <button class="btn btn-qf" onclick="setQuickDate('today',this)">วันนี้</button>
-        <button class="btn btn-qf" onclick="setQuickDate('7d',this)">7 วัน</button>
-        <button class="btn btn-qf" onclick="setQuickDate('month',this)">เดือนนี้</button>
-        <button class="btn btn-qf" onclick="setQuickDate('year',this)">ปีนี้</button>
+        <div class="th-fg">
+          <label>🏭 คลัง</label>
+          <select id="fWH" onchange="applyFilters()"><option value="">ทั้งหมด</option></select>
+        </div>
+        <div class="th-fg">
+          <label>🏪 สาขา</label>
+          <select id="fBR" onchange="applyFilters()"><option value="">ทั้งหมด</option></select>
+        </div>
+        <div class="th-fg">
+          <label>🧾 ประเภทงาน</label>
+          <select id="fJT" onchange="applyFilters()"><option value="">ทั้งหมด</option></select>
+        </div>
+        <div class="th-fg">
+          <label>⚠️ สาเหตุ</label>
+          <select id="fCA" onchange="applyFilters()"><option value="">ทั้งหมด</option></select>
+        </div>
+        <div class="th-fg th-fg-wide">
+          <label>🔍 ค้นหาเลขที่ / สาขา / คลัง</label>
+          <input type="text" id="fSearch" placeholder="พิมพ์เพื่อค้นหา..." oninput="applyFilters()">
+        </div>
+        <div class="th-fg">
+          <label>📅 วันที่คิวงาน</label>
+          <div class="th-date-row">
+            <input type="date" id="fDateFrom" onchange="applyFilters()">
+            <span class="date-sep">—</span>
+            <input type="date" id="fDateTo" onchange="applyFilters()">
+          </div>
+        </div>
+        <div class="th-fg">
+          <label>⚡ ช่วงเวลาด่วน</label>
+          <div class="th-qf-row">
+            <button class="btn btn-qf" onclick="setQuickDate('today',this)">วันนี้</button>
+            <button class="btn btn-qf" onclick="setQuickDate('7d',this)">7 วัน</button>
+            <button class="btn btn-qf" onclick="setQuickDate('month',this)">เดือนนี้</button>
+            <button class="btn btn-qf" onclick="setQuickDate('year',this)">ปีนี้</button>
+          </div>
+        </div>
       </div>
       <div class="th-actions">
         <span id="fileStatusLabel"></span>
