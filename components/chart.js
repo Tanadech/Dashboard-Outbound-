@@ -557,9 +557,6 @@ function renderCharts() {
       { indexAxis: 'y', scales: { x: { beginAtZero: true } } });
 
     mkDonut('cCADonut', caTop10.map(d => short(d.cause, 20)), caTop10.map(d => d.issueTotal));
-
-    mkChart('cCAStacked', 'bar', caTop10.map(d => short(d.cause, 14)),
-      whDS(caTop10, 'tot'), stackV);
   }
 
   else if (activeId === 'sec-recorder') {
