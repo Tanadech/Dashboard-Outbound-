@@ -422,26 +422,31 @@ function renderCharts() {
       borderWidth: 1.5
     }));
 
-    /* Shared stacked-horizontal config with combined tooltip */
-    const stackH = {
-      indexAxis: 'y',
-      scales: { x: { stacked: true, beginAtZero: true }, y: { stacked: true } },
+    /* Shared stacked-vertical config with combined tooltip */
+    const stackV = {
+      scales: {
+        x: {
+          stacked: true, beginAtZero: true,
+          ticks: { maxRotation: 45, font: { family: 'Sarabun', size: 11 } }
+        },
+        y: { stacked: true, beginAtZero: true }
+      },
       plugins: {
         tooltip: {
           mode: 'index',
           intersect: false,
-          filter: item => (item.parsed.x || 0) > 0,
+          filter: item => (item.parsed.y || 0) > 0,
           callbacks: {
             footer: items =>
-              `รวม: ${items.reduce((s, i) => s + (i.parsed.x || 0), 0).toLocaleString()} ชิ้น`
+              `รวม: ${items.reduce((s, i) => s + (i.parsed.y || 0), 0).toLocaleString()} ชิ้น`
           }
         }
       }
     };
 
-    mkChart('cBrTop',   'bar', brTop10.map(d => short(d.branch)),   whDS(brTop10,   'tot'), stackH);
-    mkChart('cBrShort', 'bar', brShort10.map(d => short(d.branch)), whDS(brShort10, 'sh'),  stackH);
-    mkChart('cBrOver',  'bar', brOver10.map(d => short(d.branch)),  whDS(brOver10,  'ov'),  stackH);
+    mkChart('cBrTop',   'bar', brTop10.map(d => short(d.branch, 14)),   whDS(brTop10,   'tot'), stackV);
+    mkChart('cBrShort', 'bar', brShort10.map(d => short(d.branch, 14)), whDS(brShort10, 'sh'),  stackV);
+    mkChart('cBrOver',  'bar', brOver10.map(d => short(d.branch, 14)),  whDS(brOver10,  'ov'),  stackV);
 
     /* Bottom stacked: shortage vs overage with combined tooltip */
     mkChart('cBrStacked', 'bar', brTop10.map(d => short(d.branch, 16)),
