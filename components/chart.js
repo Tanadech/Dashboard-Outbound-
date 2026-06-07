@@ -596,9 +596,5 @@ function renderCharts() {
 
     mkRadial('cRECDonut', recT10.map(d => short(d.recorder, 18)), recT10.map(d => d.r008DocCount));
 
-    mkChart('cRECStacked', 'bar', recI10.map(d => short(d.recorder, 20)),
-      [barDS('จำนวนขาด', recI10.map(d => d.shortageTotal), 2),
-       barDS('จำนวนเกิน', recI10.map(d => d.overageTotal),  0)],
-      { scales: { x: { stacked: true, beginAtZero: true }, y: { stacked: true, beginAtZero: true } }, plugins: recTooltip(recI10) });
   }
 }

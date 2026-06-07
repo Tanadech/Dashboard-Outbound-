@@ -95,14 +95,10 @@ function renderKPI() {
   const tRECS  = [...rec].sort((a, b) => b.shortageTotal - a.shortageTotal)[0] || { recorder: '-', shortageTotal: 0 };
   const tRECO  = [...rec].sort((a, b) => b.overageTotal  - a.overageTotal)[0]  || { recorder: '-', overageTotal:  0 };
   const tRECT  = [...rec].sort((a, b) => b.issueTotal    - a.issueTotal)[0]    || { recorder: '-', issueTotal:    0 };
-  const avgR008 = rec.length > 0
-    ? (rec.reduce((s, r) => s + r.r008DocCount, 0) / rec.length).toFixed(1) : '0';
-
   document.getElementById('kpiREC').innerHTML = [
-    { c: 'c-red',    ico: '🏆', label: 'ผู้บันทึกที่มีเอกสารขาดเกินสาขา สูงสุด',  val: short(tREC.recorder,  20), sub: `เอกสารขาดเกินสาขา ${tREC.r008DocCount.toLocaleString()} ใบ` },
-    { c: 'c-orange', ico: '📉', label: 'ผู้บันทึกที่มีจำนวนขาดสูงสุด',       val: short(tRECS.recorder, 20), sub: `ขาด ${(tRECS.shortageTotal || 0).toLocaleString()} ชิ้น` },
-    { c: 'c-teal',   ico: '📈', label: 'ผู้บันทึกที่มีจำนวนเกินสูงสุด',       val: short(tRECO.recorder, 20), sub: `เกิน ${(tRECO.overageTotal || 0).toLocaleString()} ชิ้น` },
-    { c: 'c-purple', ico: '⚠️', label: 'ผู้บันทึกที่มีปัญหารวมสูงสุด',        val: short(tRECT.recorder, 20), sub: `ปัญหา ${(tRECT.issueTotal || 0).toLocaleString()} ชิ้น` },
-    { c: 'c-blue',   ico: '📊', label: 'ค่าเฉลี่ยขาดเกินสาขา ต่อผู้บันทึก',         val: avgR008,                   sub: 'เอกสาร/คน' }
+    { c: 'c-red',    ico: '🏆', label: 'เอกสารขาดเกินสาขา สูงสุด', val: short(tREC.recorder,  20), sub: `${tREC.r008DocCount.toLocaleString()} ใบ` },
+    { c: 'c-orange', ico: '📉', label: 'ขาดสูงสุด',                 val: short(tRECS.recorder, 20), sub: `${(tRECS.shortageTotal || 0).toLocaleString()} ชิ้น` },
+    { c: 'c-teal',   ico: '📈', label: 'เกินสูงสุด',                 val: short(tRECO.recorder, 20), sub: `${(tRECO.overageTotal  || 0).toLocaleString()} ชิ้น` },
+    { c: 'c-purple', ico: '⚠️', label: 'ปัญหารวมสูงสุด',            val: short(tRECT.recorder, 20), sub: `${(tRECT.issueTotal    || 0).toLocaleString()} ชิ้น` }
   ].map(buildKpiCard).join('');
 }
