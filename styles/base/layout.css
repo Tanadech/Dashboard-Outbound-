@@ -198,7 +198,7 @@
   min-height: 0;
   height: 100% !important;
 }
-#sec-warehouse.active .tbl-card { flex: 0 0 195px; }
+#sec-warehouse.active .tbl-card { flex: 1; }
 #sec-warehouse.active .wh-tbl-hdr {
   display: flex;
   align-items: center;
