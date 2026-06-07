@@ -146,14 +146,9 @@ function mkWHTimeline(id, dates, series, height) {
     xaxis: {
       categories: dates,
       labels: {
-        rotate: -45,
-        style: { fontFamily: 'Sarabun, sans-serif', fontSize: '10px' },
-        formatter: v => {
-          const d = new Date(v);
-          return isNaN(d) ? v : `${d.getDate()}/${d.getMonth()+1}`;
-        },
+        rotate: -30,
+        style: { fontFamily: 'Sarabun, sans-serif', fontSize: '11px' },
       },
-      tickAmount: Math.min(dates.length, 20),
     },
     yaxis: {
       title: { text: 'จำนวนเอกสาร (ใบ)', style: { fontFamily: 'Sarabun, sans-serif', fontSize: '11px' } },

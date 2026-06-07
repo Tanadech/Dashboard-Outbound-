@@ -88,7 +88,7 @@
       ]) +
       chart2col([
         chartCard('mWHDonut', '🍩 สัดส่วนเอกสารขาดเกินตามคลัง'),
-        '<div class="dm-chart-card"><h3>📅 Timeline รายวัน (แสดงเมื่อมีข้อมูลวันที่)</h3>' +
+        '<div class="dm-chart-card"><h3>📅 เปรียบเทียบรายเดือน (เอกสารทั้งหมด / ขาด / เกิน)</h3>' +
           '<div class="dm-chart-box" id="mWHTimelineBox"><div id="mWHTimeline"></div></div></div>',
       ]) +
       tblWH();
@@ -247,14 +247,14 @@
       mkRadial('mWHDonut',
         wh.map(function (d) { return d.warehouse; }),
         wh.map(function (d) { return d.r008DocCount; }));
-      const whTime = aggWHTime(filtered);
-      if (whTime.dates.length > 0) {
-        mkWHTimeline('mWHTimeline', whTime.dates, whTime.series);
+      const monthly = aggMonthly(filtered);
+      if (monthly.dates.length > 0) {
+        mkWHTimeline('mWHTimeline', monthly.dates, monthly.series);
       } else {
         const box = document.getElementById('mWHTimelineBox');
         if (box) box.innerHTML =
           '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:#adb5bd;font-size:12px;gap:6px">' +
-          '<span style="font-size:28px">📅</span>ไม่มีข้อมูลวันที่คิวงาน</div>';
+          '<span style="font-size:28px">📅</span>ไม่มีข้อมูลวันที่</div>';
       }
     }
 
