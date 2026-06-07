@@ -230,9 +230,10 @@
 #sec-warehouse.active .wh-tbl-hdr .tbl-toolbar,
 #sec-jobtype.active   .wh-tbl-hdr .tbl-toolbar { flex: 1; min-width: 0; margin-bottom: 0; }
 
-/* ── Cause / JobType: chart row taller than table ── */
+/* ── Cause: chart row taller than table ── */
 #sec-cause.active     .chart-grid { flex: 2; }
-#sec-jobtype.active   .chart-grid { flex: 2; }
+/* ── JobType: equal split so table shows all rows without scroll ── */
+#sec-jobtype.active   .chart-grid { flex: 1; }
 
 /* ── Branch: top 3 charts compact, side-row (Stacked + table) taller ── */
 #sec-branch.active   .chart-grid { flex: 1; }
