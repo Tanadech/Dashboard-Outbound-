@@ -187,18 +187,29 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 #sec-warehouse.active .chart-grid { flex: 2; }
-#sec-warehouse.active .wh-timeline-card {
+#sec-warehouse.active .wh-bottom-row {
   flex: 1;
   min-height: 0;
   display: flex;
+  flex-direction: row;
+  gap: 12px;
+}
+#sec-warehouse.active .wh-bottom-row .wh-timeline-card {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  display: flex;
   flex-direction: column;
 }
-#sec-warehouse.active .wh-timeline-card .chart-box {
+#sec-warehouse.active .wh-bottom-row .wh-timeline-card .chart-box {
   flex: 1;
   min-height: 0;
   height: 100% !important;
 }
-#sec-warehouse.active .tbl-card { flex: 1; }
+#sec-warehouse.active .wh-bottom-row .tbl-card {
+  flex: 1;
+  min-width: 0;
+}
 #sec-warehouse.active .wh-tbl-hdr {
   display: flex;
   align-items: center;
