@@ -205,6 +205,11 @@
   flex: 1;
   min-height: 0;
   height: 100% !important;
+  position: relative;
+}
+#sec-warehouse.active .wh-bottom-row .wh-timeline-card .chart-box > div {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
 }
 #sec-warehouse.active .wh-bottom-row .tbl-card {
   flex: 1;
