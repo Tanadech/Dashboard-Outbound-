@@ -89,6 +89,18 @@ function renderKPI() {
     { c: 'c-teal',   ico: '📈', label: 'เกินสูงสุดตามสาเหตุ',            val: (tCAov.overageTotal  || 0).toLocaleString(),  sub: short(tCAov.cause, 18) }
   ].map(buildKpiCard).join('');
 
+  /* Branch KPIs */
+  const topR008BR = [...br].sort((a, b) => b.r008DocCount - a.r008DocCount)[0] || { branch: '-', r008DocCount: 0 };
+  const topShBR   = topN(br, 'shortageTotal', 1)[0] || { branch: '-', shortageTotal: 0 };
+  const topOvBR   = topN(br, 'overageTotal',  1)[0] || { branch: '-', overageTotal:  0 };
+  const topIssBR  = topN(br, 'issueTotal',    1)[0] || { branch: '-', issueTotal:    0 };
+  document.getElementById('kpiBR').innerHTML = [
+    { c: 'c-blue',   ico: '🏪', label: 'สาขาทั้งหมด',               val: br.length,                                           sub: `มีขาดเกิน ${br.filter(b => b.r008DocCount > 0).length} สาขา` },
+    { c: 'c-red',    ico: '🏆', label: 'เอกสารขาดเกินสาขา สูงสุด',  val: short(topR008BR.branch, 20),                         sub: `${topR008BR.r008DocCount.toLocaleString()} ใบ` },
+    { c: 'c-orange', ico: '📉', label: 'ขาดสูงสุด',                  val: (topShBR.shortageTotal || 0).toLocaleString(),       sub: short(topShBR.branch, 20) },
+    { c: 'c-teal',   ico: '📈', label: 'เกินสูงสุด',                  val: (topOvBR.overageTotal  || 0).toLocaleString(),       sub: short(topOvBR.branch, 20) }
+  ].map(buildKpiCard).join('');
+
   /* Recorder KPIs */
   const rec    = aggREC(filtered);
   const tREC   = rec[0] || { recorder: '-', r008DocCount: 0 };

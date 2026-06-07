@@ -202,7 +202,8 @@
   min-height: 0;
 }
 
-/* ── JobType + Cause + Recorder: header + KPI in same row ── */
+/* ── Branch + JobType + Cause + Recorder: header + KPI in same row ── */
+#sec-branch.active   .wh-hdr-row,
 #sec-jobtype.active  .wh-hdr-row,
 #sec-cause.active    .wh-hdr-row,
 #sec-recorder.active .wh-hdr-row {
@@ -213,6 +214,7 @@
   padding-bottom: 6px;
   border-bottom: 2px solid var(--green);
 }
+#sec-branch.active   .wh-hdr-row .sec-hdr,
 #sec-jobtype.active  .wh-hdr-row .sec-hdr,
 #sec-cause.active    .wh-hdr-row .sec-hdr,
 #sec-recorder.active .wh-hdr-row .sec-hdr {
@@ -222,6 +224,7 @@
   margin-bottom: 0;
   min-width: 190px;
 }
+#sec-branch.active   .wh-hdr-row .kpi-grid,
 #sec-jobtype.active  .wh-hdr-row .kpi-grid,
 #sec-cause.active    .wh-hdr-row .kpi-grid,
 #sec-recorder.active .wh-hdr-row .kpi-grid {

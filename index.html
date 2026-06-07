@@ -20,7 +20,7 @@
   <!-- Base styles -->
   <link rel="stylesheet" href="styles/base/reset.css?v=3">
   <link rel="stylesheet" href="styles/base/colors.css?v=5">
-  <link rel="stylesheet" href="styles/base/layout.css?v=33">
+  <link rel="stylesheet" href="styles/base/layout.css?v=34">
 
   <!-- Component styles -->
   <link rel="stylesheet" href="styles/components/header.css?v=5">
@@ -421,12 +421,15 @@
 
     <!-- C. BRANCH -->
     <section class="dash-section" id="sec-branch">
-      <div class="sec-hdr">
-        <span class="sec-icon">🏪</span>
-        <div class="sec-hdr-text">
-          <h2>วิเคราะห์สาขา</h2>
-          <p>สรุปจำนวนขาด/เกิน แยกตามสาขา</p>
+      <div class="wh-hdr-row">
+        <div class="sec-hdr">
+          <span class="sec-icon">🏪</span>
+          <div class="sec-hdr-text">
+            <h2>วิเคราะห์สาขา</h2>
+            <p>สรุปจำนวนขาด/เกิน แยกตามสาขา</p>
+          </div>
         </div>
+        <div class="kpi-grid" id="kpiBR"></div>
       </div>
 
       <div class="chart-grid g3">
@@ -724,7 +727,7 @@
 <script src="components/pagination.js?v=2"></script>
 <script src="components/nav.js?v=5"></script>
 <script src="components/chart.js?v=38"></script>
-<script src="components/kpi.js?v=6"></script>
+<script src="components/kpi.js?v=7"></script>
 <script src="components/table-warehouse.js?v=5"></script>
 <script src="components/table-branch.js?v=6"></script>
 <script src="components/table-jobtype.js?v=5"></script>
