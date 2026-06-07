@@ -209,7 +209,7 @@ function mkBarH(id, labels, seriesArr, colors = COLORS, unit = 'ใบ', height 
 }
 
 /* ─── Create or replace a simple ApexCharts donut chart ─── */
-function mkDonut(id, labels, values) {
+function mkDonut(id, labels, values, unit = 'ใบ') {
   const el = document.getElementById(id);
   if (!el) return;
   if (charts[id] && charts[id].destroy) { charts[id].destroy(); }
@@ -238,7 +238,7 @@ function mkDonut(id, labels, values) {
       dropShadow: { enabled: false },
       formatter: (val, opts) => {
         const v = opts.w.config.series[opts.seriesIndex];
-        return [`${v.toLocaleString()} ใบ`, `${val.toFixed(1)}%`];
+        return [`${v.toLocaleString()} ${unit}`, `${val.toFixed(1)}%`];
       },
     },
     plotOptions: {
@@ -255,7 +255,7 @@ function mkDonut(id, labels, values) {
               fontSize: '12px',
               color: '#495057',
               formatter: w =>
-                w.globals.seriesTotals.reduce((a, b) => a + b, 0).toLocaleString() + ' ใบ',
+                w.globals.seriesTotals.reduce((a, b) => a + b, 0).toLocaleString() + ' ' + unit,
             },
             value: {
               fontFamily: 'Sarabun, sans-serif',
@@ -269,7 +269,7 @@ function mkDonut(id, labels, values) {
       },
     },
     tooltip: {
-      y: { formatter: val => val.toLocaleString() + ' ใบ' },
+      y: { formatter: val => val.toLocaleString() + ' ' + unit },
     },
   });
   charts[id].render();
@@ -556,7 +556,7 @@ function renderCharts() {
       [barDS('จำนวนขาด', caShort10.map(d => d.shortageTotal), 2)],
       { indexAxis: 'y', scales: { x: { beginAtZero: true } } });
 
-    mkDonut('cCADonut', caTop10.map(d => short(d.cause, 20)), caTop10.map(d => d.issueTotal));
+    mkDonut('cCADonut', caTop10.map(d => short(d.cause, 20)), caTop10.map(d => d.issueTotal), 'ชิ้น');
   }
 
   else if (activeId === 'sec-recorder') {
