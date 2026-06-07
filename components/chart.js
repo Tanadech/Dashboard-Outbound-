@@ -529,7 +529,7 @@ function renderCharts() {
       { name: '% เอกสารขาดเกิน', data: jt.map(d => parseFloat(d.percentage)) },
     ], ['#c92a2a'], '%');
 
-    mkDonut('cJTDonut', jt.map(d => d.jobType), jt.map(d => d.r008DocCount));
+    mkDonut('cJTDonut', jt.map(d => d.jobType), jt.map(d => d.r008DocCount), 'เอกสาร');
   }
 
   else if (activeId === 'sec-cause') {
