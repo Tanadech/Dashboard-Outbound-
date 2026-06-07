@@ -11,7 +11,7 @@
   --red:    #FF5630;
   --teal:   #00B8D9;
   --amber:  #FFAB00;
-  --accent: #fda92d;
+  --accent: #f59e0b;
 
   /* Status semantic */
   --ok:     #22C55E;
@@ -41,7 +41,7 @@
   --sidebar-active-text:   #B66816;
 
   /* Header */
-  --hdr-gradient: linear-gradient(135deg, #1e3a5f 0%, #1e40af 55%, #1d4ed8 100%);
+  --hdr-gradient: linear-gradient(135deg, #052e16 0%, #14532d 55%, #166534 100%);
   --hdr-ctrl-bg:  rgba(255,255,255,.1);
   --hdr-ctrl-bd:  rgba(255,255,255,.18);
   --hdr-text:     #fff;
@@ -88,7 +88,7 @@ html.dark {
   --sidebar-active-text:   #B66816;
 
   /* Header */
-  --hdr-gradient: linear-gradient(135deg, #020811 0%, #081829 55%, #0c2240 100%);
+  --hdr-gradient: linear-gradient(135deg, #020c05 0%, #052e16 55%, #0a3d1a 100%);
   --hdr-ctrl-bg:  rgba(255,255,255,.08);
   --hdr-ctrl-bd:  rgba(255,255,255,.12);
   --hdr-text:     #f1f5f9;
