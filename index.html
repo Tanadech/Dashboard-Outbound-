@@ -285,11 +285,7 @@
       <div class="th-actions">
         <button class="btn btn-ghost btn-compact" onclick="resetFilters()">🔄 ล้างการกรอง</button>
         <button class="btn btn-green btn-compact" onclick="exportCSV()">⬇️ Export</button>
-        <button class="btn btn-ghost btn-compact" onclick="window.print()">🖨️</button>
-        <label class="btn btn-primary btn-compact btn-file">
-          📂 นำเข้า
-          <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" style="display:none" onchange="handleFile(this)">
-        </label>
+        <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" style="display:none" onchange="handleFile(this)">
       </div>
     </div>
 
