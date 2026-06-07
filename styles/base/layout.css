@@ -239,9 +239,9 @@
 #sec-branch.active    .wh-tbl-hdr .tbl-toolbar,
 #sec-cause.active     .wh-tbl-hdr .tbl-toolbar { flex: 1; min-width: 0; margin-bottom: 0; }
 
-/* ── Cause: chart-grid + table ── */
-#sec-cause.active .chart-grid { flex: 1.2; }
-#sec-cause.active .tbl-card   { flex: 1.3; min-height: 0; }
+/* ── Cause: chart-grid bigger + table fills rest ── */
+#sec-cause.active .chart-grid { flex: 2; min-height: 0; }
+#sec-cause.active .tbl-card   { flex: 1; flex-shrink: 1; min-height: 0; }
 /* ── JobType: chart-grid + stacked chart + table ── */
 #sec-jobtype.active .chart-grid      { flex: 1; }
 #sec-jobtype.active .jt-stacked-card { flex: 1; }
