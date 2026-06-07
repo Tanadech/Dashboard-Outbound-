@@ -530,9 +530,6 @@ function renderCharts() {
     ], ['#c92a2a'], '%');
 
     mkDonut('cJTDonut', jt.map(d => d.jobType), jt.map(d => d.r008DocCount));
-
-    mkChart('cJTStacked', 'bar', jt.map(d => short(d.jobType, 14)),
-      whDS(jt, 'tot'), stackV);
   }
 
   else if (activeId === 'sec-cause') {

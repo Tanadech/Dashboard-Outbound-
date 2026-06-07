@@ -242,9 +242,8 @@
 /* ── Cause: chart-grid fills space, table fits content ── */
 #sec-cause.active .chart-grid { flex: 1; min-height: 0; }
 #sec-cause.active .tbl-card   { flex: 0 0 auto; }
-/* ── JobType: chart-grid + stacked chart + table ── */
-#sec-jobtype.active .chart-grid      { flex: 1; }
-#sec-jobtype.active .jt-stacked-card { flex: 1; }
+/* ── JobType: chart-grid + table ── */
+#sec-jobtype.active .chart-grid { flex: 1; }
 
 /* ── Branch: top 3 + stacked chart + table stacked vertically ── */
 #sec-branch.active .chart-grid      { flex: 1; }
