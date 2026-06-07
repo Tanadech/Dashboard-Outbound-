@@ -19,8 +19,8 @@
 .btn-green         { background: var(--green); color: #fff; }
 .btn-green:hover   { background: #267a38; }
 
-.btn-ghost         { background: #fff; color: var(--text-2); border: 1px solid var(--border); }
-.btn-ghost:hover   { background: #f8f9fa; }
+.btn-ghost         { background: var(--card); color: var(--text-2); border: 1px solid var(--border); }
+.btn-ghost:hover   { background: var(--bg); }
 
 .btn-file { cursor: pointer; }
 

@@ -1,29 +1,96 @@
+/* ════ Light (default) — WMS Corporate ══════════════════════ */
 :root {
-  --sidebar-w:      240px;
-  --header-h:       60px;
-  --sidebar-bg:     #1a2744;
-  --sidebar-text:   rgba(255, 255, 255, 0.72);
-  --sidebar-active: #3b5bdb;
+  --sidebar-w: 240px;
+  --header-h:  52px;
 
-  /* Brand colors */
-  --blue:   #3b5bdb;
-  --green:  #2f9e44;
+  /* Brand */
+  --blue:   #1e40af;
+  --green:  #22C55E;
   --orange: #e8590c;
-  --purple: #7048e8;
-  --red:    #c92a2a;
-  --teal:   #0c8599;
-  --amber:  #f59f00;
+  --purple: #7c3aed;
+  --red:    #FF5630;
+  --teal:   #00B8D9;
+  --amber:  #FFAB00;
+  --accent: #fda92d;
+
+  /* Status semantic */
+  --ok:     #22C55E;
+  --warn:   #FFAB00;
+  --danger: #FF5630;
+  --info:   #00B8D9;
 
   /* Surface */
-  --bg:     #f0f2f8;
-  --card:   #ffffff;
-  --border: #dee2e6;
+  --bg:     #F4F6F8;
+  --card:   #FFFFFF;
+  --border: #DFE3E8;
 
   /* Text */
-  --text-1: #1a1a2e;
-  --text-2: #495057;
-  --text-3: #868e96;
+  --text-1: #1C252E;
+  --text-2: #637381;
+  --text-3: #919EAB;
 
   /* Effects */
-  --shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+  --shadow:      0 2px 8px rgba(145,158,171,.16);
+  --shadow-card: 0 0 2px rgba(145,158,171,.2), 0 12px 24px -4px rgba(145,158,171,.12);
+
+  /* Sidebar */
+  --sidebar-bg:            #FFFFFF;
+  --sidebar-text:          #637381;
+  --sidebar-active-bg:     #FEF4D4;
+  --sidebar-active-border: #FED680;
+  --sidebar-active-text:   #B66816;
+
+  /* Header */
+  --hdr-gradient: linear-gradient(135deg, #1e3a5f 0%, #1e40af 55%, #1d4ed8 100%);
+  --hdr-ctrl-bg:  rgba(255,255,255,.1);
+  --hdr-ctrl-bd:  rgba(255,255,255,.18);
+  --hdr-text:     #fff;
+  --hdr-label:    rgba(255,255,255,.6);
+}
+
+/* ════ Dark — Glass Morphism + Deep Space ════════════════════ */
+html.dark {
+  /* Brand (bright on dark) */
+  --blue:   #38bdf8;
+  --green:  #34d399;
+  --orange: #fbbf24;
+  --purple: #c4b5fd;
+  --red:    #f87171;
+  --teal:   #38bdf8;
+  --amber:  #fbbf24;
+  --accent: #38bdf8;
+
+  /* Status */
+  --ok:     #34d399;
+  --warn:   #fbbf24;
+  --danger: #f87171;
+  --info:   #7dd3fc;
+
+  /* Surface */
+  --bg:     #0d1a2e;
+  --card:   rgba(255,255,255,.04);
+  --border: rgba(56,189,248,.12);
+
+  /* Text */
+  --text-1: #f1f5f9;
+  --text-2: #9db5cc;
+  --text-3: #5d7a96;
+
+  /* Effects */
+  --shadow:      0 4px 20px rgba(0,0,0,.4);
+  --shadow-card: 0 4px 20px rgba(0,0,0,.4);
+
+  /* Sidebar stays white */
+  --sidebar-bg:            #FFFFFF;
+  --sidebar-text:          #637381;
+  --sidebar-active-bg:     #FEF4D4;
+  --sidebar-active-border: #FED680;
+  --sidebar-active-text:   #B66816;
+
+  /* Header */
+  --hdr-gradient: linear-gradient(135deg, #020811 0%, #081829 55%, #0c2240 100%);
+  --hdr-ctrl-bg:  rgba(255,255,255,.08);
+  --hdr-ctrl-bd:  rgba(255,255,255,.12);
+  --hdr-text:     #f1f5f9;
+  --hdr-label:    rgba(241,245,249,.5);
 }

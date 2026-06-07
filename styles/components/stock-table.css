@@ -2,9 +2,16 @@
   background: var(--card);
   border-radius: 12px;
   padding: 18px 18px 14px;
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-card);
+  border: 1px solid transparent;
   width: 100%;
   margin-bottom: 18px;
+  transition: background 0.25s;
+}
+html.dark .tbl-card {
+  border-color: var(--border);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 .tbl-card h3 {
   font-size: 16px;
@@ -32,18 +39,22 @@
   border-radius: 7px;
   font-size: 14px;
   font-family: inherit;
+  background: var(--card);
+  color: var(--text-1);
   outline: none;
   min-width: 200px;
   transition: border 0.18s;
 }
 .tbl-search:focus { border-color: var(--blue); }
+.tbl-search::placeholder { color: var(--text-3); }
 
 .row-info { font-size: 13px; color: var(--text-3); }
 
 .tbl-wrap { overflow-x: auto; width: 100%; }
 
 table { width: 100%; border-collapse: collapse; font-size: 14px; }
-thead tr { background: #f8f9fa; }
+thead tr { background: var(--bg); }
+html.dark thead tr { background: rgba(255,255,255,.05); }
 
 th {
   padding: 9px 11px;
@@ -68,9 +79,10 @@ th.sort-desc::after  { content: ' ↓'; color: var(--blue); }
 
 td {
   padding: 8px 11px;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--border);
   color: var(--text-1);
 }
-tr:hover td { background: #f5f8ff; }
+tr:hover td { background: rgba(30,64,175,.04); }
+html.dark tr:hover td { background: rgba(56,189,248,.06); }
 
 .num { text-align: right; }

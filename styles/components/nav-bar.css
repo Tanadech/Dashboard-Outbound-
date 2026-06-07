@@ -3,10 +3,12 @@
   overflow-x: auto;
   scrollbar-width: none;
   padding: 0 20px;
-  background: #fff;
+  background: var(--card);
   border-bottom: 2px solid var(--border);
+  transition: background 0.25s;
 }
 #navBar::-webkit-scrollbar { display: none; }
+html.dark #navBar { background: rgba(13,26,46,.95); }
 
 #navBar a {
   display: flex;

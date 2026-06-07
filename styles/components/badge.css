@@ -7,20 +7,33 @@
   white-space: nowrap;
 }
 
-/* Base badge colors */
-.bp-red    { background: #fff0f0; color: var(--red); }
-.bp-blue   { background: #e8f4fd; color: var(--blue); }
-.bp-purple { background: #f3f0ff; color: var(--purple); }
-.bp-green  { background: #ebfbee; color: var(--green); }
-.bp-orange { background: #fff4e6; color: var(--orange); }
-.bp-gray   { background: #f1f3f5; color: var(--text-2); }
+/* Base badge colors (RGBA = works in both light + dark) */
+.bp-red    { background: rgba(255,86,48,.1);   color: var(--red); }
+.bp-blue   { background: rgba(30,64,175,.1);   color: var(--blue); }
+.bp-purple { background: rgba(124,58,237,.1);  color: var(--purple); }
+.bp-green  { background: rgba(34,197,94,.1);   color: var(--green); }
+.bp-orange { background: rgba(232,89,12,.1);   color: var(--orange); }
+.bp-gray   { background: rgba(145,158,171,.1); color: var(--text-2); }
+
+/* WMS Status Pills: s0–s5 */
+.bp-s0 { background: rgba(255,86,48,.12);   color: var(--danger);  } /* รอจัดสินค้า */
+.bp-s1 { background: rgba(0,184,217,.12);   color: var(--info);    } /* จัดสินค้าเรียบร้อย */
+.bp-s2 { background: rgba(34,197,94,.12);   color: var(--ok);      } /* ประมวลผลผ่าน */
+.bp-s3 { background: rgba(255,171,0,.12);   color: var(--warn);    } /* รอประมวลผล */
+.bp-s4 { background: rgba(124,58,237,.12);  color: var(--purple);  } /* ประมวลผลผิดพลาด */
+.bp-s5 { background: rgba(145,158,171,.12); color: var(--text-2);  } /* อื่นๆ */
 
 /* Risk level badges */
-.bp-risk-vh { background: #ffe0e0; color: #7a0000; font-weight: 700; }
-.bp-risk-h  { background: #fff0f0; color: var(--red); }
-.bp-risk-m  { background: #fff4e6; color: var(--orange); }
-.bp-risk-w  { background: #fffde6; color: #c87800; }
-.bp-risk-l  { background: #ebfbee; color: var(--green); }
+.bp-risk-vh { background: rgba(255,86,48,.15);  color: var(--danger);  font-weight: 700; }
+.bp-risk-h  { background: rgba(255,86,48,.1);   color: var(--danger); }
+.bp-risk-m  { background: rgba(255,171,0,.1);   color: var(--warn); }
+.bp-risk-w  { background: rgba(255,171,0,.08);  color: var(--orange); }
+.bp-risk-l  { background: rgba(34,197,94,.1);   color: var(--ok); }
+
+/* Day severity badges */
+.bp-day-low  { background: rgba(34,197,94,.12);  color: var(--ok);     font-weight: 700; }
+.bp-day-med  { background: rgba(255,171,0,.12);  color: var(--warn);   font-weight: 700; }
+.bp-day-high { background: rgba(255,86,48,.15);  color: var(--danger); font-weight: 700; }
 
 /* Rank badges */
 .rank-badge {
@@ -33,7 +46,7 @@
   font-size: 10.5px;
   font-weight: 700;
 }
-.r1 { background: #ffd700; color: #7a5900; }
-.r2 { background: #c0c0c0; color: #444; }
-.r3 { background: #cd7f32; color: #fff; }
-.rn { background: #f1f3f5; color: var(--text-2); }
+.r1 { background: rgba(255,215,0,.25);  color: #b8860b; }
+.r2 { background: rgba(192,192,192,.2); color: #757575; }
+.r3 { background: rgba(205,127,50,.2);  color: #8b5e3c; }
+.rn { background: rgba(145,158,171,.1); color: var(--text-2); }

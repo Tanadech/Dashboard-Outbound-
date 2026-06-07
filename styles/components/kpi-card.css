@@ -10,15 +10,25 @@
   background: var(--card);
   border-radius: 12px;
   padding: 12px 14px;
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-card);
   border-left: 4px solid transparent;
   min-width: 0;
   display: flex;
   align-items: center;
   gap: 10px;
+  transition: background 0.25s, box-shadow 0.25s;
 }
 
-/* Color variants */
+/* Glass border on dark */
+html.dark .kpi-card {
+  border-top:    1px solid var(--border);
+  border-right:  1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Color accent */
 .kpi-card.c-blue   { border-left-color: var(--blue); }
 .kpi-card.c-red    { border-left-color: var(--red); }
 .kpi-card.c-orange { border-left-color: var(--orange); }
@@ -38,13 +48,13 @@
   flex-shrink: 0;
 }
 
-.kpi-card.c-blue   .kpi-ico { background: rgba(59,  91,  219, 0.12); }
-.kpi-card.c-red    .kpi-ico { background: rgba(201, 42,  42,  0.12); }
-.kpi-card.c-orange .kpi-ico { background: rgba(232, 89,  12,  0.12); }
-.kpi-card.c-purple .kpi-ico { background: rgba(112, 72,  232, 0.12); }
-.kpi-card.c-green  .kpi-ico { background: rgba(47,  158, 68,  0.12); }
-.kpi-card.c-teal   .kpi-ico { background: rgba(12,  133, 153, 0.12); }
-.kpi-card.c-amber  .kpi-ico { background: rgba(245, 159, 0,   0.12); }
+.kpi-card.c-blue   .kpi-ico { background: rgba(30,  64,  175, 0.1); }
+.kpi-card.c-red    .kpi-ico { background: rgba(255, 86,  48,  0.1); }
+.kpi-card.c-orange .kpi-ico { background: rgba(232, 89,  12,  0.1); }
+.kpi-card.c-purple .kpi-ico { background: rgba(124, 58,  237, 0.1); }
+.kpi-card.c-green  .kpi-ico { background: rgba(34,  197, 94,  0.1); }
+.kpi-card.c-teal   .kpi-ico { background: rgba(0,   184, 217, 0.1); }
+.kpi-card.c-amber  .kpi-ico { background: rgba(255, 171, 0,   0.1); }
 
 .kpi-body { flex: 1; min-width: 0; }
 .kpi-label {
@@ -70,7 +80,7 @@
   white-space: nowrap;
 }
 
-/* KPI value color per card variant */
+/* KPI value color */
 .kpi-card.c-blue   .kpi-value { color: var(--blue); }
 .kpi-card.c-red    .kpi-value { color: var(--red); }
 .kpi-card.c-orange .kpi-value { color: var(--orange); }
