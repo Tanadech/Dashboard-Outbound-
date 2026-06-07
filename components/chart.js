@@ -112,34 +112,32 @@ function mkRadial(id, labels, values) {
   charts[id].render();
 }
 
-/* ─── Stacked bar: shortage + overage per month ─── */
-function mkMonthlyBar(id, months, shortage, overage) {
+/* ─── Grouped bar: one series per year, X = months only ─── */
+function mkMonthlyBar(id, months, series) {
   const el = document.getElementById(id);
   if (!el) return;
   if (charts[id] && charts[id].destroy) charts[id].destroy();
   delete charts[id];
   if (!months.length) return;
+  const YR_COLORS = ['#3b5bdb','#e8590c','#2f9e44','#f59f00','#7048e8','#0c8599'];
   charts[id] = new ApexCharts(el, {
-    series: [
-      { name: 'จำนวนขาด (ชิ้น)',  data: shortage },
-      { name: 'จำนวนเกิน (ชิ้น)', data: overage  },
-    ],
+    series,
     chart: {
       type: 'bar', height: 300,
       fontFamily: 'Sarabun, sans-serif',
       toolbar: { show: false },
       animations: { enabled: false },
-      stacked: true,
+      stacked: false,
     },
-    colors: ['#e8590c', '#3b5bdb'],
-    plotOptions: { bar: { columnWidth: '55%', borderRadius: 2 } },
+    colors: series.map((_, i) => YR_COLORS[i % YR_COLORS.length]),
+    plotOptions: { bar: { columnWidth: series.length > 1 ? '70%' : '45%', borderRadius: 2 } },
     dataLabels: { enabled: false },
     xaxis: {
       categories: months,
-      labels: { style: { fontFamily: 'Sarabun, sans-serif', fontSize: '11px' } },
+      labels: { style: { fontFamily: 'Sarabun, sans-serif', fontSize: '12px' } },
     },
     yaxis: {
-      title: { text: 'จำนวน (ชิ้น)', style: { fontFamily: 'Sarabun, sans-serif', fontSize: '11px' } },
+      title: { text: 'ชิ้น', style: { fontFamily: 'Sarabun, sans-serif', fontSize: '11px' } },
       labels: { formatter: v => v.toLocaleString() },
     },
     tooltip: {
