@@ -564,16 +564,16 @@ function renderCharts() {
   else if (activeId === 'sec-jobtype') {
     const jt = aggJT(filtered);
 
-    mkRadial('cJTDonut', jt.map(d => d.jobType), jt.map(d => d.issueTotal));
+    mkBarH('cJTBar', jt.map(d => d.jobType), [
+      { name: 'จำนวนขาด', data: jt.map(d => d.shortageTotal) },
+      { name: 'จำนวนเกิน', data: jt.map(d => d.overageTotal)  },
+    ], ['#e8590c', '#3b5bdb']);
 
-    mkChart('cJTBar', 'bar', jt.map(d => d.jobType),
-      [barDS('จำนวนขาด', jt.map(d => d.shortageTotal), 2),
-       barDS('จำนวนเกิน', jt.map(d => d.overageTotal),  0)],
-      { scales: scBoth });
+    mkBarH('cJTTop', jt.map(d => d.jobType), [
+      { name: '% เอกสารขาดเกิน', data: jt.map(d => parseFloat(d.percentage)) },
+    ], ['#c92a2a'], '%');
 
-    mkChart('cJTTop', 'bar', jt.map(d => d.jobType),
-      [barDS('ปัญหารวม', jt.map(d => d.issueTotal), 1)],
-      { indexAxis: 'y', scales: { x: { beginAtZero: true } } });
+    mkDonut('cJTDonut', jt.map(d => d.jobType), jt.map(d => d.r008DocCount));
   }
 
   else if (activeId === 'sec-cause') {

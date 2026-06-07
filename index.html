@@ -19,7 +19,7 @@
   <!-- Base styles -->
   <link rel="stylesheet" href="styles/base/reset.css?v=2">
   <link rel="stylesheet" href="styles/base/colors.css?v=2">
-  <link rel="stylesheet" href="styles/base/layout.css?v=19">
+  <link rel="stylesheet" href="styles/base/layout.css?v=20">
 
   <!-- Component styles -->
   <link rel="stylesheet" href="styles/components/header.css?v=3">
@@ -443,28 +443,29 @@
 
     <!-- D. JOB TYPE -->
     <section class="dash-section" id="sec-jobtype">
-      <div class="sec-hdr">
-        <span class="sec-icon">🧾</span>
-        <div class="sec-hdr-text">
-          <h2>วิเคราะห์ประเภทงาน</h2>
-          <p>วิเคราะห์ประเภทงานที่มีจำนวนขาด/เกิน</p>
+      <div class="wh-hdr-row">
+        <div class="sec-hdr">
+          <span class="sec-icon">🧾</span>
+          <div class="sec-hdr-text">
+            <h2>วิเคราะห์ประเภทงาน</h2>
+            <p>วิเคราะห์ประเภทงานที่มีจำนวนขาด/เกิน</p>
+          </div>
         </div>
+        <div class="kpi-grid" id="kpiJT"></div>
       </div>
-
-      <div class="kpi-grid" id="kpiJT"></div>
 
       <div class="chart-grid g3">
         <div class="chart-card">
-          <h3>🍩 สัดส่วนปัญหาตามประเภทงาน</h3>
+          <h3>📊 ขาด / เกิน (ชิ้น) แยกตามประเภทงาน</h3>
+          <div class="chart-box h300"><div id="cJTBar"></div></div>
+        </div>
+        <div class="chart-card">
+          <h3>📈 % เอกสารขาดเกิน ต่อเอกสารทั้งหมด</h3>
+          <div class="chart-box h300"><div id="cJTTop"></div></div>
+        </div>
+        <div class="chart-card">
+          <h3>🍩 สัดส่วนเอกสารขาดเกินตามประเภทงาน</h3>
           <div class="chart-box h300"><div id="cJTDonut"></div></div>
-        </div>
-        <div class="chart-card">
-          <h3>📊 จำนวนขาด/เกิน แยกตามประเภทงาน</h3>
-          <div class="chart-box h300"><canvas id="cJTBar"></canvas></div>
-        </div>
-        <div class="chart-card">
-          <h3>📈 Top ประเภทงานที่มีปัญหาสูงสุด</h3>
-          <div class="chart-box h280"><canvas id="cJTTop"></canvas></div>
         </div>
       </div>
 
@@ -680,7 +681,7 @@
 <script src="components/loading.js?v=2"></script>
 <script src="components/pagination.js?v=2"></script>
 <script src="components/nav.js?v=4"></script>
-<script src="components/chart.js?v=26"></script>
+<script src="components/chart.js?v=27"></script>
 <script src="components/kpi.js?v=4"></script>
 <script src="components/table-warehouse.js?v=5"></script>
 <script src="components/table-branch.js?v=6"></script>
