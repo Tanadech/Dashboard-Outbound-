@@ -1,7 +1,7 @@
 (function () {
   /* ── Section metadata: title + chart IDs to destroy on close ── */
   const SECTIONS = {
-    'sec-warehouse': { title: '🏭 วิเคราะห์คลังสินค้า', ids: ['mWHBar','mWHRate','mWHTimeline'] },
+    'sec-warehouse': { title: '🏭 วิเคราะห์คลังสินค้า', ids: ['mWHBar','mWHRate','mWHDonut','mWHTimeline'] },
     'sec-branch':    { title: '🏪 วิเคราะห์สาขา',         ids: ['mBrTop','mBrStacked'] },
     'sec-recorder':  { title: '👤 วิเคราะห์ผู้บันทึก',    ids: ['mRECTop','mRECStacked'] },
     'sec-jobtype':   { title: '🧾 วิเคราะห์ประเภทงาน',     ids: ['mJTTop','mJTBar'] },
@@ -73,7 +73,10 @@
         '<div class="dm-chart-card"><h3>📊 ขาด / เกิน (ชิ้น) แยกตามคลัง</h3><div class="dm-chart-box"><div id="mWHBar"></div></div></div>' +
         '<div class="dm-chart-card"><h3>📈 % เอกสารขาดเกิน ต่อเอกสารทั้งหมด</h3><div class="dm-chart-box"><div id="mWHRate"></div></div></div>' +
       '</div>' +
-      '<div class="dm-full-chart-card"><h3>📅 จำนวนเอกสารจ่ายปกติ vs เสียหาย แยกตามคลัง (รายวัน)</h3><div class="dm-full-chart-box"><div id="mWHTimeline"></div></div></div>' +
+      '<div class="dm-charts">' +
+        '<div class="dm-chart-card"><h3>🍩 สัดส่วนเอกสารขาดเกินตามคลัง</h3><div class="dm-chart-box"><div id="mWHDonut"></div></div></div>' +
+        '<div class="dm-chart-card"><h3>📅 Timeline (รายวัน — แสดงเมื่อมีข้อมูลวันที่)</h3><div class="dm-chart-box" id="mWHTimelineBox"><div id="mWHTimeline"></div></div></div>' +
+      '</div>' +
       tblWH()
     );
   }
@@ -234,8 +237,14 @@
       mkBarH('mWHRate', wh.map(function (d) { return d.warehouse; }), [
         { name: '% เอกสารขาดเกิน', data: wh.map(function (d) { return parseFloat(d.percentage); }) },
       ], ['#c92a2a'], '%');
+      mkRadial('mWHDonut', wh.map(function (d) { return d.warehouse; }), wh.map(function (d) { return d.r008DocCount; }));
       var whTime = aggWHTime(filtered);
-      mkWHTimeline('mWHTimeline', whTime.dates, whTime.series, whTime.whList);
+      if (whTime.dates.length > 0) {
+        mkWHTimeline('mWHTimeline', whTime.dates, whTime.series, whTime.whList);
+      } else {
+        var box = document.getElementById('mWHTimelineBox');
+        if (box) box.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:#adb5bd;font-size:12px;gap:6px"><span style="font-size:28px">📅</span>ไม่มีข้อมูลวันที่คิวงาน</div>';
+      }
     }
 
     else if (sectionId === 'sec-branch') {
