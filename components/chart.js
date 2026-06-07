@@ -208,6 +208,73 @@ function mkBarH(id, labels, seriesArr, colors = COLORS, unit = 'ใบ', height 
   charts[id].render();
 }
 
+/* ─── Create or replace a simple ApexCharts donut chart ─── */
+function mkDonut(id, labels, values) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (charts[id] && charts[id].destroy) { charts[id].destroy(); }
+  delete charts[id];
+  if (!values.length) return;
+
+  charts[id] = new ApexCharts(el, {
+    series: values,
+    labels: labels,
+    chart: {
+      type: 'donut',
+      height: '100%',
+      fontFamily: 'Sarabun, sans-serif',
+      toolbar: { show: false },
+      animations: { enabled: true, speed: 600 },
+    },
+    colors: COLORS.slice(0, labels.length),
+    legend: {
+      position: 'bottom',
+      fontFamily: 'Sarabun, sans-serif',
+      fontSize: '12px',
+    },
+    dataLabels: {
+      enabled: true,
+      style: { fontFamily: 'Sarabun, sans-serif', fontSize: '12px', fontWeight: '700' },
+      dropShadow: { enabled: false },
+      formatter: (val, opts) => {
+        const v = opts.w.config.series[opts.seriesIndex];
+        return [`${v.toLocaleString()} ใบ`, `${val.toFixed(1)}%`];
+      },
+    },
+    plotOptions: {
+      pie: {
+        donut: {
+          size: '62%',
+          labels: {
+            show: true,
+            total: {
+              show: true,
+              showAlways: true,
+              label: 'รวมทั้งหมด',
+              fontFamily: 'Sarabun, sans-serif',
+              fontSize: '12px',
+              color: '#495057',
+              formatter: w =>
+                w.globals.seriesTotals.reduce((a, b) => a + b, 0).toLocaleString() + ' ใบ',
+            },
+            value: {
+              fontFamily: 'Sarabun, sans-serif',
+              fontSize: '18px',
+              fontWeight: '700',
+              color: '#212529',
+              formatter: val => parseInt(val).toLocaleString(),
+            },
+          },
+        },
+      },
+    },
+    tooltip: {
+      y: { formatter: val => val.toLocaleString() + ' ใบ' },
+    },
+  });
+  charts[id].render();
+}
+
 /* ─── Create or replace an ApexCharts radar (polygon fill) on a div element ─── */
 function mkRadar(id, labels, values) {
   const el = document.getElementById(id);
@@ -393,7 +460,7 @@ function renderCharts() {
       { name: '% เอกสารขาดเกิน', data: wh.map(d => parseFloat(d.percentage)) },
     ], ['#c92a2a'], '%');
 
-    mkRadial('cWHDonut', wh.map(d => d.warehouse), wh.map(d => d.r008DocCount));
+    mkDonut('cWHDonut', wh.map(d => d.warehouse), wh.map(d => d.r008DocCount));
   }
 
   else if (activeId === 'sec-branch') {
