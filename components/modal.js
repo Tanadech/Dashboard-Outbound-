@@ -248,8 +248,8 @@
         wh.map(function (d) { return d.warehouse; }),
         wh.map(function (d) { return d.r008DocCount; }));
       const monthly = aggMonthly(filtered);
-      if (monthly.dates.length > 0) {
-        mkWHTimeline('mWHTimeline', monthly.dates, monthly.series);
+      if (monthly.months.length > 0) {
+        mkMonthlyBar('mWHTimeline', monthly.months, monthly.shortage, monthly.overage);
       } else {
         const box = document.getElementById('mWHTimelineBox');
         if (box) box.innerHTML =
