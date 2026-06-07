@@ -159,18 +159,26 @@ function mkRadarMulti(id, labels, seriesArr) {
 }
 
 /* ─── Mixed bar+line: total / shortage / overage docs per day ─── */
-function mkWHTimeline(id, dates, series) {
+function mkWHTimeline(id, dates, series, height) {
   const el = document.getElementById(id);
   if (!el) return;
   if (charts[id] && charts[id].destroy) { charts[id].destroy(); }
   delete charts[id];
   if (!dates.length) return;
 
+  /* Measure actual container height; fall back to 300 if layout hasn't resolved */
+  if (!height) {
+    const card = el.closest('.wh-timeline-card');
+    const h3h  = card && card.querySelector('h3') ? card.querySelector('h3').offsetHeight + 14 : 36;
+    const cardH = card ? card.offsetHeight : 0;
+    height = cardH > 80 ? cardH - h3h - 16 : 300;
+  }
+
   charts[id] = new ApexCharts(el, {
     series,
     chart: {
       type: 'bar',
-      height: '100%',
+      height: height,
       fontFamily: 'Sarabun, sans-serif',
       toolbar: { show: false },
       animations: { enabled: false },
@@ -207,7 +215,7 @@ function mkWHTimeline(id, dates, series) {
 }
 
 /* ─── ApexCharts clean horizontal bar chart ─── */
-function mkBarH(id, labels, seriesArr, colors = COLORS, unit = 'ใบ') {
+function mkBarH(id, labels, seriesArr, colors = COLORS, unit = 'ใบ', height = '100%') {
   const el = document.getElementById(id);
   if (!el) return;
   if (charts[id] && charts[id].destroy) { charts[id].destroy(); }
@@ -218,7 +226,7 @@ function mkBarH(id, labels, seriesArr, colors = COLORS, unit = 'ใบ') {
     series: seriesArr,
     chart: {
       type: 'bar',
-      height: '100%',
+      height: height,
       fontFamily: 'Sarabun, sans-serif',
       toolbar: { show: false },
       animations: { enabled: true, speed: 600 },
@@ -490,15 +498,22 @@ function renderCharts() {
 
     const th = document.querySelector('#sec-warehouse .wh-timeline-card h3');
     const whTime = aggWHTime(filtered);
+
+    /* Measure available height once for both branches */
+    const tlCard = document.querySelector('#sec-warehouse .wh-timeline-card');
+    const tlH3h  = tlCard && tlCard.querySelector('h3') ? tlCard.querySelector('h3').offsetHeight + 14 : 36;
+    const tlCardH = tlCard ? tlCard.offsetHeight : 0;
+    const tlHeight = tlCardH > 80 ? tlCardH - tlH3h - 16 : 300;
+
     if (whTime.dates.length > 0) {
       if (th) th.textContent = '📅 เอกสารทั้งหมด / ขาด / เกิน รายวัน';
-      mkWHTimeline('cWHTimeline', whTime.dates, whTime.series);
+      mkWHTimeline('cWHTimeline', whTime.dates, whTime.series, tlHeight);
     } else {
       if (th) th.textContent = '📊 เอกสารปกติ vs ขาดเกินสาขา แยกตามคลัง';
       mkBarH('cWHTimeline', wh.map(d => d.warehouse), [
         { name: 'ปกติ',         data: wh.map(d => d.totalDocCount - d.r008DocCount) },
         { name: 'ขาดเกินสาขา', data: wh.map(d => d.r008DocCount) },
-      ], ['#3b5bdb', '#e8590c']);
+      ], ['#3b5bdb', '#e8590c'], 'ใบ', tlHeight);
     }
   }
 
