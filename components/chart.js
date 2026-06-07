@@ -349,7 +349,7 @@ function mkRadar(id, labels, values) {
 }
 
 /* ─── ApexCharts vertical bar with gradient fill and rounded corners ─── */
-function mkBarGradient(id, labels, values, seriesName = 'เอกสารขาดเกินสาขา', color = COLORS[3]) {
+function mkBarGradient(id, labels, values, seriesName = 'เอกสารขาดเกินสาขา', color = COLORS[3], unit = 'เอกสาร') {
   const el = document.getElementById(id);
   if (!el) return;
   if (charts[id] && charts[id].destroy) { charts[id].destroy(); }
@@ -368,7 +368,7 @@ function mkBarGradient(id, labels, values, seriesName = 'เอกสารข�
           borderColor: color,
           offsetY: 0,
           style: { color: '#fff', background: color, fontFamily: 'Sarabun, sans-serif', fontSize: '11px' },
-          text: `สูงสุด: ${values[maxIdx].toLocaleString()} ใบ`,
+          text: `สูงสุด: ${values[maxIdx].toLocaleString()} ${unit}`,
         },
       }],
     },
@@ -394,7 +394,7 @@ function mkBarGradient(id, labels, values, seriesName = 'เอกสารข�
       labels: { rotate: -45, style: { fontFamily: 'Sarabun, sans-serif', fontSize: '11px' } },
     },
     yaxis: {
-      title: { text: 'เอกสารขาดเกิน (ใบ)', style: { fontFamily: 'Sarabun, sans-serif', fontSize: '11px' } },
+      title: { text: `เอกสารขาดเกิน (${unit})`, style: { fontFamily: 'Sarabun, sans-serif', fontSize: '11px' } },
     },
     fill: {
       type: 'gradient',
@@ -404,7 +404,7 @@ function mkBarGradient(id, labels, values, seriesName = 'เอกสารข�
       },
     },
     colors: [color],
-    tooltip: { y: { formatter: val => val.toLocaleString() + ' ใบ' } },
+    tooltip: { y: { formatter: val => val.toLocaleString() + ' ' + unit } },
   });
   charts[id].render();
 }

@@ -96,7 +96,7 @@
 
   function bodyBR() {
     return chart2col([
-        chartCard('mBrTop', '🏪 Top 10 สาขาที่มีปัญหาสูงสุด (ใบ)'),
+        chartCard('mBrTop', '🏪 Top 10 สาขาที่มีปัญหาสูงสุด (เอกสาร)'),
         chartCard('mBrBar', '📊 ขาด / เกิน (ชิ้น) Top 10 สาขา'),
       ]) +
       tblBR();
@@ -164,8 +164,8 @@
         '</tr>';
     }).join('');
     return '<div class="dm-tbl-card"><h3>📋 สรุปจำนวนขาด/เกิน แยกตามสาขา <span class="dm-tbl-hint">คลิกแถวเพื่อดูเอกสาร</span></h3>' +
-      '<table><thead><tr><th>#</th><th>สาขา</th><th class="num">เอกสารทั้งหมด</th><th class="num">ขาดเกิน (ใบ)</th>' +
-      '<th class="num">จำนวนขาด</th><th class="num">จำนวนเกิน</th><th class="num">%</th><th>ความเสี่ยง</th>' +
+      '<table><thead><tr><th>#</th><th>สาขา</th><th class="num">เอกสารทั้งหมด (เอกสาร)</th><th class="num">ขาดเกิน (เอกสาร)</th>' +
+      '<th class="num">จำนวนขาด (เอกสาร)</th><th class="num">จำนวนเกิน (ชิ้น)</th><th class="num">%</th><th>ความเสี่ยง</th>' +
       '</tr></thead><tbody>' + rows + '</tbody></table></div>';
   }
 
@@ -265,12 +265,12 @@
       mkBarGradient('mBrTop',
         brR10.map(function (d) { return short(d.branch, 16); }),
         brR10.map(function (d) { return d.r008DocCount; }),
-        'เอกสารขาดเกิน (ใบ)', '#0c8599');
+        'เอกสารขาดเกิน (เอกสาร)', '#0c8599');
       mkBarH('mBrBar',
         brTop10.map(function (d) { return short(d.branch, 16); }),
         [{ name: 'จำนวนขาด', data: brTop10.map(function (d) { return d.shortageTotal; }) },
          { name: 'จำนวนเกิน', data: brTop10.map(function (d) { return d.overageTotal;  }) }],
-        ['#e8590c', '#3b5bdb']);
+        ['#e8590c', '#3b5bdb'], 'ชิ้น');
     }
 
     else if (sectionId === 'sec-recorder') {
@@ -280,7 +280,7 @@
       mkBarGradient('mRECTop',
         recT10.map(function (d) { return short(d.recorder, 16); }),
         recT10.map(function (d) { return d.r008DocCount; }),
-        'เอกสารขาดเกิน (ใบ)', '#7048e8');
+        'เอกสารขาดเกิน (เอกสาร)', '#7048e8');
       mkBarH('mRECBar',
         recI10.map(function (d) { return short(d.recorder, 16); }),
         [{ name: 'จำนวนขาด', data: recI10.map(function (d) { return d.shortageTotal; }) },
