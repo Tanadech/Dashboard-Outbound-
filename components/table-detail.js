@@ -18,8 +18,8 @@ function renderDT() {
     const va = a[col], vb = b[col];
     if (typeof va === 'number') return dir === 'asc' ? va - vb : vb - va;
     return dir === 'asc'
-      ? String(va).localeCompare(String(vb), 'th')
-      : String(vb).localeCompare(String(va), 'th');
+      ? String(va).localeCompare(String(vb))
+      : String(vb).localeCompare(String(va));
   });
 
   /* Update sort indicators on column headers */

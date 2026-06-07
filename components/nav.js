@@ -13,6 +13,7 @@
       a.classList.toggle('active', a.getAttribute('href') === hash);
     });
 
+    if (typeof renderActiveTable === 'function') renderActiveTable(hash);
     if (typeof renderCharts === 'function') renderCharts();
   }
 

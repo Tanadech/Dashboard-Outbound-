@@ -73,15 +73,21 @@ async function autoLoadData() {
   lbl.className = 'ok';
 }
 
-/* ─── Re-render every dashboard section after data/filter change ─── */
+/* ─── Render only the active section's table ─── */
+function renderActiveTable(hash) {
+  const h = hash || location.hash || '#sec-overview';
+  if      (h === '#sec-warehouse') renderWH();
+  else if (h === '#sec-branch')    renderBR();
+  else if (h === '#sec-jobtype')   renderJT();
+  else if (h === '#sec-cause')     renderCA();
+  else if (h === '#sec-recorder')  renderREC();
+  else if (h === '#sec-detail')    renderDT();
+}
+
+/* ─── Re-render KPI + active section only; other sections render on demand via showPage ─── */
 function renderAll() {
   renderKPI();
-  renderWH();
-  renderBR();
-  renderJT();
-  renderCA();
-  renderREC();
-  renderDT();
+  renderActiveTable();
   if (typeof showPage === 'function') showPage(location.hash || '#sec-overview');
 }
 

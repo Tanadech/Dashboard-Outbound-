@@ -205,8 +205,9 @@
 #sec-cause.active     .chart-grid { flex: 2; }
 #sec-jobtype.active   .chart-grid { flex: 2; }
 
-/* ── Branch: top 3 charts taller than bottom side-row ── */
-#sec-branch.active   .chart-grid { flex: 2; }
+/* ── Branch: top 3 charts compact, side-row (Stacked + table) taller ── */
+#sec-branch.active   .chart-grid { flex: 1; }
+#sec-branch.active   .side-row   { flex: 2; }
 
 /* ── Recorder: top 4 charts taller than bottom side-row ── */
 #sec-recorder.active .chart-grid { flex: 2; }
