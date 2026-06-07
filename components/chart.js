@@ -515,50 +515,8 @@ function renderCharts() {
     mkChart('cBrShort', 'bar', brShort10.map(d => short(d.branch, 14)), whDS(brShort10, 'sh'),  stackV);
     mkChart('cBrOver',  'bar', brOver10.map(d => short(d.branch, 14)),  whDS(brOver10,  'ov'),  stackV);
 
-    /* Bottom stacked: shortage vs overage with combined tooltip */
-    mkChart('cBrStacked', 'bar', brTop10.map(d => short(d.branch, 16)),
-      [barDS('จำนวนขาด', brTop10.map(d => d.shortageTotal), 2),
-       barDS('จำนวนเกิน', brTop10.map(d => d.overageTotal),  0)],
-      {
-        scales: {
-          x: {
-            stacked: true, beginAtZero: true,
-            ticks: {
-              font: { family: 'Sarabun', size: 13 },
-              callback: (value, index) => {
-                const b = brTop10[index];
-                if (!b) return value;
-                return [short(b.branch, 14), `(${short(b.topJobType || '', 12)})`];
-              }
-            }
-          },
-          y: { stacked: true, beginAtZero: true }
-        },
-        plugins: {
-          tooltip: {
-            mode: 'index',
-            intersect: false,
-            callbacks: {
-              title: items => {
-                const b = brTop10[items[0].dataIndex];
-                return b ? b.branch : items[0].label;
-              },
-              afterBody: items => {
-                const b = brTop10[items[0].dataIndex];
-                if (!b) return [];
-                return [
-                  '',
-                  `เอกสารขาดเกินสาขา: ${b.r008DocCount.toLocaleString()} ใบ`,
-                  `สัดส่วน: ${b.percentage}%`,
-                  '',
-                  'Top ประเภทงาน:',
-                  ...(b.topJobTypes || []).map((jt, i) => `  ${i + 1}. ${jt[0]} (${jt[1].toLocaleString()})`)
-                ];
-              }
-            }
-          }
-        }
-      });
+    mkChart('cBrStacked', 'bar', brTop10.map(d => short(d.branch, 14)),
+      whDS(brTop10, 'tot'), stackV);
   }
 
   else if (activeId === 'sec-jobtype') {

@@ -218,7 +218,8 @@
 #sec-jobtype.active .tbl-card { flex: 1; min-height: 0; }
 
 #sec-warehouse.active .wh-tbl-hdr,
-#sec-jobtype.active   .wh-tbl-hdr {
+#sec-jobtype.active   .wh-tbl-hdr,
+#sec-branch.active    .wh-tbl-hdr {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -226,18 +227,21 @@
   margin-bottom: 6px;
 }
 #sec-warehouse.active .wh-tbl-hdr h3,
-#sec-jobtype.active   .wh-tbl-hdr h3 { margin-bottom: 0; flex-shrink: 0; white-space: nowrap; }
+#sec-jobtype.active   .wh-tbl-hdr h3,
+#sec-branch.active    .wh-tbl-hdr h3 { margin-bottom: 0; flex-shrink: 0; white-space: nowrap; }
 #sec-warehouse.active .wh-tbl-hdr .tbl-toolbar,
-#sec-jobtype.active   .wh-tbl-hdr .tbl-toolbar { flex: 1; min-width: 0; margin-bottom: 0; }
+#sec-jobtype.active   .wh-tbl-hdr .tbl-toolbar,
+#sec-branch.active    .wh-tbl-hdr .tbl-toolbar { flex: 1; min-width: 0; margin-bottom: 0; }
 
 /* ── Cause: chart row taller than table ── */
 #sec-cause.active     .chart-grid { flex: 2; }
 /* ── JobType: equal split so table shows all rows without scroll ── */
 #sec-jobtype.active   .chart-grid { flex: 1; }
 
-/* ── Branch: top 3 charts compact, side-row (Stacked + table) taller ── */
-#sec-branch.active   .chart-grid { flex: 1; }
-#sec-branch.active   .side-row   { flex: 2; }
+/* ── Branch: top 3 + stacked chart + table stacked vertically ── */
+#sec-branch.active .chart-grid      { flex: 1; }
+#sec-branch.active .br-stacked-card { flex: 1; }
+#sec-branch.active .tbl-card        { flex: 1.3; min-height: 0; }
 
 /* ── Recorder: top 4 charts taller than bottom side-row ── */
 #sec-recorder.active .chart-grid { flex: 2; }
