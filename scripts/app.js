@@ -51,8 +51,8 @@ async function autoLoadData() {
   loading(true);
   let json;
   try {
-    let res = await fetch('./data/data.json?t=' + Date.now());
-    if (!res.ok) res = await fetch(RAW_URL + '?t=' + Date.now());
+    let res = await fetch('./data/data.json');
+    if (!res.ok) res = await fetch(RAW_URL);
     if (!res.ok) throw new Error('HTTP ' + res.status);
     json = await res.json();
     if (!Array.isArray(json) || json.length === 0) throw new Error('ไม่มีข้อมูล');
