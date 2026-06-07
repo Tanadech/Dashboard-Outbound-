@@ -186,30 +186,10 @@
   margin-bottom: 0;
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
-#sec-warehouse.active .chart-grid { flex: 1; }
-#sec-warehouse.active .wh-bottom-row {
-  flex: 2;
-  min-height: 0;
-  display: flex;
-  flex-direction: row;
-  gap: 12px;
-}
-#sec-warehouse.active .wh-bottom-row .wh-timeline-card {
+#sec-warehouse.active .chart-grid { flex: 2; }
+#sec-warehouse.active .tbl-card {
   flex: 1;
   min-height: 0;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-}
-#sec-warehouse.active .wh-bottom-row .wh-timeline-card .chart-box {
-  flex: 1;
-  min-height: 200px;
-  height: auto !important;
-  position: relative;
-}
-#sec-warehouse.active .wh-bottom-row .tbl-card {
-  flex: 1;
-  min-width: 0;
 }
 #sec-warehouse.active .wh-tbl-hdr {
   display: flex;

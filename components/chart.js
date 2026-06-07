@@ -394,26 +394,6 @@ function renderCharts() {
     ], ['#c92a2a'], '%');
 
     mkRadial('cWHDonut', wh.map(d => d.warehouse), wh.map(d => d.r008DocCount));
-
-    const th = document.querySelector('#sec-warehouse .wh-timeline-card h3');
-    const whTime = aggWHTime(filtered);
-
-    /* Measure available height once for both branches */
-    const tlCard = document.querySelector('#sec-warehouse .wh-timeline-card');
-    const tlH3h  = tlCard && tlCard.querySelector('h3') ? tlCard.querySelector('h3').offsetHeight + 14 : 36;
-    const tlCardH = tlCard ? tlCard.offsetHeight : 0;
-    const tlHeight = tlCardH > 80 ? tlCardH - tlH3h - 16 : 300;
-
-    if (whTime.dates.length > 0) {
-      if (th) th.textContent = '📅 เอกสารทั้งหมด / ขาด / เกิน รายวัน';
-      mkWHTimeline('cWHTimeline', whTime.dates, whTime.series, tlHeight);
-    } else {
-      if (th) th.textContent = '📊 เอกสารปกติ vs ขาดเกินสาขา แยกตามคลัง';
-      mkBarH('cWHTimeline', wh.map(d => d.warehouse), [
-        { name: 'ปกติ',         data: wh.map(d => d.totalDocCount - d.r008DocCount) },
-        { name: 'ขาดเกินสาขา', data: wh.map(d => d.r008DocCount) },
-      ], ['#3b5bdb', '#e8590c'], 'ใบ', tlHeight);
-    }
   }
 
   else if (activeId === 'sec-branch') {
