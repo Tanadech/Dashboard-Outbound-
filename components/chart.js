@@ -401,19 +401,49 @@ function renderCharts() {
     const brTop10   = topN(br, 'issueTotal',    10);
     const brShort10 = topN(br, 'shortageTotal', 10);
     const brOver10  = topN(br, 'overageTotal',  10);
+    const brwhMap   = aggBRWH(filtered);
 
-    mkChart('cBrTop', 'bar', brTop10.map(d => short(d.branch)),
-      [barDS('ปัญหารวม', brTop10.map(d => d.issueTotal), 3)],
-      { indexAxis: 'y', scales: { x: { beginAtZero: true } } });
+    /* Warehouse series — sorted, excluding unlabelled */
+    const whs = [...new Set(filtered.map(r => r.warehouse))]
+      .filter(w => w && w !== 'ไม่ระบุคลัง').sort();
 
-    mkChart('cBrShort', 'bar', brShort10.map(d => short(d.branch)),
-      [barDS('จำนวนขาด', brShort10.map(d => d.shortageTotal), 2)],
-      { indexAxis: 'y', scales: { x: { beginAtZero: true } } });
+    const WH_COL = {
+      'WH1': '#e8590c', 'WH2': '#3b5bdb', 'WH3': '#2f9e44',
+      'WH1,WH2': '#f59f00', 'WH2,WH3': '#7048e8', 'WH1,WH3': '#0c8599'
+    };
+    const whColor = (wh, i) => WH_COL[wh] || COLORS[i % COLORS.length];
 
-    mkChart('cBrOver', 'bar', brOver10.map(d => short(d.branch)),
-      [barDS('จำนวนเกิน', brOver10.map(d => d.overageTotal), 0)],
-      { indexAxis: 'y', scales: { x: { beginAtZero: true } } });
+    /* Build one dataset per warehouse for the given metric (sh/ov/tot) */
+    const whDS = (branches, metric) => whs.map((wh, i) => ({
+      label: wh,
+      data: branches.map(b => brwhMap[b.branch]?.[wh]?.[metric] || 0),
+      backgroundColor: alpha(whColor(wh, i)),
+      borderColor: whColor(wh, i),
+      borderWidth: 1.5
+    }));
 
+    /* Shared stacked-horizontal config with combined tooltip */
+    const stackH = {
+      indexAxis: 'y',
+      scales: { x: { stacked: true, beginAtZero: true }, y: { stacked: true } },
+      plugins: {
+        tooltip: {
+          mode: 'index',
+          intersect: false,
+          filter: item => (item.parsed.x || 0) > 0,
+          callbacks: {
+            footer: items =>
+              `รวม: ${items.reduce((s, i) => s + (i.parsed.x || 0), 0).toLocaleString()} ชิ้น`
+          }
+        }
+      }
+    };
+
+    mkChart('cBrTop',   'bar', brTop10.map(d => short(d.branch)),   whDS(brTop10,   'tot'), stackH);
+    mkChart('cBrShort', 'bar', brShort10.map(d => short(d.branch)), whDS(brShort10, 'sh'),  stackH);
+    mkChart('cBrOver',  'bar', brOver10.map(d => short(d.branch)),  whDS(brOver10,  'ov'),  stackH);
+
+    /* Bottom stacked: shortage vs overage with combined tooltip */
     mkChart('cBrStacked', 'bar', brTop10.map(d => short(d.branch, 16)),
       [barDS('จำนวนขาด', brTop10.map(d => d.shortageTotal), 2),
        barDS('จำนวนเกิน', brTop10.map(d => d.overageTotal),  0)],
@@ -434,28 +464,24 @@ function renderCharts() {
         },
         plugins: {
           tooltip: {
+            mode: 'index',
+            intersect: false,
             callbacks: {
               title: items => {
                 const b = brTop10[items[0].dataIndex];
                 return b ? b.branch : items[0].label;
               },
-              label: item => `${item.dataset.label}: ${(item.parsed.y || 0).toLocaleString()} ชิ้น`,
               afterBody: items => {
                 const b = brTop10[items[0].dataIndex];
                 if (!b) return [];
-                const lines = [
+                return [
                   '',
-                  `จำนวนขาด: ${b.shortageTotal.toLocaleString()} ชิ้น`,
-                  `จำนวนเกิน: ${b.overageTotal.toLocaleString()} ชิ้น`,
                   `เอกสารขาดเกินสาขา: ${b.r008DocCount.toLocaleString()} ใบ`,
                   `สัดส่วน: ${b.percentage}%`,
                   '',
-                  'Top ประเภทงาน:'
+                  'Top ประเภทงาน:',
+                  ...(b.topJobTypes || []).map((jt, i) => `  ${i + 1}. ${jt[0]} (${jt[1].toLocaleString()})`)
                 ];
-                (b.topJobTypes || []).forEach((jtItem, i) => {
-                  lines.push(`  ${i + 1}. ${jtItem[0]} (${jtItem[1].toLocaleString()})`);
-                });
-                return lines;
               }
             }
           }
