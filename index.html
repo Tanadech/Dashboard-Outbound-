@@ -19,7 +19,7 @@
   <!-- Base styles -->
   <link rel="stylesheet" href="styles/base/reset.css?v=2">
   <link rel="stylesheet" href="styles/base/colors.css?v=2">
-  <link rel="stylesheet" href="styles/base/layout.css?v=10">
+  <link rel="stylesheet" href="styles/base/layout.css?v=11">
 
   <!-- Component styles -->
   <link rel="stylesheet" href="styles/components/header.css?v=3">
@@ -327,15 +327,16 @@
 
     <!-- B. WAREHOUSE -->
     <section class="dash-section" id="sec-warehouse">
-      <div class="sec-hdr">
-        <span class="sec-icon">🏭</span>
-        <div class="sec-hdr-text">
-          <h2>วิเคราะห์คลังสินค้า</h2>
-          <p>สรุปจำนวนขาด/เกิน แยกตามคลังสินค้า</p>
+      <div class="wh-hdr-row">
+        <div class="sec-hdr">
+          <span class="sec-icon">🏭</span>
+          <div class="sec-hdr-text">
+            <h2>วิเคราะห์คลังสินค้า</h2>
+            <p>สรุปจำนวนขาด/เกิน แยกตามคลังสินค้า</p>
+          </div>
         </div>
+        <div class="kpi-grid" id="kpiWH"></div>
       </div>
-
-      <div class="kpi-grid" id="kpiWH"></div>
 
       <div class="chart-grid g3">
         <div class="chart-card">
@@ -358,10 +359,12 @@
       </div>
 
       <div class="tbl-card">
-        <h3>📋 สรุปจำนวนขาด/เกิน แยกตามคลังสินค้า</h3>
-        <div class="tbl-toolbar">
-          <input class="tbl-search" id="sWH" placeholder="ค้นหาคลัง..." oninput="renderWH()">
-          <span class="row-info" id="infoWH"></span>
+        <div class="wh-tbl-hdr">
+          <h3>📋 สรุปจำนวนขาด/เกิน แยกตามคลังสินค้า</h3>
+          <div class="tbl-toolbar">
+            <input class="tbl-search" id="sWH" placeholder="ค้นหาคลัง..." oninput="renderWH()">
+            <span class="row-info" id="infoWH"></span>
+          </div>
         </div>
         <div class="tbl-wrap">
           <table>
@@ -680,7 +683,7 @@
 <script src="components/loading.js?v=2"></script>
 <script src="components/pagination.js?v=2"></script>
 <script src="components/nav.js?v=3"></script>
-<script src="components/chart.js?v=18"></script>
+<script src="components/chart.js?v=19"></script>
 <script src="components/kpi.js?v=3"></script>
 <script src="components/table-warehouse.js?v=5"></script>
 <script src="components/table-branch.js?v=6"></script>

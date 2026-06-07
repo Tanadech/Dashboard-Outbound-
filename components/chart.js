@@ -504,8 +504,18 @@ function renderCharts() {
 
     mkRadial('cWHDonut', wh.map(d => d.warehouse), wh.map(d => d.r008DocCount));
 
+    const th = document.querySelector('#sec-warehouse .wh-timeline-card h3');
     const whTime = aggWHTime(filtered);
-    mkWHTimeline('cWHTimeline', whTime.dates, whTime.series, whTime.whList);
+    if (whTime.dates.length > 0) {
+      if (th) th.textContent = '📅 จำนวนเอกสารจ่ายปกติ vs เสียหาย แยกตามคลัง (รายวัน)';
+      mkWHTimeline('cWHTimeline', whTime.dates, whTime.series, whTime.whList);
+    } else {
+      if (th) th.textContent = '📊 เอกสารปกติ vs ขาดเกินสาขา แยกตามคลัง';
+      mkBarH('cWHTimeline', wh.map(d => d.warehouse), [
+        { name: 'ปกติ',         data: wh.map(d => d.totalDocCount - d.r008DocCount) },
+        { name: 'ขาดเกินสาขา', data: wh.map(d => d.r008DocCount) },
+      ], ['#3b5bdb', '#e8590c']);
+    }
   }
 
   else if (activeId === 'sec-branch') {

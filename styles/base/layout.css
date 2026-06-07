@@ -163,10 +163,32 @@
 #sec-overview.active .chart-grid:first-of-type { flex: 1; }
 #sec-overview.active .chart-grid:last-of-type  { flex: 1.5; }
 
-/* ── Warehouse / Cause / JobType: chart row taller than table ── */
-#sec-warehouse.active .chart-grid    { flex: 1.2; }
+/* ── Warehouse: header + KPI in same row ── */
+#sec-warehouse.active .wh-hdr-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--border);
+}
+#sec-warehouse.active .wh-hdr-row .sec-hdr {
+  flex-shrink: 0;
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 0;
+  min-width: 190px;
+}
+#sec-warehouse.active .wh-hdr-row .kpi-grid {
+  flex: 1;
+  min-width: 0;
+  max-height: none;
+  margin-bottom: 0;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+#sec-warehouse.active .chart-grid { flex: 2; }
 #sec-warehouse.active .wh-timeline-card {
-  flex: 1.5;
+  flex: 1;
   min-height: 0;
   display: flex;
   flex-direction: column;
@@ -176,7 +198,18 @@
   min-height: 0;
   height: 100% !important;
 }
-#sec-warehouse.active .tbl-card      { flex: 0 0 230px; }
+#sec-warehouse.active .tbl-card { flex: 0 0 195px; }
+#sec-warehouse.active .wh-tbl-hdr {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+  margin-bottom: 6px;
+}
+#sec-warehouse.active .wh-tbl-hdr h3 { margin-bottom: 0; flex-shrink: 0; white-space: nowrap; }
+#sec-warehouse.active .wh-tbl-hdr .tbl-toolbar { flex: 1; min-width: 0; margin-bottom: 0; }
+
+/* ── Cause / JobType: chart row taller than table ── */
 #sec-cause.active     .chart-grid { flex: 2; }
 #sec-jobtype.active   .chart-grid { flex: 2; }
 
