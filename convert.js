@@ -43,18 +43,24 @@ try {
   const H = Object.keys(json[0]);
 
   /* Keep only the columns used by normalizeData — same patterns as normalize.js fcol calls */
-  const keep = [
-    fcol(H, ['เลขที่เอกสาร', 'doc.?no', 'document.?no']),
-    fcol(H, ['ประตูT2', 'ประตู.?T2', 'T2$', 'gate.?2']),
-    fcol(H, ['ประตูT3', 'ประตู.?T3', 'T3$', 'gate.?3']),
-    fcol(H, ['ชื่อสาขา', 'สาขา', 'branch']),
-    fcol(H, ['ประเภทงาน', 'job.?type', 'jobtype']),
-    fcol(H, ['จำนวนขาด', 'shortage', 'ขาด']),
-    fcol(H, ['จำนวนเกิน', 'overage', 'เกิน']),
-    fcol(H, ['สาเหตุ.*R008', 'R008.*สาเหตุ', 'สาเหตุของ', 'สาเหตุ']),
-    fcol(H, ['วันที่คิวงาน', 'คิวงาน', 'queue.*date', 'date.*queue', 'วันที่เอกสาร', 'วันที่จ่าย', 'วันที่บันทึก', 'วันที่ส่ง', 'วันที่', 'date']),
-    fcol(H, ['ผู้บันทึก.*T3', 'T3.*ผู้บันทึก', 'ผู้บันทึก']),
-  ].filter(Boolean);
+  const REQUIRED = [
+    { label: 'เลขที่เอกสาร', pats: ['เลขที่เอกสาร', 'doc.?no', 'document.?no'] },
+    { label: 'ประตู T2',      pats: ['ประตูT2', 'ประตู.?T2', 'T2$', 'gate.?2'] },
+    { label: 'ประตู T3',      pats: ['ประตูT3', 'ประตู.?T3', 'T3$', 'gate.?3'] },
+    { label: 'ชื่อสาขา',     pats: ['ชื่อสาขา', 'สาขา', 'branch'] },
+    { label: 'ประเภทงาน',    pats: ['ประเภทงาน', 'job.?type', 'jobtype'] },
+    { label: 'จำนวนขาด',     pats: ['จำนวนขาด', 'shortage', 'ขาด'] },
+    { label: 'จำนวนเกิน',    pats: ['จำนวนเกิน', 'overage', 'เกิน'] },
+    { label: 'สาเหตุ R008',  pats: ['สาเหตุ.*R008', 'R008.*สาเหตุ', 'สาเหตุของ', 'สาเหตุ'] },
+    { label: 'วันที่คิวงาน', pats: ['วันที่คิวงาน', 'คิวงาน', 'queue.*date', 'date.*queue', 'วันที่เอกสาร', 'วันที่จ่าย', 'วันที่บันทึก', 'วันที่ส่ง', 'วันที่', 'date'] },
+    { label: 'ผู้บันทึก',    pats: ['ผู้บันทึก.*T3', 'T3.*ผู้บันทึก', 'ผู้บันทึก'] },
+  ];
+
+  const keep = REQUIRED.map(({ label, pats }) => {
+    const col = fcol(H, pats);
+    if (!col) console.warn(`⚠️  ไม่พบคอลัมน์: ${label} — ข้อมูลส่วนนี้จะว่าง`);
+    return col;
+  }).filter(Boolean);
 
   console.log('📋  ใช้ ' + keep.length + ' คอลัมน์จาก ' + H.length + ' คอลัมน์');
 

@@ -112,52 +112,6 @@ function mkRadial(id, labels, values) {
   charts[id].render();
 }
 
-/* ─── ApexCharts radar with multiple series ─── */
-function mkRadarMulti(id, labels, seriesArr) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  if (charts[id] && charts[id].destroy) { charts[id].destroy(); }
-  delete charts[id];
-  if (!labels.length) return;
-
-  charts[id] = new ApexCharts(el, {
-    series: seriesArr,
-    chart: {
-      type: 'radar',
-      height: '100%',
-      fontFamily: 'Sarabun, sans-serif',
-      toolbar: { show: false },
-      animations: { enabled: true, speed: 600 },
-    },
-    dataLabels: { enabled: true, style: { fontSize: '11px', fontFamily: 'Sarabun, sans-serif' } },
-    plotOptions: {
-      radar: {
-        size: 110,
-        polygons: {
-          strokeColors: '#e9e9e9',
-          fill: { colors: ['#f8f8f8', '#fff'] },
-        },
-      },
-    },
-    colors: [COLORS[0], COLORS[2]],
-    markers: { size: 3, strokeWidth: 2 },
-    tooltip: { y: { formatter: val => val.toLocaleString() + ' ใบ' } },
-    xaxis: {
-      categories: labels,
-      labels: { style: { fontFamily: 'Sarabun, sans-serif', fontSize: '11px' } },
-    },
-    yaxis: {
-      labels: { formatter: (val, i) => i % 2 === 0 ? val.toLocaleString() : '' },
-    },
-    legend: {
-      position: 'top',
-      fontFamily: 'Sarabun, sans-serif',
-      fontSize: '12px',
-    },
-  });
-  charts[id].render();
-}
-
 /* ─── Mixed bar+line: total / shortage / overage docs per day ─── */
 function mkWHTimeline(id, dates, series, height) {
   const el = document.getElementById(id);
@@ -250,61 +204,6 @@ function mkBarH(id, labels, seriesArr, colors = COLORS, unit = 'ใบ', height 
     grid: { borderColor: '#f1f1f1', strokeDashArray: 4 },
     legend: { fontFamily: 'Sarabun, sans-serif', fontSize: '12px' },
     tooltip: { y: { formatter: val => val.toLocaleString() + ' ' + unit } },
-  });
-  charts[id].render();
-}
-
-/* ─── RadialBar showing problem rate: r008DocCount / totalDocCount × 100% ─── */
-function mkRadialRate(id, labels, r008Counts, totalCounts) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  if (charts[id] && charts[id].destroy) { charts[id].destroy(); }
-  delete charts[id];
-  if (!labels.length) return;
-
-  const maxShow = Math.min(labels.length, 8);
-  const lbls  = labels.slice(0, maxShow);
-  const r008  = r008Counts.slice(0, maxShow);
-  const tots  = totalCounts.slice(0, maxShow);
-  const pcts  = tots.map((t, i) => t > 0 ? +(r008[i] / t * 100).toFixed(1) : 0);
-
-  charts[id] = new ApexCharts(el, {
-    series: pcts,
-    chart: {
-      type: 'radialBar',
-      height: '100%',
-      fontFamily: 'Sarabun, sans-serif',
-      toolbar: { show: false },
-      animations: { enabled: true, speed: 600 },
-    },
-    plotOptions: {
-      radialBar: {
-        offsetY: 0,
-        startAngle: 0,
-        endAngle: 270,
-        hollow: { margin: 5, size: '28%', background: 'transparent' },
-        track: { background: '#e9ecef', strokeWidth: '90%', margin: 4 },
-        dataLabels: { name: { show: false }, value: { show: false } },
-        barLabels: {
-          enabled: true,
-          useSeriesColors: true,
-          offsetX: -8,
-          fontSize: '13px',
-          fontFamily: 'Sarabun, sans-serif',
-          fontWeight: 600,
-          formatter: (name, opts) =>
-            `${name}: ${pcts[opts.seriesIndex]}%`,
-        },
-      },
-    },
-    colors: COLORS.slice(0, maxShow),
-    labels: lbls,
-    tooltip: {
-      y: {
-        formatter: (_, { seriesIndex }) =>
-          `${r008[seriesIndex].toLocaleString()} / ${tots[seriesIndex].toLocaleString()} ใบ (${pcts[seriesIndex]}%)`,
-      },
-    },
   });
   charts[id].render();
 }

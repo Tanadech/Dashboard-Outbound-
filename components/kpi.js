@@ -59,10 +59,13 @@ function renderKPI() {
   ].map(buildKpiCard).join('');
 
   /* Warehouse KPIs */
+  const topShWH    = topN(wh, 'shortageTotal', 1)[0] || { warehouse: '-', shortageTotal: 0 };
+  const topOvWH    = topN(wh, 'overageTotal',  1)[0] || { warehouse: '-', overageTotal:  0 };
+  const topIssueWH = topN(wh, 'issueTotal',    1)[0] || { warehouse: '-', issueTotal:    0 };
   document.getElementById('kpiWH').innerHTML = [
-    { c: 'c-red',    ico: '📉', label: 'คลังขาดสูงสุด',       val: topN(wh, 'shortageTotal', 1)[0]?.warehouse || '-', sub: `ขาด ${(topN(wh, 'shortageTotal', 1)[0]?.shortageTotal || 0).toLocaleString()} ชิ้น` },
-    { c: 'c-blue',   ico: '📈', label: 'คลังเกินสูงสุด',       val: topN(wh, 'overageTotal',  1)[0]?.warehouse || '-', sub: `เกิน ${(topN(wh, 'overageTotal', 1)[0]?.overageTotal || 0).toLocaleString()} ชิ้น` },
-    { c: 'c-purple', ico: '⚠️', label: 'คลังปัญหารวมสูงสุด',  val: wh[0]?.warehouse || '-',                            sub: `ปัญหา ${(wh[0]?.issueTotal || 0).toLocaleString()} ชิ้น` }
+    { c: 'c-red',    ico: '📉', label: 'คลังขาดสูงสุด',      val: topShWH.warehouse,    sub: `ขาด ${topShWH.shortageTotal.toLocaleString()} ชิ้น` },
+    { c: 'c-blue',   ico: '📈', label: 'คลังเกินสูงสุด',      val: topOvWH.warehouse,    sub: `เกิน ${topOvWH.overageTotal.toLocaleString()} ชิ้น` },
+    { c: 'c-purple', ico: '⚠️', label: 'คลังปัญหารวมสูงสุด', val: topIssueWH.warehouse, sub: `ปัญหา ${topIssueWH.issueTotal.toLocaleString()} ชิ้น` }
   ].map(buildKpiCard).join('');
 
   /* Job Type KPIs */
