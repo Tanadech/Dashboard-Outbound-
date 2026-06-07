@@ -19,7 +19,7 @@
   <!-- Base styles -->
   <link rel="stylesheet" href="styles/base/reset.css?v=2">
   <link rel="stylesheet" href="styles/base/colors.css?v=2">
-  <link rel="stylesheet" href="styles/base/layout.css?v=18">
+  <link rel="stylesheet" href="styles/base/layout.css?v=19">
 
   <!-- Component styles -->
   <link rel="stylesheet" href="styles/components/header.css?v=3">
@@ -469,24 +469,26 @@
       </div>
 
       <div class="tbl-card">
-        <h3>📋 สรุปตามประเภทงาน</h3>
-        <div class="tbl-toolbar">
-          <input class="tbl-search" id="sJT" placeholder="ค้นหาประเภทงาน..." oninput="renderJT()">
-          <span class="row-info" id="infoJT"></span>
+        <div class="wh-tbl-hdr">
+          <h3>📋 สรุปตามประเภทงาน</h3>
+          <div class="tbl-toolbar">
+            <input class="tbl-search" id="sJT" placeholder="ค้นหาประเภทงาน..." oninput="renderJT()">
+            <span class="row-info" id="infoJT"></span>
+          </div>
         </div>
         <div class="tbl-wrap">
           <table>
             <thead><tr>
               <th>ประเภทงาน</th>
-              <th class="num">จำนวนเอกสารทั้งหมด (เอกสาร)</th>
-              <th class="num">จำนวนเอกสารขาดเกิน (เอกสาร)</th>
-              <th class="num">จำนวนขาด (ชิ้น)</th>
-              <th class="num">จำนวนเกิน (ชิ้น)</th>
-              <th class="num">จำนวนรวมทั้งหมด (ชิ้น)</th>
-              <th class="num">สัดส่วน %</th>
-              <th>คลังที่พบมาก</th>
-              <th>สาขาที่พบมาก</th>
-              <th>สถานะความเสี่ยง</th>
+              <th class="num">จำนวนเอกสารทั้งหมด<br><span class="th-unit">(เอกสาร)</span></th>
+              <th class="num">จำนวนเอกสารขาดเกิน<br><span class="th-unit">(เอกสาร)</span></th>
+              <th class="num">จำนวนขาด<br><span class="th-unit">(ชิ้น)</span></th>
+              <th class="num">จำนวนเกิน<br><span class="th-unit">(ชิ้น)</span></th>
+              <th class="num">จำนวนรวมทั้งหมด<br><span class="th-unit">(ชิ้น)</span></th>
+              <th class="num">สัดส่วน<br><span class="th-unit">%</span></th>
+              <th>คลังหลัก</th>
+              <th>สาขาหลัก</th>
+              <th>สถานะ</th>
             </tr></thead>
             <tbody id="bJT"></tbody>
           </table>
@@ -682,7 +684,7 @@
 <script src="components/kpi.js?v=4"></script>
 <script src="components/table-warehouse.js?v=5"></script>
 <script src="components/table-branch.js?v=6"></script>
-<script src="components/table-jobtype.js?v=4"></script>
+<script src="components/table-jobtype.js?v=5"></script>
 <script src="components/table-cause.js?v=4"></script>
 <script src="components/table-recorder.js?v=4"></script>
 <script src="components/table-detail.js?v=5"></script>

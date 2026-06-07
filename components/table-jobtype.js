@@ -7,7 +7,7 @@ function renderJT() {
 
   paginate('bJT', 'pgJT', data, pages.jt, p => { pages.jt = p; renderJT(); }, r => `
     <tr style="cursor:pointer" onclick="openJTModal('${r.jobType.replace(/'/g, "\\'")}')">
-      <td>${r.jobType}</td>
+      <td><strong>${r.jobType}</strong></td>
       <td class="num">${r.totalDocCount.toLocaleString()}</td>
       <td class="num"><span class="bp bp-red">${r.r008DocCount.toLocaleString()}</span></td>
       <td class="num"><span class="bp bp-orange">${r.shortageTotal.toLocaleString()}</span></td>

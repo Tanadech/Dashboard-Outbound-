@@ -191,15 +191,18 @@
   flex: 1;
   min-height: 0;
 }
-#sec-warehouse.active .wh-tbl-hdr {
+#sec-warehouse.active .wh-tbl-hdr,
+#sec-jobtype.active   .wh-tbl-hdr {
   display: flex;
   align-items: center;
   gap: 12px;
   flex-shrink: 0;
   margin-bottom: 6px;
 }
-#sec-warehouse.active .wh-tbl-hdr h3 { margin-bottom: 0; flex-shrink: 0; white-space: nowrap; }
-#sec-warehouse.active .wh-tbl-hdr .tbl-toolbar { flex: 1; min-width: 0; margin-bottom: 0; }
+#sec-warehouse.active .wh-tbl-hdr h3,
+#sec-jobtype.active   .wh-tbl-hdr h3 { margin-bottom: 0; flex-shrink: 0; white-space: nowrap; }
+#sec-warehouse.active .wh-tbl-hdr .tbl-toolbar,
+#sec-jobtype.active   .wh-tbl-hdr .tbl-toolbar { flex: 1; min-width: 0; margin-bottom: 0; }
 
 /* ── Cause / JobType: chart row taller than table ── */
 #sec-cause.active     .chart-grid { flex: 2; }
