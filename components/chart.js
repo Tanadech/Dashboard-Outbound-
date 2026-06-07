@@ -478,7 +478,7 @@ function renderCharts() {
     mkBarH('cWHBar', wh.map(d => d.warehouse), [
       { name: 'จำนวนขาด', data: wh.map(d => d.shortageTotal) },
       { name: 'จำนวนเกิน', data: wh.map(d => d.overageTotal)  },
-    ], ['#e8590c', '#3b5bdb']);
+    ], ['#e8590c', '#3b5bdb'], 'ชิ้น');
 
     mkBarH('cWHRate', wh.map(d => d.warehouse), [
       { name: '% เอกสารขาดเกิน', data: wh.map(d => parseFloat(d.percentage)) },
@@ -523,7 +523,7 @@ function renderCharts() {
     mkBarH('cJTBar', jt.map(d => d.jobType), [
       { name: 'จำนวนขาด', data: jt.map(d => d.shortageTotal) },
       { name: 'จำนวนเกิน', data: jt.map(d => d.overageTotal)  },
-    ], ['#e8590c', '#3b5bdb']);
+    ], ['#e8590c', '#3b5bdb'], 'ชิ้น');
 
     mkBarH('cJTTop', jt.map(d => d.jobType), [
       { name: '% เอกสารขาดเกิน', data: jt.map(d => parseFloat(d.percentage)) },
