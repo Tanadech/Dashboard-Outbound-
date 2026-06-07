@@ -192,9 +192,10 @@
   min-height: 0;
 }
 
-/* ── JobType + Cause: header + KPI in same row ── */
-#sec-jobtype.active .wh-hdr-row,
-#sec-cause.active   .wh-hdr-row {
+/* ── JobType + Cause + Recorder: header + KPI in same row ── */
+#sec-jobtype.active  .wh-hdr-row,
+#sec-cause.active    .wh-hdr-row,
+#sec-recorder.active .wh-hdr-row {
   display: flex;
   align-items: center;
   gap: 16px;
@@ -202,16 +203,18 @@
   padding-bottom: 6px;
   border-bottom: 2px solid var(--border);
 }
-#sec-jobtype.active .wh-hdr-row .sec-hdr,
-#sec-cause.active   .wh-hdr-row .sec-hdr {
+#sec-jobtype.active  .wh-hdr-row .sec-hdr,
+#sec-cause.active    .wh-hdr-row .sec-hdr,
+#sec-recorder.active .wh-hdr-row .sec-hdr {
   flex-shrink: 0;
   border-bottom: none;
   padding-bottom: 0;
   margin-bottom: 0;
   min-width: 190px;
 }
-#sec-jobtype.active .wh-hdr-row .kpi-grid,
-#sec-cause.active   .wh-hdr-row .kpi-grid {
+#sec-jobtype.active  .wh-hdr-row .kpi-grid,
+#sec-cause.active    .wh-hdr-row .kpi-grid,
+#sec-recorder.active .wh-hdr-row .kpi-grid {
   flex: 1;
   min-width: 0;
   max-height: none;
@@ -223,7 +226,8 @@
 #sec-warehouse.active .wh-tbl-hdr,
 #sec-jobtype.active   .wh-tbl-hdr,
 #sec-branch.active    .wh-tbl-hdr,
-#sec-cause.active     .wh-tbl-hdr {
+#sec-cause.active     .wh-tbl-hdr,
+#sec-recorder.active  .wh-tbl-hdr {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -233,11 +237,13 @@
 #sec-warehouse.active .wh-tbl-hdr h3,
 #sec-jobtype.active   .wh-tbl-hdr h3,
 #sec-branch.active    .wh-tbl-hdr h3,
-#sec-cause.active     .wh-tbl-hdr h3 { margin-bottom: 0; flex-shrink: 0; white-space: nowrap; }
+#sec-cause.active     .wh-tbl-hdr h3,
+#sec-recorder.active  .wh-tbl-hdr h3 { margin-bottom: 0; flex-shrink: 0; white-space: nowrap; }
 #sec-warehouse.active .wh-tbl-hdr .tbl-toolbar,
 #sec-jobtype.active   .wh-tbl-hdr .tbl-toolbar,
 #sec-branch.active    .wh-tbl-hdr .tbl-toolbar,
-#sec-cause.active     .wh-tbl-hdr .tbl-toolbar { flex: 1; min-width: 0; margin-bottom: 0; }
+#sec-cause.active     .wh-tbl-hdr .tbl-toolbar,
+#sec-recorder.active  .wh-tbl-hdr .tbl-toolbar { flex: 1; min-width: 0; margin-bottom: 0; }
 
 /* ── Cause: chart-grid fills space, table fits content ── */
 #sec-cause.active .chart-grid { flex: 1; min-height: 0; }
@@ -250,8 +256,10 @@
 #sec-branch.active .br-stacked-card { flex: 1; }
 #sec-branch.active .tbl-card        { flex: 1.3; min-height: 0; }
 
-/* ── Recorder: top 4 charts taller than bottom side-row ── */
-#sec-recorder.active .chart-grid { flex: 2; }
+/* ── Recorder: chart-grid + stacked + table ── */
+#sec-recorder.active .chart-grid        { flex: 1; min-height: 0; }
+#sec-recorder.active .rec-stacked-card  { flex: 1; }
+#sec-recorder.active .tbl-card          { flex: 1; min-height: 0; }
 
 /* ── Compact sec-hdr ── */
 .dash-section.active .sec-hdr { padding-bottom: 4px; }

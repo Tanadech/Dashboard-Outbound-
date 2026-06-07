@@ -19,7 +19,7 @@
   <!-- Base styles -->
   <link rel="stylesheet" href="styles/base/reset.css?v=2">
   <link rel="stylesheet" href="styles/base/colors.css?v=2">
-  <link rel="stylesheet" href="styles/base/layout.css?v=29">
+  <link rel="stylesheet" href="styles/base/layout.css?v=30">
 
   <!-- Component styles -->
   <link rel="stylesheet" href="styles/components/header.css?v=3">
@@ -560,55 +560,58 @@
 
     <!-- F. RECORDER -->
     <section class="dash-section" id="sec-recorder">
-      <div class="sec-hdr">
-        <span class="sec-icon">👤</span>
-        <div class="sec-hdr-text">
-          <h2>วิเคราะห์ผู้บันทึก</h2>
-          <p>วิเคราะห์ผลงานการปิดรถของผู้บันทึก T3</p>
+      <div class="wh-hdr-row">
+        <div class="sec-hdr">
+          <span class="sec-icon">👤</span>
+          <div class="sec-hdr-text">
+            <h2>วิเคราะห์ผู้บันทึก</h2>
+            <p>วิเคราะห์ผลงานการปิดรถของผู้บันทึก T3</p>
+          </div>
         </div>
+        <div class="kpi-grid" id="kpiREC"></div>
       </div>
-
-      <div class="kpi-grid" id="kpiREC"></div>
 
       <div class="chart-grid g4">
         <div class="chart-card">
           <h3>🏆 Top 10 ผู้บันทึกที่มีเอกสารขาดเกินสาขา สูงสุด</h3>
-          <div class="chart-box h320"><canvas id="cRECTop"></canvas></div>
+          <div class="chart-box"><canvas id="cRECTop"></canvas></div>
         </div>
         <div class="chart-card">
           <h3>📉 Top 10 ผู้บันทึกที่มีจำนวนขาดสูงสุด</h3>
-          <div class="chart-box h320"><canvas id="cRECShort"></canvas></div>
+          <div class="chart-box"><canvas id="cRECShort"></canvas></div>
         </div>
         <div class="chart-card">
           <h3>📈 Top 10 ผู้บันทึกที่มีจำนวนเกินสูงสุด</h3>
-          <div class="chart-box h320"><canvas id="cRECOver"></canvas></div>
+          <div class="chart-box"><canvas id="cRECOver"></canvas></div>
         </div>
         <div class="chart-card">
           <h3>🍩 สัดส่วนเอกสารขาดเกินสาขา ตามผู้บันทึก (Top 10)</h3>
-          <div class="chart-box h320"><div id="cRECDonut"></div></div>
+          <div class="chart-box"><div id="cRECDonut"></div></div>
         </div>
       </div>
 
-      <div class="side-row">
-        <div class="chart-card">
-          <h3>📊 Stacked: ขาด/เกิน แยกตามผู้บันทึก (Top 10)</h3>
-          <div class="chart-box h320"><canvas id="cRECStacked"></canvas></div>
-        </div>
-        <div class="tbl-card">
-        <h3>📋 สรุปผู้บันทึก</h3>
-        <div class="tbl-toolbar">
-          <input class="tbl-search" id="sREC" placeholder="ค้นหาผู้บันทึก..." oninput="renderREC()">
-          <span class="row-info" id="infoREC"></span>
+      <div class="chart-card rec-stacked-card">
+        <h3>📊 ปัญหารวม (ชิ้น) แยกตามผู้บันทึก Top 10</h3>
+        <div class="chart-box"><canvas id="cRECStacked"></canvas></div>
+      </div>
+
+      <div class="tbl-card">
+        <div class="wh-tbl-hdr">
+          <h3>📋 สรุปผู้บันทึก</h3>
+          <div class="tbl-toolbar">
+            <input class="tbl-search" id="sREC" placeholder="ค้นหาผู้บันทึก..." oninput="renderREC()">
+            <span class="row-info" id="infoREC"></span>
+          </div>
         </div>
         <div class="tbl-wrap">
           <table>
             <thead><tr>
               <th>ผู้บันทึก</th>
-              <th class="num">จำนวนเอกสารทั้งหมด (เอกสาร)</th>
-              <th class="num">จำนวนเอกสารขาดเกิน (เอกสาร)</th>
-              <th class="num">จำนวนขาด (ชิ้น)</th>
-              <th class="num">จำนวนเกิน (ชิ้น)</th>
-              <th class="num">จำนวนรวมทั้งหมด (ชิ้น)</th>
+              <th class="num">จำนวนเอกสารทั้งหมด <span class="th-unit">เอกสาร</span></th>
+              <th class="num">จำนวนเอกสารขาดเกิน <span class="th-unit">เอกสาร</span></th>
+              <th class="num">จำนวนขาด <span class="th-unit">ชิ้น</span></th>
+              <th class="num">จำนวนเกิน <span class="th-unit">ชิ้น</span></th>
+              <th class="num">จำนวนรวมทั้งหมด <span class="th-unit">ชิ้น</span></th>
               <th class="num">สัดส่วน %</th>
               <th>สถานะความเสี่ยง</th>
               <th>คลังที่พบมากสุด</th>
@@ -618,8 +621,7 @@
             <tbody id="bREC"></tbody>
           </table>
         </div>
-          <div class="pagination" id="pgREC"></div>
-        </div>
+        <div class="pagination" id="pgREC"></div>
       </div>
     </section>
 
