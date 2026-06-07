@@ -19,11 +19,12 @@
 
   <!-- Base styles -->
   <link rel="stylesheet" href="styles/base/reset.css?v=3">
-  <link rel="stylesheet" href="styles/base/colors.css?v=4">
-  <link rel="stylesheet" href="styles/base/layout.css?v=32">
+  <link rel="stylesheet" href="styles/base/colors.css?v=5">
+  <link rel="stylesheet" href="styles/base/layout.css?v=33">
 
   <!-- Component styles -->
   <link rel="stylesheet" href="styles/components/header.css?v=5">
+  <link rel="stylesheet" href="styles/components/sidebar.css?v=1">
   <link rel="stylesheet" href="styles/components/nav-bar.css?v=4">
   <link rel="stylesheet" href="styles/components/filter-bar.css?v=2">
   <link rel="stylesheet" href="styles/components/button.css?v=3">
@@ -235,7 +236,35 @@
 
 <div class="app-layout">
 
-  <!-- ===== STICKY HEADER + NAV ===== -->
+  <!-- ===== SIDEBAR ===== -->
+  <aside id="sidebar">
+    <div class="sb-brand">
+      <div class="sb-logo-wrap">📦</div>
+      <div class="sb-brand-text">
+        <strong>Dashboard Outbound</strong>
+        <small>OUTBOUND REPORT 008</small>
+      </div>
+    </div>
+    <div class="sb-menu">
+      <button class="sb-group-btn"><span>📁</span> รายงาน</button>
+      <div class="sb-group-label">รายงานสต็อกขาดเกิน</div>
+      <a class="sb-link" href="#sec-overview"><span class="sb-ico">📊</span>ภาพรวม</a>
+      <a class="sb-link" href="#sec-warehouse"><span class="sb-ico">🏭</span>วิเคราะห์คลัง</a>
+      <a class="sb-link" href="#sec-branch"><span class="sb-ico">🏪</span>วิเคราะห์สาขา</a>
+      <a class="sb-link" href="#sec-jobtype"><span class="sb-ico">🧾</span>ประเภทงาน</a>
+      <a class="sb-link" href="#sec-cause"><span class="sb-ico">⚠️</span>สาเหตุขาดเกิน</a>
+      <a class="sb-link" href="#sec-recorder"><span class="sb-ico">👤</span>ผู้บันทึก</a>
+      <a class="sb-link" href="#sec-detail"><span class="sb-ico">📋</span>รายละเอียด</a>
+    </div>
+    <div class="sb-footer">
+      <button class="sb-dark-btn" id="themeToggle" onclick="toggleTheme()">🌙 Dark</button>
+    </div>
+  </aside>
+
+  <!-- ===== MAIN AREA ===== -->
+  <div id="mainWrap">
+
+  <!-- ===== STICKY HEADER ===== -->
   <div id="stickyWrap">
 
     <!-- Combined header + filters (single row) -->
@@ -284,23 +313,11 @@
         </div>
       </div>
       <div class="th-actions">
-        <button class="btn btn-ghost btn-compact" id="themeToggle" onclick="toggleTheme()" title="สลับ Dark/Light Mode">🌙</button>
         <button class="btn btn-ghost btn-compact" onclick="resetFilters()">🔄 ล้างการกรอง</button>
         <button class="btn btn-green btn-compact" onclick="exportCSV()">⬇️ Export</button>
         <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" style="display:none" onchange="handleFile(this)">
       </div>
     </div>
-
-    <!-- Section Navigation -->
-    <nav id="navBar">
-      <a class="nav-link" href="#sec-overview"><span class="ico">📊</span>ภาพรวม</a>
-      <a class="nav-link" href="#sec-warehouse"><span class="ico">🏭</span>วิเคราะห์คลัง</a>
-      <a class="nav-link" href="#sec-branch"><span class="ico">🏪</span>วิเคราะห์สาขา</a>
-      <a class="nav-link" href="#sec-jobtype"><span class="ico">🧾</span>วิเคราะห์ประเภทงาน</a>
-      <a class="nav-link" href="#sec-cause"><span class="ico">⚠️</span>วิเคราะห์สาเหตุขาดเกิน</a>
-      <a class="nav-link" href="#sec-recorder"><span class="ico">👤</span>วิเคราะห์ผู้บันทึก</a>
-      <a class="nav-link" href="#sec-detail"><span class="ico">📋</span>รายละเอียดข้อมูล</a>
-    </nav>
 
   </div><!-- /stickyWrap -->
 
@@ -681,6 +698,7 @@
     </section>
 
   </div><!-- /content -->
+  </div><!-- /mainWrap -->
 </div><!-- /app-layout -->
 
 <!-- ===== JAVASCRIPT — load order matters ===== -->
@@ -704,7 +722,7 @@
 <!-- 6. UI components (depend on state, utilities, lib) -->
 <script src="components/loading.js?v=2"></script>
 <script src="components/pagination.js?v=2"></script>
-<script src="components/nav.js?v=4"></script>
+<script src="components/nav.js?v=5"></script>
 <script src="components/chart.js?v=38"></script>
 <script src="components/kpi.js?v=6"></script>
 <script src="components/table-warehouse.js?v=5"></script>
@@ -716,7 +734,7 @@
 <script src="components/modal.js?v=7"></script>
 
 <!-- 7. App orchestration (ties everything together — must be last) -->
-<script src="scripts/app.js?v=10"></script>
+<script src="scripts/app.js?v=11"></script>
 
 </body>
 </html>

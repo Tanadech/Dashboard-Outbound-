@@ -94,7 +94,7 @@ function toggleTheme() {
   const isDark = document.documentElement.classList.toggle('dark');
   localStorage.setItem('theme', isDark ? 'dark' : 'light');
   const btn = document.getElementById('themeToggle');
-  if (btn) btn.textContent = isDark ? '☀️' : '🌙';
+  if (btn) btn.innerHTML = isDark ? '&#9728;&#xFE0F; Light' : '&#127769; Dark';
 }
 
 /* ─── Auto-load data on page open ─── */
@@ -102,5 +102,5 @@ document.addEventListener('DOMContentLoaded', () => {
   if (typeof showPage === 'function') showPage(location.hash || '#sec-overview');
   autoLoadData();
   const btn = document.getElementById('themeToggle');
-  if (btn && document.documentElement.classList.contains('dark')) btn.textContent = '☀️';
+  if (btn && document.documentElement.classList.contains('dark')) btn.innerHTML = '&#9728;&#xFE0F; Light';
 });

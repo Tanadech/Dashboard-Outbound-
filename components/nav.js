@@ -9,7 +9,7 @@
       window.scrollTo(0, 0);
     }
 
-    document.querySelectorAll('#navBar a').forEach(a => {
+    document.querySelectorAll('#sidebar .sb-link').forEach(a => {
       a.classList.toggle('active', a.getAttribute('href') === hash);
     });
 
@@ -18,7 +18,7 @@
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('#navBar a').forEach(a => {
+    document.querySelectorAll('#sidebar .sb-link').forEach(a => {
       a.addEventListener('click', e => {
         e.preventDefault();
         const hash = a.getAttribute('href');
