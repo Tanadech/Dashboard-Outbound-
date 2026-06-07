@@ -192,8 +192,9 @@
   min-height: 0;
 }
 
-/* ── JobType: header + KPI in same row (mirrors warehouse) ── */
-#sec-jobtype.active .wh-hdr-row {
+/* ── JobType + Cause: header + KPI in same row ── */
+#sec-jobtype.active .wh-hdr-row,
+#sec-cause.active   .wh-hdr-row {
   display: flex;
   align-items: center;
   gap: 16px;
@@ -201,14 +202,16 @@
   padding-bottom: 6px;
   border-bottom: 2px solid var(--border);
 }
-#sec-jobtype.active .wh-hdr-row .sec-hdr {
+#sec-jobtype.active .wh-hdr-row .sec-hdr,
+#sec-cause.active   .wh-hdr-row .sec-hdr {
   flex-shrink: 0;
   border-bottom: none;
   padding-bottom: 0;
   margin-bottom: 0;
   min-width: 190px;
 }
-#sec-jobtype.active .wh-hdr-row .kpi-grid {
+#sec-jobtype.active .wh-hdr-row .kpi-grid,
+#sec-cause.active   .wh-hdr-row .kpi-grid {
   flex: 1;
   min-width: 0;
   max-height: none;
@@ -219,7 +222,8 @@
 
 #sec-warehouse.active .wh-tbl-hdr,
 #sec-jobtype.active   .wh-tbl-hdr,
-#sec-branch.active    .wh-tbl-hdr {
+#sec-branch.active    .wh-tbl-hdr,
+#sec-cause.active     .wh-tbl-hdr {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -228,15 +232,20 @@
 }
 #sec-warehouse.active .wh-tbl-hdr h3,
 #sec-jobtype.active   .wh-tbl-hdr h3,
-#sec-branch.active    .wh-tbl-hdr h3 { margin-bottom: 0; flex-shrink: 0; white-space: nowrap; }
+#sec-branch.active    .wh-tbl-hdr h3,
+#sec-cause.active     .wh-tbl-hdr h3 { margin-bottom: 0; flex-shrink: 0; white-space: nowrap; }
 #sec-warehouse.active .wh-tbl-hdr .tbl-toolbar,
 #sec-jobtype.active   .wh-tbl-hdr .tbl-toolbar,
-#sec-branch.active    .wh-tbl-hdr .tbl-toolbar { flex: 1; min-width: 0; margin-bottom: 0; }
+#sec-branch.active    .wh-tbl-hdr .tbl-toolbar,
+#sec-cause.active     .wh-tbl-hdr .tbl-toolbar { flex: 1; min-width: 0; margin-bottom: 0; }
 
-/* ── Cause: chart row taller than table ── */
-#sec-cause.active     .chart-grid { flex: 2; }
-/* ── JobType: equal split so table shows all rows without scroll ── */
-#sec-jobtype.active   .chart-grid { flex: 1; }
+/* ── Cause: top 3 + stacked chart + table stacked vertically ── */
+#sec-cause.active .chart-grid       { flex: 1; }
+#sec-cause.active .ca-stacked-card  { flex: 1; }
+#sec-cause.active .tbl-card         { flex: 1.3; min-height: 0; }
+/* ── JobType: chart-grid + stacked chart + table ── */
+#sec-jobtype.active .chart-grid      { flex: 1; }
+#sec-jobtype.active .jt-stacked-card { flex: 1; }
 
 /* ── Branch: top 3 + stacked chart + table stacked vertically ── */
 #sec-branch.active .chart-grid      { flex: 1; }

@@ -77,6 +77,18 @@ function renderKPI() {
     { c: 'c-orange', ico: '📈', label: 'เกินสูงสุดในประเภทงาน',           val: (topN(jt, 'overageTotal',  1)[0]?.overageTotal  || 0).toLocaleString(),   sub: topN(jt, 'overageTotal',  1)[0]?.jobType || '-' }
   ].map(buildKpiCard).join('');
 
+  /* Cause KPIs */
+  const ca    = aggCA(filtered);
+  const tCA   = ca[0] || { cause: '-', r008DocCount: 0 };
+  const tCAsh = topN(ca, 'shortageTotal', 1)[0] || { cause: '-', shortageTotal: 0 };
+  const tCAov = topN(ca, 'overageTotal',  1)[0] || { cause: '-', overageTotal:  0 };
+  document.getElementById('kpiCA').innerHTML = [
+    { c: 'c-blue',   ico: '⚠️', label: 'สาเหตุทั้งหมด',               val: ca.length,                                    sub: 'สาเหตุ' },
+    { c: 'c-purple', ico: '🏆', label: 'สาเหตุเอกสารขาดเกิน สูงสุด',   val: short(tCA.cause, 20),                         sub: `${tCA.r008DocCount.toLocaleString()} ใบ` },
+    { c: 'c-red',    ico: '📉', label: 'ขาดสูงสุดตามสาเหตุ',            val: (tCAsh.shortageTotal || 0).toLocaleString(),  sub: short(tCAsh.cause, 18) },
+    { c: 'c-teal',   ico: '📈', label: 'เกินสูงสุดตามสาเหตุ',            val: (tCAov.overageTotal  || 0).toLocaleString(),  sub: short(tCAov.cause, 18) }
+  ].map(buildKpiCard).join('');
+
   /* Recorder KPIs */
   const rec    = aggREC(filtered);
   const tREC   = rec[0] || { recorder: '-', r008DocCount: 0 };

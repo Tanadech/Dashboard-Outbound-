@@ -19,7 +19,7 @@
   <!-- Base styles -->
   <link rel="stylesheet" href="styles/base/reset.css?v=2">
   <link rel="stylesheet" href="styles/base/colors.css?v=2">
-  <link rel="stylesheet" href="styles/base/layout.css?v=22">
+  <link rel="stylesheet" href="styles/base/layout.css?v=23">
 
   <!-- Component styles -->
   <link rel="stylesheet" href="styles/components/header.css?v=3">
@@ -470,6 +470,11 @@
         </div>
       </div>
 
+      <div class="chart-card jt-stacked-card">
+        <h3>📊 ปัญหารวม (ชิ้น) แยกตามประเภทงาน × คลัง</h3>
+        <div class="chart-box"><canvas id="cJTStacked"></canvas></div>
+      </div>
+
       <div class="tbl-card">
         <div class="wh-tbl-hdr">
           <h3>📋 สรุปตามประเภทงาน</h3>
@@ -502,48 +507,58 @@
 
     <!-- E. CAUSE -->
     <section class="dash-section" id="sec-cause">
-      <div class="sec-hdr">
-        <span class="sec-icon">⚠️</span>
-        <div class="sec-hdr-text">
-          <h2>วิเคราะห์สาเหตุขาดเกิน</h2>
-          <p>วิเคราะห์สาเหตุของการขาดเกิน</p>
+      <div class="wh-hdr-row">
+        <div class="sec-hdr">
+          <span class="sec-icon">⚠️</span>
+          <div class="sec-hdr-text">
+            <h2>วิเคราะห์สาเหตุขาดเกิน</h2>
+            <p>วิเคราะห์สาเหตุของการขาดเกิน</p>
+          </div>
         </div>
+        <div class="kpi-grid" id="kpiCA"></div>
       </div>
 
       <div class="chart-grid g3">
         <div class="chart-card">
-          <h3>📊 Top 10 สาเหตุขาดเกินสาขา ที่มีปัญหารวมสูงสุด</h3>
+          <h3>📊 Top 10 สาเหตุที่มีปัญหารวมสูงสุด</h3>
           <div class="chart-box h360"><canvas id="cCATop"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h3>📉 Top 10 สาเหตุที่มีจำนวนขาดสูงสุด</h3>
+          <div class="chart-box h300"><canvas id="cCAShort"></canvas></div>
         </div>
         <div class="chart-card">
           <h3>🍩 สัดส่วนตามสาเหตุขาดเกิน</h3>
           <div class="chart-box h300"><div id="cCADonut"></div></div>
         </div>
-        <div class="chart-card">
-          <h3>📊 Stacked: ขาด/เกิน แยกตามสาเหตุ</h3>
-          <div class="chart-box h300"><canvas id="cCAStacked"></canvas></div>
-        </div>
+      </div>
+
+      <div class="chart-card ca-stacked-card">
+        <h3>📊 ปัญหารวม (ชิ้น) Top 10 สาเหตุ แยกตามคลัง</h3>
+        <div class="chart-box"><canvas id="cCAStacked"></canvas></div>
       </div>
 
       <div class="tbl-card">
-        <h3>📋 สรุปตามสาเหตุขาดเกิน</h3>
-        <div class="tbl-toolbar">
-          <input class="tbl-search" id="sCA" placeholder="ค้นหาสาเหตุ..." oninput="renderCA()">
-          <span class="row-info" id="infoCA"></span>
+        <div class="wh-tbl-hdr">
+          <h3>📋 สรุปตามสาเหตุขาดเกิน</h3>
+          <div class="tbl-toolbar">
+            <input class="tbl-search" id="sCA" placeholder="ค้นหาสาเหตุ..." oninput="renderCA()">
+            <span class="row-info" id="infoCA"></span>
+          </div>
         </div>
         <div class="tbl-wrap">
           <table>
             <thead><tr>
               <th>สาเหตุขาดเกิน</th>
-              <th class="num">จำนวนเอกสารทั้งหมด (เอกสาร)</th>
-              <th class="num">จำนวนเอกสารขาดเกิน (เอกสาร)</th>
-              <th class="num">จำนวนขาด (ชิ้น)</th>
-              <th class="num">จำนวนเกิน (ชิ้น)</th>
-              <th class="num">จำนวนรวมทั้งหมด (ชิ้น)</th>
+              <th class="num">จำนวนเอกสารทั้งหมด<br><span class="th-unit">(เอกสาร)</span></th>
+              <th class="num">จำนวนเอกสารขาดเกิน<br><span class="th-unit">(เอกสาร)</span></th>
+              <th class="num">จำนวนขาด<br><span class="th-unit">(ชิ้น)</span></th>
+              <th class="num">จำนวนเกิน<br><span class="th-unit">(ชิ้น)</span></th>
+              <th class="num">จำนวนรวมทั้งหมด<br><span class="th-unit">(ชิ้น)</span></th>
               <th>คลังที่พบมาก</th>
               <th>สาขาที่พบมาก</th>
               <th>ประเภทงานที่พบมาก</th>
-              <th>สถานะความเสี่ยง</th>
+              <th>สถานะ</th>
             </tr></thead>
             <tbody id="bCA"></tbody>
           </table>
@@ -670,7 +685,7 @@
 <script src="lib/normalize.js?v=6"></script>
 
 <!-- 3. Aggregation (depends on format.js: riskBadge) -->
-<script src="lib/calculate.js?v=7"></script>
+<script src="lib/calculate.js?v=8"></script>
 
 <!-- 4. Filter logic (depends on state + will call renderAll at runtime) -->
 <script src="lib/filter.js?v=2"></script>
@@ -682,8 +697,8 @@
 <script src="components/loading.js?v=2"></script>
 <script src="components/pagination.js?v=2"></script>
 <script src="components/nav.js?v=4"></script>
-<script src="components/chart.js?v=28"></script>
-<script src="components/kpi.js?v=4"></script>
+<script src="components/chart.js?v=29"></script>
+<script src="components/kpi.js?v=5"></script>
 <script src="components/table-warehouse.js?v=5"></script>
 <script src="components/table-branch.js?v=6"></script>
 <script src="components/table-jobtype.js?v=5"></script>

@@ -427,6 +427,30 @@ function renderCharts() {
   const activeId = document.querySelector('.dash-section.active')?.id || 'sec-overview';
   const scBoth   = { x: { beginAtZero: true }, y: { beginAtZero: true } };
 
+  /* ── Shared warehouse helpers (branch / jobtype / cause) ── */
+  const WH_COL = {
+    'WH1': '#e8590c', 'WH2': '#3b5bdb', 'WH3': '#2f9e44',
+    'WH1,WH2': '#f59f00', 'WH2,WH3': '#7048e8', 'WH1,WH3': '#0c8599'
+  };
+  const whColor = (wh, i) => WH_COL[wh] || COLORS[i % COLORS.length];
+  const whs = [...new Set(filtered.map(r => r.warehouse))]
+    .filter(w => w && w !== 'ไม่ระบุคลัง').sort();
+  const stackV = {
+    scales: {
+      x: { stacked: true, beginAtZero: true, ticks: { maxRotation: 45, font: { family: 'Sarabun', size: 11 } } },
+      y: { stacked: true, beginAtZero: true }
+    },
+    plugins: {
+      tooltip: {
+        mode: 'index', intersect: false,
+        filter: item => (item.parsed.y || 0) > 0,
+        callbacks: {
+          footer: items => `รวม: ${items.reduce((s, i) => s + (i.parsed.y || 0), 0).toLocaleString()} ชิ้น`
+        }
+      }
+    }
+  };
+
   if (activeId === 'sec-overview') {
     const wh          = aggWH(filtered);
     const br          = aggBR(filtered);
@@ -468,19 +492,7 @@ function renderCharts() {
     const brTop10   = topN(br, 'issueTotal',    10);
     const brShort10 = topN(br, 'shortageTotal', 10);
     const brOver10  = topN(br, 'overageTotal',  10);
-    const brwhMap   = aggBRWH(filtered);
-
-    /* Warehouse series — sorted, excluding unlabelled */
-    const whs = [...new Set(filtered.map(r => r.warehouse))]
-      .filter(w => w && w !== 'ไม่ระบุคลัง').sort();
-
-    const WH_COL = {
-      'WH1': '#e8590c', 'WH2': '#3b5bdb', 'WH3': '#2f9e44',
-      'WH1,WH2': '#f59f00', 'WH2,WH3': '#7048e8', 'WH1,WH3': '#0c8599'
-    };
-    const whColor = (wh, i) => WH_COL[wh] || COLORS[i % COLORS.length];
-
-    /* Build one dataset per warehouse for the given metric (sh/ov/tot) */
+    const brwhMap = aggBRWH(filtered);
     const whDS = (branches, metric) => whs.map((wh, i) => ({
       label: wh,
       data: branches.map(b => brwhMap[b.branch]?.[wh]?.[metric] || 0),
@@ -488,28 +500,6 @@ function renderCharts() {
       borderColor: whColor(wh, i),
       borderWidth: 1.5
     }));
-
-    /* Shared stacked-vertical config with combined tooltip */
-    const stackV = {
-      scales: {
-        x: {
-          stacked: true, beginAtZero: true,
-          ticks: { maxRotation: 45, font: { family: 'Sarabun', size: 11 } }
-        },
-        y: { stacked: true, beginAtZero: true }
-      },
-      plugins: {
-        tooltip: {
-          mode: 'index',
-          intersect: false,
-          filter: item => (item.parsed.y || 0) > 0,
-          callbacks: {
-            footer: items =>
-              `รวม: ${items.reduce((s, i) => s + (i.parsed.y || 0), 0).toLocaleString()} ชิ้น`
-          }
-        }
-      }
-    };
 
     mkChart('cBrTop',   'bar', brTop10.map(d => short(d.branch, 14)),   whDS(brTop10,   'tot'), stackV);
     mkChart('cBrShort', 'bar', brShort10.map(d => short(d.branch, 14)), whDS(brShort10, 'sh'),  stackV);
@@ -520,7 +510,15 @@ function renderCharts() {
   }
 
   else if (activeId === 'sec-jobtype') {
-    const jt = aggJT(filtered);
+    const jt      = aggJT(filtered);
+    const jtwhMap = aggJTWH(filtered);
+    const whDS = (items, metric) => whs.map((wh, i) => ({
+      label: wh,
+      data: items.map(d => jtwhMap[d.jobType]?.[wh]?.[metric] || 0),
+      backgroundColor: alpha(whColor(wh, i)),
+      borderColor: whColor(wh, i),
+      borderWidth: 1.5
+    }));
 
     mkBarH('cJTBar', jt.map(d => d.jobType), [
       { name: 'จำนวนขาด', data: jt.map(d => d.shortageTotal) },
@@ -532,22 +530,36 @@ function renderCharts() {
     ], ['#c92a2a'], '%');
 
     mkDonut('cJTDonut', jt.map(d => d.jobType), jt.map(d => d.r008DocCount));
+
+    mkChart('cJTStacked', 'bar', jt.map(d => short(d.jobType, 14)),
+      whDS(jt, 'tot'), stackV);
   }
 
   else if (activeId === 'sec-cause') {
-    const ca      = aggCA(filtered);
-    const caTop10 = topN(ca, 'issueTotal', 10);
+    const ca        = aggCA(filtered);
+    const caTop10   = topN(ca, 'issueTotal',    10);
+    const caShort10 = topN(ca, 'shortageTotal', 10);
+    const cawhMap   = aggCAWH(filtered);
+    const whDS = (items, metric) => whs.map((wh, i) => ({
+      label: wh,
+      data: items.map(d => cawhMap[d.cause]?.[wh]?.[metric] || 0),
+      backgroundColor: alpha(whColor(wh, i)),
+      borderColor: whColor(wh, i),
+      borderWidth: 1.5
+    }));
 
     mkChart('cCATop', 'bar', caTop10.map(d => short(d.cause, 22)),
       [barDS('ปัญหารวม', caTop10.map(d => d.issueTotal), 4)],
       { indexAxis: 'y', scales: { x: { beginAtZero: true } } });
 
-    mkRadial('cCADonut', caTop10.map(d => short(d.cause, 20)), caTop10.map(d => d.issueTotal));
+    mkChart('cCAShort', 'bar', caShort10.map(d => short(d.cause, 22)),
+      [barDS('จำนวนขาด', caShort10.map(d => d.shortageTotal), 2)],
+      { indexAxis: 'y', scales: { x: { beginAtZero: true } } });
 
-    mkChart('cCAStacked', 'bar', caTop10.map(d => short(d.cause, 16)),
-      [barDS('จำนวนขาด', caTop10.map(d => d.shortageTotal), 2),
-       barDS('จำนวนเกิน', caTop10.map(d => d.overageTotal),  0)],
-      { scales: { x: { stacked: true, beginAtZero: true }, y: { stacked: true, beginAtZero: true } } });
+    mkDonut('cCADonut', caTop10.map(d => short(d.cause, 20)), caTop10.map(d => d.issueTotal));
+
+    mkChart('cCAStacked', 'bar', caTop10.map(d => short(d.cause, 14)),
+      whDS(caTop10, 'tot'), stackV);
   }
 
   else if (activeId === 'sec-recorder') {
