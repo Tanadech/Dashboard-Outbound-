@@ -95,11 +95,11 @@
   margin-bottom: 8px;
 }
 .dm-chart-box {
-  height: 220px;
+  height: 260px;
   position: relative;
 }
 .dm-full-chart-box {
-  height: 200px;
+  height: 220px;
   position: relative;
 }
 
@@ -160,3 +160,15 @@
   transition: opacity 0.15s;
 }
 .drill-card:hover .drill-hint { opacity: 1; }
+
+/* Table click hint inside drill modal */
+.dm-tbl-hint {
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--blue);
+  margin-left: 8px;
+}
+.dm-tbl-card tr:hover td { background: #f0f4ff; cursor: pointer; }
+
+/* Detail modals appear above drill modal */
+#whModal, #brModal, #jtModal, #caModal, #recModal { z-index: 3000; }
