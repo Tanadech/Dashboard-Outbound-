@@ -482,7 +482,9 @@ function renderCharts() {
       { name: 'เอกสารขาดเกินสาขา', data: wh.map(d => d.r008DocCount)  },
     ], ['#3b5bdb', '#e8590c']);
 
-    mkRadial('cOvWHDonut', wh.slice(0, 8).map(d => d.warehouse), wh.slice(0, 8).map(d => d.r008DocCount));
+    const rec    = aggREC(filtered);
+    const recT10 = topN(rec, 'r008DocCount', 10);
+    mkBarGradient('cOvWHDonut', recT10.map(d => short(d.recorder, 16)), recT10.map(d => d.r008DocCount), 'เอกสารขาดเกิน', '#7048e8');
     mkBarGradient('cOvBrTop', brR008Top10.map(d => short(d.branch, 14)), brR008Top10.map(d => d.r008DocCount), 'เอกสารขาดเกินสาขา', '#0c8599');
     mkBarGradient('cOvJTDonut', jt.slice(0, 6).map(d => d.jobType), jt.slice(0, 6).map(d => d.r008DocCount), 'เอกสารขาดเกิน', '#f59f00');
     mkRadar('cOvCauseBar', ca5R008.map(d => short(d.cause, 20)), ca5R008.map(d => d.r008DocCount));

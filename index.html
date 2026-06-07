@@ -32,7 +32,7 @@
   <link rel="stylesheet" href="styles/components/badge.css?v=2">
   <link rel="stylesheet" href="styles/components/pagination.css?v=2">
   <link rel="stylesheet" href="styles/components/loading.css?v=2">
-  <link rel="stylesheet" href="styles/components/modal.css?v=3">
+  <link rel="stylesheet" href="styles/components/modal.css?v=4">
   <link rel="stylesheet" href="styles/components/empty.css?v=2">
 
   <!-- Utility styles -->
@@ -40,6 +40,20 @@
   <link rel="stylesheet" href="styles/utilities/print.css?v=2">
 </head>
 <body>
+
+<!-- ===== DRILL-DOWN ANALYTICS MODAL ===== -->
+<div id="drillModal" class="modal-overlay" style="display:none" onclick="closeDrillModal(event)">
+  <div class="modal-card drill-modal-card">
+    <div class="modal-hdr">
+      <h3 id="drillModalTitle"></h3>
+      <div class="modal-hdr-actions">
+        <button class="btn btn-primary btn-compact" onclick="goToDrillSection()">เปิดเต็มหน้า →</button>
+        <button class="modal-close" onclick="closeDrillModalBtn()">✕</button>
+      </div>
+    </div>
+    <div class="drill-modal-body" id="drillModalBody"></div>
+  </div>
+</div>
 
 <!-- ===== WAREHOUSE DETAIL MODAL ===== -->
 <div id="whModal" class="modal-overlay" style="display:none" onclick="closeWHModal(event)">
@@ -284,27 +298,27 @@
       <div class="kpi-grid" id="kpiMain"></div>
 
       <div class="chart-grid">
-        <div class="chart-card">
-          <h3>📦 ขาด/เกิน แยกตามคลังสินค้า</h3>
+        <div class="chart-card drill-card" onclick="openDrillModal('sec-warehouse')">
+          <h3>📦 ขาด/เกิน แยกตามคลังสินค้า<span class="drill-hint">🔍 คลิกดูรายละเอียด</span></h3>
           <div class="chart-box h260"><div id="cOvWHBar"></div></div>
         </div>
-        <div class="chart-card">
-          <h3>🏪 Top 10 สาขาที่มีปัญหาสูงสุด</h3>
+        <div class="chart-card drill-card" onclick="openDrillModal('sec-branch')">
+          <h3>🏪 Top 10 สาขาที่มีปัญหาสูงสุด<span class="drill-hint">🔍 คลิกดูรายละเอียด</span></h3>
           <div class="chart-box h300"><div id="cOvBrTop"></div></div>
         </div>
       </div>
 
       <div class="chart-grid g3">
-        <div class="chart-card">
-          <h3>🍩 สัดส่วนปัญหาตามคลัง</h3>
+        <div class="chart-card drill-card" onclick="openDrillModal('sec-recorder')">
+          <h3>👤 Top 10 ผู้บันทึก<span class="drill-hint">🔍 คลิกดูรายละเอียด</span></h3>
           <div class="chart-box h260"><div id="cOvWHDonut"></div></div>
         </div>
-        <div class="chart-card">
-          <h3>🧾 สัดส่วนตามประเภทงาน</h3>
+        <div class="chart-card drill-card" onclick="openDrillModal('sec-jobtype')">
+          <h3>🧾 สัดส่วนตามประเภทงาน<span class="drill-hint">🔍 คลิกดูรายละเอียด</span></h3>
           <div class="chart-box h300"><div id="cOvJTDonut"></div></div>
         </div>
-        <div class="chart-card">
-          <h3>⚠️ Top 5 สาเหตุขาดเกินสาขา</h3>
+        <div class="chart-card drill-card" onclick="openDrillModal('sec-cause')">
+          <h3>⚠️ Top 5 สาเหตุขาดเกินสาขา<span class="drill-hint">🔍 คลิกดูรายละเอียด</span></h3>
           <div class="chart-box h300"><div id="cOvCauseBar"></div></div>
         </div>
       </div>
@@ -666,7 +680,7 @@
 <script src="components/loading.js?v=2"></script>
 <script src="components/pagination.js?v=2"></script>
 <script src="components/nav.js?v=3"></script>
-<script src="components/chart.js?v=17"></script>
+<script src="components/chart.js?v=18"></script>
 <script src="components/kpi.js?v=3"></script>
 <script src="components/table-warehouse.js?v=5"></script>
 <script src="components/table-branch.js?v=6"></script>
@@ -674,6 +688,7 @@
 <script src="components/table-cause.js?v=4"></script>
 <script src="components/table-recorder.js?v=4"></script>
 <script src="components/table-detail.js?v=4"></script>
+<script src="components/modal.js?v=1"></script>
 
 <!-- 7. App orchestration (ties everything together — must be last) -->
 <script src="scripts/app.js?v=6"></script>

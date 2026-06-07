@@ -53,3 +53,110 @@
 .modal-body td.num { text-align: right; }
 .modal-body tr:hover td { background: #f0f4ff; }
 .modal-info { font-size: 13px; color: var(--text-2); margin-bottom: 10px; }
+
+/* ── Drill-down analytics modal ── */
+.drill-modal-card {
+  width: min(1100px, 96vw);
+  max-height: 90vh;
+}
+.modal-hdr-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.drill-modal-body {
+  padding: 16px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
+
+/* 2-column chart grid inside modal */
+.dm-charts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.dm-chart-card,
+.dm-full-chart-card {
+  background: var(--bg);
+  border-radius: 10px;
+  padding: 14px;
+  border: 1px solid var(--border);
+}
+.dm-chart-card h3,
+.dm-full-chart-card h3 {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-1);
+  margin-bottom: 8px;
+}
+.dm-chart-box {
+  height: 220px;
+  position: relative;
+}
+.dm-full-chart-box {
+  height: 200px;
+  position: relative;
+}
+
+/* Table inside modal */
+.dm-tbl-card {
+  background: var(--bg);
+  border-radius: 10px;
+  padding: 14px;
+  border: 1px solid var(--border);
+}
+.dm-tbl-card h3 {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-1);
+  margin-bottom: 10px;
+}
+.dm-tbl-card table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+.dm-tbl-card th {
+  background: var(--bg, #f8f9fa);
+  color: var(--text-2);
+  font-weight: 600;
+  padding: 6px 10px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+.dm-tbl-card td {
+  padding: 5px 10px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-1);
+}
+.dm-tbl-card td.num { text-align: right; }
+.dm-tbl-card tr:last-child td { border-bottom: none; }
+.dm-tbl-card tr:hover td { background: #f0f4ff; }
+
+/* Clickable overview chart cards */
+.drill-card {
+  cursor: pointer;
+  transition: box-shadow 0.15s, transform 0.12s;
+  position: relative;
+}
+.drill-card:hover {
+  box-shadow: 0 6px 20px rgba(59,91,219,0.18);
+  transform: translateY(-2px);
+}
+.drill-hint {
+  font-size: 10px;
+  color: var(--blue);
+  font-weight: 400;
+  margin-left: 6px;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.drill-card:hover .drill-hint { opacity: 1; }
