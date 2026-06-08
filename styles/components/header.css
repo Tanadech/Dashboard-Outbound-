@@ -44,7 +44,8 @@
   line-height: 1;
   user-select: none;
 }
-.th-fg-wide { flex-shrink: 1; min-width: 0; }
+.th-fg-wide { flex-shrink: 1; min-width: 0; overflow: hidden; }
+.th-fg-wide > label { max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
 
 /* Controls on gradient header */
 .th-filters select,
