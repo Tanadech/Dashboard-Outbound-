@@ -34,7 +34,8 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
-  flex-shrink: 0;
+  flex-shrink: 1;
+  min-width: 0;
 }
 .th-fg > label {
   font-size: 10px;
@@ -62,9 +63,9 @@
   outline: none;
   transition: border 0.15s, background 0.15s;
 }
-.th-filters select             { min-width: 90px; }
-.th-filters input[type="text"] { width: 155px; }
-.th-filters input[type="date"] { width: 128px; }
+.th-filters select             { min-width: 80px; flex: 1; }
+.th-filters input[type="text"] { width: 100%; }
+.th-filters input[type="date"] { width: 118px; }
 .th-filters select:focus,
 .th-filters input:focus        { border-color: rgba(255,255,255,.5); background: rgba(255,255,255,.15); }
 
