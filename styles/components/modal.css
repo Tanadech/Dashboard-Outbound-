@@ -55,6 +55,7 @@ html.dark .modal-card {
   border-bottom: 1px solid var(--border);
 }
 .modal-body th { background: var(--bg); font-weight: 600; position: sticky; top: 0; }
+.modal-body th.num { text-align: right; }
 .modal-body td.num { text-align: right; }
 .modal-body tr:hover td { background: rgba(30,64,175,.05); }
 html.dark .modal-body tr:hover td { background: rgba(56,189,248,.07); }
@@ -143,6 +144,7 @@ html.dark .modal-body tr:hover td { background: rgba(56,189,248,.07); }
   border-bottom: 1px solid var(--border);
   color: var(--text-1);
 }
+.dm-tbl-card th.num { text-align: right; }
 .dm-tbl-card td.num { text-align: right; }
 .dm-tbl-card tr:last-child td { border-bottom: none; }
 .dm-tbl-card tr:hover td { background: rgba(30,64,175,.05); }

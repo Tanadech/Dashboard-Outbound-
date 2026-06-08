@@ -87,4 +87,5 @@ td {
 tr:hover td { background: rgba(30,64,175,.04); }
 html.dark tr:hover td { background: rgba(56,189,248,.06); }
 
-.num { text-align: right; }
+.num    { text-align: right; }
+th.num  { text-align: right; }

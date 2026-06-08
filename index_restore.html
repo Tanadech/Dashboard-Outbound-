@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Outbound – วิเคราะห์สินค้าขาดเกินที่สาขา</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- External libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.49.0/dist/apexcharts.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+
+  <!-- Base styles -->
+  <link rel="stylesheet" href="styles/base/reset.css?v=2">
+  <link rel="stylesheet" href="styles/base/colors.css?v=2">
+  <link rel="stylesheet" href="styles/base/layout.css?v=2">
+
+  <!-- Component styles -->
+  <link rel="stylesheet" href="styles/components/header.css?v=2">
+  <link rel="stylesheet" href="styles/components/nav-bar.css?v=2">
+  <link rel="stylesheet" href="styles/components/filter-bar.css?v=2">
+  <link rel="stylesheet" href="styles/components/button.css?v=2">
+  <link rel="stylesheet" href="styles/components/kpi-card.css?v=4">
+  <link rel="stylesheet" href="styles/components/chart-card.css?v=2">
+  <link rel="stylesheet" href="styles/components/stock-table.css?v=2">
+  <link rel="stylesheet" href="styles/components/badge.css?v=2">
+  <link rel="stylesheet" href="styles/components/pagination.css?v=2">
+  <link rel="stylesheet" href="styles/components/loading.css?v=2">
+  <link rel="stylesheet" href="styles/components/modal.css?v=3">
+  <link rel="stylesheet" href="styles/components/empty.css?v=2">
+
+  <!-- Utility styles -->
+  <link rel="stylesheet" href="styles/utilities/responsive.css?v=2">
+  <link rel="stylesheet" href="styles/utilities/print.css?v=2">
+</head>
+<body>
+
+<!-- ===== WAREHOUSE DETAIL MODAL ===== -->
+<div id="whModal" class="modal-overlay" style="display:none" onclick="closeWHModal(event)">
+  <div class="modal-card">
+    <div class="modal-hdr">
+      <h3 id="whModalTitle">📋 เอกสารคลัง</h3>
+      <button class="modal-close" onclick="closeWHModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <input class="tbl-search" id="whModalSearch" placeholder="ค้นหาเลขที่เอกสาร..." oninput="renderWHModalRows()" style="flex:1;max-width:260px">
+        <span class="row-info" id="whModalInfo"></span>
+      </div>
+      <table>
+        <thead><tr>
+          <th>เลขที่เอกสาร</th>
+          <th>วันที่</th>
+          <th>สาขา</th>
+          <th class="num">จำนวนขาด</th>
+          <th class="num">จำนวนเกิน</th>
+          <th>ผู้บันทึก</th>
+          <th>สาเหตุ</th>
+        </tr></thead>
+        <tbody id="whModalBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- JOB TYPE DETAIL MODAL -->
+<div id="jtModal" class="modal-overlay" style="display:none" onclick="closeJTModal(event)">
+  <div class="modal-card">
+    <div class="modal-hdr">
+      <h3 id="jtModalTitle">📋 เอกสารประเภทงาน</h3>
+      <button class="modal-close" onclick="closeJTModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <input class="tbl-search" id="jtModalSearch" placeholder="ค้นหาเลขที่เอกสาร..." oninput="renderJTModalRows()" style="flex:1;max-width:260px">
+        <span class="row-info" id="jtModalInfo"></span>
+      </div>
+      <table>
+        <thead><tr>
+          <th>เลขที่เอกสาร</th>
+          <th>วันที่</th>
+          <th>คลังสินค้า</th>
+          <th>สาขา</th>
+          <th class="num">จำนวนขาด</th>
+          <th class="num">จำนวนเกิน</th>
+          <th>ผู้บันทึก</th>
+          <th>สาเหตุ</th>
+        </tr></thead>
+        <tbody id="jtModalBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- CAUSE DETAIL MODAL -->
+<div id="caModal" class="modal-overlay" style="display:none" onclick="closeCAModal(event)">
+  <div class="modal-card">
+    <div class="modal-hdr">
+      <h3 id="caModalTitle">📋 เอกสารสาเหตุขาดเกิน</h3>
+      <button class="modal-close" onclick="closeCAModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <input class="tbl-search" id="caModalSearch" placeholder="ค้นหาเลขที่เอกสาร..." oninput="renderCAModalRows()" style="flex:1;max-width:260px">
+        <span class="row-info" id="caModalInfo"></span>
+      </div>
+      <table>
+        <thead><tr>
+          <th>เลขที่เอกสาร</th>
+          <th>วันที่</th>
+          <th>คลังสินค้า</th>
+          <th>สาขา</th>
+          <th>ประเภทงาน</th>
+          <th class="num">จำนวนขาด</th>
+          <th class="num">จำนวนเกิน</th>
+          <th>ผู้บันทึก</th>
+        </tr></thead>
+        <tbody id="caModalBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- RECORDER DETAIL MODAL -->
+<div id="recModal" class="modal-overlay" style="display:none" onclick="closeRECModal(event)">
+  <div class="modal-card">
+    <div class="modal-hdr">
+      <h3 id="recModalTitle">📋 เอกสารผู้บันทึก</h3>
+      <button class="modal-close" onclick="closeRECModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <input class="tbl-search" id="recModalSearch" placeholder="ค้นหาเลขที่เอกสาร..." oninput="renderRECModalRows()" style="flex:1;max-width:260px">
+        <span class="row-info" id="recModalInfo"></span>
+      </div>
+      <table>
+        <thead><tr>
+          <th>เลขที่เอกสาร</th>
+          <th>วันที่</th>
+          <th>คลังสินค้า</th>
+          <th>สาขา</th>
+          <th>ประเภทงาน</th>
+          <th class="num">จำนวนขาด</th>
+          <th class="num">จำนวนเกิน</th>
+          <th>สาเหตุ</th>
+        </tr></thead>
+        <tbody id="recModalBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- DOCUMENT DETAIL MODAL -->
+<div id="dtModal" class="modal-overlay" style="display:none" onclick="closeDTModal(event)">
+  <div class="modal-card">
+    <div class="modal-hdr">
+      <h3 id="dtModalTitle">📋 รายละเอียดเอกสาร</h3>
+      <button class="modal-close" onclick="closeDTModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px" id="dtModalSummary"></div>
+      <table>
+        <thead><tr>
+          <th>คลังสินค้า</th>
+          <th>สาขา</th>
+          <th>ประเภทงาน</th>
+          <th class="num">จำนวนขาด</th>
+          <th class="num">จำนวนเกิน</th>
+          <th>ผู้บันทึก</th>
+          <th>สาเหตุ</th>
+          <th>สถานะ</th>
+        </tr></thead>
+        <tbody id="dtModalBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- BRANCH DETAIL MODAL -->
+<div id="brModal" class="modal-overlay" style="display:none" onclick="closeBRModal(event)">
+  <div class="modal-card">
+    <div class="modal-hdr">
+      <h3 id="brModalTitle">📋 เอกสารสาขา</h3>
+      <button class="modal-close" onclick="closeBRModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <input class="tbl-search" id="brModalSearch" placeholder="ค้นหาเลขที่เอกสาร..." oninput="renderBRModalRows()" style="flex:1;max-width:260px">
+        <span class="row-info" id="brModalInfo"></span>
+      </div>
+      <table>
+        <thead><tr>
+          <th>เลขที่เอกสาร</th>
+          <th>วันที่</th>
+          <th>คลังสินค้า</th>
+          <th class="num">จำนวนขาด</th>
+          <th class="num">จำนวนเกิน</th>
+          <th>ผู้บันทึก</th>
+          <th>สาเหตุ</th>
+        </tr></thead>
+        <tbody id="brModalBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ===== LOADING OVERLAY ===== -->
+<div id="loader">
+  <div class="loader-box">
+    <div class="spin"></div>
+    <p style="font-size:13px;color:#555;">กำลังประมวลผลข้อมูล...</p>
+  </div>
+</div>
+
+<div class="app-layout">
+
+  <!-- ===== STICKY HEADER + NAV ===== -->
+  <div id="stickyWrap">
+
+    <!-- Top Header -->
+    <div id="topHeader">
+      <div class="th-left">
+        <h1>📦 Dashboard Outbound สินค้าขาดเกินที่สาขา</h1>
+        <p>วิเคราะห์จำนวนขาด/เกิน แยกตามคลัง สาขา ประเภทงาน และสาเหตุ</p>
+      </div>
+      <div class="th-right">
+        <span id="fileStatusLabel">ยังไม่ได้เลือกไฟล์</span>
+        <label class="btn btn-primary btn-file">
+          📂 นำเข้าไฟล์
+          <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" style="display:none" onchange="handleFile(this)">
+        </label>
+      </div>
+    </div>
+
+    <!-- Filter Bar -->
+    <div id="filterBar">
+      <div class="fg">
+        <label>คลังสินค้า</label>
+        <select id="fWH" onchange="applyFilters()"><option value="">ทั้งหมด</option></select>
+      </div>
+      <div class="fg">
+        <label>สาขา</label>
+        <select id="fBR" onchange="applyFilters()"><option value="">ทั้งหมด</option></select>
+      </div>
+      <div class="fg">
+        <label>ประเภทงาน</label>
+        <select id="fJT" onchange="applyFilters()"><option value="">ทั้งหมด</option></select>
+      </div>
+      <div class="fg">
+        <label>สาเหตุขาดเกิน</label>
+        <select id="fCA" onchange="applyFilters()"><option value="">ทั้งหมด</option></select>
+      </div>
+      <div class="fg wide">
+        <label>ค้นหา</label>
+        <input type="text" id="fSearch" placeholder="เลขที่เอกสาร / สาขา / คลัง" oninput="applyFilters()">
+      </div>
+      <div class="fg">
+        <label>วันที่เริ่มต้น</label>
+        <input type="date" id="fDateFrom" onchange="applyFilters()">
+      </div>
+      <div class="fg">
+        <label>วันที่สิ้นสุด</label>
+        <input type="date" id="fDateTo" onchange="applyFilters()">
+      </div>
+      <div class="fb-actions">
+        <button class="btn btn-ghost" onclick="resetFilters()">🔄 รีเซ็ต</button>
+        <button class="btn btn-green" onclick="exportCSV()">⬇️ Export CSV</button>
+        <button class="btn btn-ghost" onclick="window.print()">🖨️ Print / PDF</button>
+      </div>
+      <div class="qf-row">
+        <span class="qf-label">⚡ ช่วงเวลาเร็ว:</span>
+        <button class="btn btn-qf" onclick="setQuickDate('today',this)">วันนี้</button>
+        <button class="btn btn-qf" onclick="setQuickDate('7d',this)">7 วันล่าสุด</button>
+        <button class="btn btn-qf" onclick="setQuickDate('month',this)">เดือนนี้</button>
+        <button class="btn btn-qf" onclick="setQuickDate('prevmonth',this)">เดือนก่อน</button>
+        <button class="btn btn-qf" onclick="setQuickDate('year',this)">ปีนี้</button>
+        <button class="btn btn-qf" onclick="setQuickDate('clear',this)">🔄 ล้างช่วงเวลา</button>
+      </div>
+    </div>
+
+    <!-- Section Navigation -->
+    <nav id="navBar">
+      <a class="nav-link" href="#sec-overview"><span class="ico">📊</span>ภาพรวม</a>
+      <a class="nav-link" href="#sec-warehouse"><span class="ico">🏭</span>วิเคราะห์คลัง</a>
+      <a class="nav-link" href="#sec-branch"><span class="ico">🏪</span>วิเคราะห์สาขา</a>
+      <a class="nav-link" href="#sec-jobtype"><span class="ico">🧾</span>วิเคราะห์ประเภทงาน</a>
+      <a class="nav-link" href="#sec-cause"><span class="ico">⚠️</span>วิเคราะห์สาเหตุขาดเกิน</a>
+      <a class="nav-link" href="#sec-recorder"><span class="ico">👤</span>วิเคราะห์ผู้บันทึก</a>
+      <a class="nav-link" href="#sec-detail"><span class="ico">📋</span>รายละเอียดข้อมูล</a>
+    </nav>
+
+  </div><!-- /stickyWrap -->
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <div id="content">
+
+    <!-- A. OVERVIEW -->
+    <section class="dash-section" id="sec-overview">
+      <div class="sec-hdr">
+        <span class="sec-icon">📊</span>
+        <div class="sec-hdr-text">
+          <h2>ภาพรวม</h2>
+          <p id="overviewSub">โหลดไฟล์ข้อมูลเพื่อดูสรุป</p>
+        </div>
+      </div>
+
+      <div class="kpi-grid" id="kpiMain"></div>
+
+      <div class="chart-grid">
+        <div class="chart-card">
+          <h3>📦 ขาด/เกิน แยกตามคลังสินค้า</h3>
+          <div class="chart-box h260"><canvas id="cOvWHBar"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h3>🍩 สัดส่วนปัญหาตามคลัง</h3>
+          <div class="chart-box h260"><div id="cOvWHDonut"></div></div>
+        </div>
+      </div>
+
+      <div class="chart-grid">
+        <div class="chart-card fw">
+          <h3>🏪 Top 10 สาขาที่มีปัญหาสูงสุด</h3>
+          <div class="chart-box h320"><canvas id="cOvBrTop"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h3>🧾 สัดส่วนตามประเภทงาน</h3>
+          <div class="chart-box h260"><div id="cOvJTDonut"></div></div>
+        </div>
+        <div class="chart-card">
+          <h3>⚠️ Top 5 สาเหตุขาดเกินสาขา</h3>
+          <div class="chart-box h260"><canvas id="cOvCauseBar"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- B. WAREHOUSE -->
+    <section class="dash-section" id="sec-warehouse">
+      <div class="sec-hdr">
+        <span class="sec-icon">🏭</span>
+        <div class="sec-hdr-text">
+          <h2>วิเคราะห์คลังสินค้า</h2>
+          <p>สรุปจำนวนขาด/เกิน แยกตามคลังสินค้า</p>
+        </div>
+      </div>
+
+      <div class="kpi-grid" id="kpiWH"></div>
+
+      <div class="chart-grid">
+        <div class="chart-card">
+          <h3>📊 จำนวนขาด/เกิน แยกตามคลัง</h3>
+          <div class="chart-box h320"><canvas id="cWHBar"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h3>🍩 สัดส่วนปัญหาจำนวนสินค้าตามคลัง</h3>
+          <div class="chart-box h320"><div id="cWHDonut"></div></div>
+        </div>
+      </div>
+
+      <div class="tbl-card">
+        <h3>📋 สรุปจำนวนขาด/เกิน แยกตามคลังสินค้า</h3>
+        <div class="tbl-toolbar">
+          <input class="tbl-search" id="sWH" placeholder="ค้นหาคลัง..." oninput="renderWH()">
+          <span class="row-info" id="infoWH"></span>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr>
+              <th>คลังสินค้า</th>
+              <th class="num">จำนวนเอกสารทั้งหมด (เอกสาร)</th>
+              <th class="num">จำนวนเอกสารขาดเกิน (เอกสาร)</th>
+              <th class="num">จำนวนขาด (ชิ้น)</th>
+              <th class="num">จำนวนเกิน (ชิ้น)</th>
+              <th class="num">จำนวนรวมทั้งหมด (ชิ้น)</th>
+              <th class="num">สัดส่วน %</th>
+              <th>สถานะความเสี่ยง</th>
+            </tr></thead>
+            <tbody id="bWH"></tbody>
+          </table>
+        </div>
+        <div class="pagination" id="pgWH"></div>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- C. BRANCH -->
+    <section class="dash-section" id="sec-branch">
+      <div class="sec-hdr">
+        <span class="sec-icon">🏪</span>
+        <div class="sec-hdr-text">
+          <h2>วิเคราะห์สาขา</h2>
+          <p>สรุปจำนวนขาด/เกิน แยกตามสาขา</p>
+        </div>
+      </div>
+
+      <div class="chart-grid g1">
+        <div class="chart-card">
+          <h3>🏆 Top 10 สาขาที่มีปัญหารวมสูงสุด</h3>
+          <div class="chart-box h380"><canvas id="cBrTop"></canvas></div>
+        </div>
+      </div>
+
+      <div class="chart-grid">
+        <div class="chart-card">
+          <h3>📉 Top 10 สาขาที่มีจำนวนขาดสูงสุด</h3>
+          <div class="chart-box h320"><canvas id="cBrShort"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h3>📈 Top 10 สาขาที่มีจำนวนเกินสูงสุด</h3>
+          <div class="chart-box h320"><canvas id="cBrOver"></canvas></div>
+        </div>
+      </div>
+
+      <div class="chart-grid g1">
+        <div class="chart-card">
+          <h3>📊 Stacked: ขาด/เกิน Top 10 สาขา</h3>
+          <div class="chart-box h320"><canvas id="cBrStacked"></canvas></div>
+        </div>
+      </div>
+
+      <div class="tbl-card">
+        <h3>📋 สรุปจำนวนขาด/เกิน แยกตามสาขา</h3>
+        <div class="tbl-toolbar">
+          <input class="tbl-search" id="sBR" placeholder="ค้นหาสาขา..." oninput="renderBR()">
+          <span class="row-info" id="infoBR"></span>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr>
+              <th>อันดับ</th>
+              <th>สาขา</th>
+              <th>คลังที่เกี่ยวข้อง</th>
+              <th>ประเภทงานที่พบมาก</th>
+              <th class="num">จำนวนเอกสารทั้งหมด (เอกสาร)</th>
+              <th class="num">จำนวนเอกสารขาดเกิน (เอกสาร)</th>
+              <th class="num">จำนวนขาด (ชิ้น)</th>
+              <th class="num">จำนวนเกิน (ชิ้น)</th>
+              <th class="num">จำนวนรวมทั้งหมด (ชิ้น)</th>
+              <th class="num">สัดส่วน %</th>
+              <th>สถานะความเสี่ยง</th>
+            </tr></thead>
+            <tbody id="bBR"></tbody>
+          </table>
+        </div>
+        <div class="pagination" id="pgBR"></div>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- D. JOB TYPE -->
+    <section class="dash-section" id="sec-jobtype">
+      <div class="sec-hdr">
+        <span class="sec-icon">🧾</span>
+        <div class="sec-hdr-text">
+          <h2>วิเคราะห์ประเภทงาน</h2>
+          <p>วิเคราะห์ประเภทงานที่มีจำนวนขาด/เกิน</p>
+        </div>
+      </div>
+
+      <div class="kpi-grid" id="kpiJT"></div>
+
+      <div class="chart-grid">
+        <div class="chart-card">
+          <h3>🍩 สัดส่วนปัญหาตามประเภทงาน</h3>
+          <div class="chart-box h300"><div id="cJTDonut"></div></div>
+        </div>
+        <div class="chart-card">
+          <h3>📊 จำนวนขาด/เกิน แยกตามประเภทงาน</h3>
+          <div class="chart-box h300"><canvas id="cJTBar"></canvas></div>
+        </div>
+        <div class="chart-card fw">
+          <h3>📈 Top ประเภทงานที่มีปัญหาสูงสุด</h3>
+          <div class="chart-box h280"><canvas id="cJTTop"></canvas></div>
+        </div>
+      </div>
+
+      <div class="tbl-card">
+        <h3>📋 สรุปตามประเภทงาน</h3>
+        <div class="tbl-toolbar">
+          <input class="tbl-search" id="sJT" placeholder="ค้นหาประเภทงาน..." oninput="renderJT()">
+          <span class="row-info" id="infoJT"></span>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr>
+              <th>ประเภทงาน</th>
+              <th class="num">จำนวนเอกสารทั้งหมด (เอกสาร)</th>
+              <th class="num">จำนวนเอกสารขาดเกิน (เอกสาร)</th>
+              <th class="num">จำนวนขาด (ชิ้น)</th>
+              <th class="num">จำนวนเกิน (ชิ้น)</th>
+              <th class="num">จำนวนรวมทั้งหมด (ชิ้น)</th>
+              <th class="num">สัดส่วน %</th>
+              <th>คลังที่พบมาก</th>
+              <th>สาขาที่พบมาก</th>
+              <th>สถานะความเสี่ยง</th>
+            </tr></thead>
+            <tbody id="bJT"></tbody>
+          </table>
+        </div>
+        <div class="pagination" id="pgJT"></div>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- E. CAUSE -->
+    <section class="dash-section" id="sec-cause">
+      <div class="sec-hdr">
+        <span class="sec-icon">⚠️</span>
+        <div class="sec-hdr-text">
+          <h2>วิเคราะห์สาเหตุขาดเกิน</h2>
+          <p>วิเคราะห์สาเหตุของการขาดเกิน</p>
+        </div>
+      </div>
+
+      <div class="chart-grid g1">
+        <div class="chart-card">
+          <h3>📊 Top 10 สาเหตุขาดเกินสาขา ที่มีปัญหารวมสูงสุด</h3>
+          <div class="chart-box h360"><canvas id="cCATop"></canvas></div>
+        </div>
+      </div>
+
+      <div class="chart-grid">
+        <div class="chart-card">
+          <h3>🍩 สัดส่วนตามสาเหตุขาดเกิน</h3>
+          <div class="chart-box h300"><div id="cCADonut"></div></div>
+        </div>
+        <div class="chart-card">
+          <h3>📊 Stacked: ขาด/เกิน แยกตามสาเหตุ</h3>
+          <div class="chart-box h300"><canvas id="cCAStacked"></canvas></div>
+        </div>
+      </div>
+
+      <div class="tbl-card">
+        <h3>📋 สรุปตามสาเหตุขาดเกิน</h3>
+        <div class="tbl-toolbar">
+          <input class="tbl-search" id="sCA" placeholder="ค้นหาสาเหตุ..." oninput="renderCA()">
+          <span class="row-info" id="infoCA"></span>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr>
+              <th>สาเหตุขาดเกิน</th>
+              <th class="num">จำนวนเอกสารทั้งหมด (เอกสาร)</th>
+              <th class="num">จำนวนเอกสารขาดเกิน (เอกสาร)</th>
+              <th class="num">จำนวนขาด (ชิ้น)</th>
+              <th class="num">จำนวนเกิน (ชิ้น)</th>
+              <th class="num">จำนวนรวมทั้งหมด (ชิ้น)</th>
+              <th>คลังที่พบมาก</th>
+              <th>สาขาที่พบมาก</th>
+              <th>ประเภทงานที่พบมาก</th>
+              <th>สถานะความเสี่ยง</th>
+            </tr></thead>
+            <tbody id="bCA"></tbody>
+          </table>
+        </div>
+        <div class="pagination" id="pgCA"></div>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- F. RECORDER -->
+    <section class="dash-section" id="sec-recorder">
+      <div class="sec-hdr">
+        <span class="sec-icon">👤</span>
+        <div class="sec-hdr-text">
+          <h2>วิเคราะห์ผู้บันทึก</h2>
+          <p>วิเคราะห์ผลงานการปิดรถของผู้บันทึก T3</p>
+        </div>
+      </div>
+
+      <div class="kpi-grid" id="kpiREC"></div>
+
+      <div class="chart-grid">
+        <div class="chart-card">
+          <h3>🏆 Top 10 ผู้บันทึกที่มีเอกสารขาดเกินสาขา สูงสุด</h3>
+          <div class="chart-box h320"><canvas id="cRECTop"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h3>📉 Top 10 ผู้บันทึกที่มีจำนวนขาดสูงสุด</h3>
+          <div class="chart-box h320"><canvas id="cRECShort"></canvas></div>
+        </div>
+      </div>
+
+      <div class="chart-grid">
+        <div class="chart-card">
+          <h3>📈 Top 10 ผู้บันทึกที่มีจำนวนเกินสูงสุด</h3>
+          <div class="chart-box h320"><canvas id="cRECOver"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h3>🍩 สัดส่วนเอกสารขาดเกินสาขา ตามผู้บันทึก (Top 10)</h3>
+          <div class="chart-box h320"><div id="cRECDonut"></div></div>
+        </div>
+      </div>
+
+      <div class="chart-grid g1">
+        <div class="chart-card">
+          <h3>📊 Stacked: ขาด/เกิน แยกตามผู้บันทึก (Top 10)</h3>
+          <div class="chart-box h320"><canvas id="cRECStacked"></canvas></div>
+        </div>
+      </div>
+
+      <div class="tbl-card">
+        <h3>📋 สรุปผู้บันทึก</h3>
+        <div class="tbl-toolbar">
+          <input class="tbl-search" id="sREC" placeholder="ค้นหาผู้บันทึก..." oninput="renderREC()">
+          <span class="row-info" id="infoREC"></span>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr>
+              <th>ผู้บันทึก</th>
+              <th class="num">จำนวนเอกสารทั้งหมด (เอกสาร)</th>
+              <th class="num">จำนวนเอกสารขาดเกิน (เอกสาร)</th>
+              <th class="num">จำนวนขาด (ชิ้น)</th>
+              <th class="num">จำนวนเกิน (ชิ้น)</th>
+              <th class="num">จำนวนรวมทั้งหมด (ชิ้น)</th>
+              <th class="num">สัดส่วน %</th>
+              <th>สถานะความเสี่ยง</th>
+              <th>คลังที่พบมากสุด</th>
+              <th>สาขาที่พบมากสุด</th>
+              <th>ประเภทงานที่พบมากสุด</th>
+            </tr></thead>
+            <tbody id="bREC"></tbody>
+          </table>
+        </div>
+        <div class="pagination" id="pgREC"></div>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- G. DETAIL -->
+    <section class="dash-section" id="sec-detail">
+      <div class="sec-hdr">
+        <span class="sec-icon">📋</span>
+        <div class="sec-hdr-text">
+          <h2>รายละเอียดขาดเกินสาขา</h2>
+          <p>ข้อมูลรายละเอียดทุกรายการ</p>
+        </div>
+      </div>
+
+      <div class="tbl-card">
+        <div class="tbl-toolbar">
+          <input class="tbl-search" id="sDT" placeholder="ค้นหา..." oninput="renderDT()">
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span class="row-info" id="infoDT"></span>
+            <button class="btn btn-green" onclick="exportCSV()" style="font-size:12px;padding:6px 11px;">⬇️ Export CSV</button>
+          </div>
+        </div>
+        <div class="tbl-wrap">
+          <table id="tDetail">
+            <thead><tr>
+              <th class="sortable" onclick="sdSort('docNo')">เลขที่เอกสาร</th>
+              <th class="sortable" onclick="sdSort('warehouse')">คลังสินค้า</th>
+              <th class="sortable" onclick="sdSort('branch')">สาขา</th>
+              <th class="sortable" onclick="sdSort('jobType')">ประเภทงาน</th>
+              <th class="num sortable" onclick="sdSort('shortage')">จำนวนขาด</th>
+              <th class="num sortable" onclick="sdSort('overage')">จำนวนเกิน</th>
+              <th class="num sortable" onclick="sdSort('total')">ปัญหารวม</th>
+              <th>สาเหตุขาดเกิน</th>
+              <th>สถานะเอกสาร</th>
+            </tr></thead>
+            <tbody id="bDT"></tbody>
+          </table>
+        </div>
+        <div class="pagination" id="pgDT"></div>
+      </div>
+    </section>
+
+  </div><!-- /content -->
+</div><!-- /app-layout -->
+
+<!-- ===== JAVASCRIPT — load order matters ===== -->
+
+<!-- 1. State & constants (must be first) -->
+<script src="lib/constants.js?v=2"></script>
+
+<!-- 2. Pure utilities (no dependencies on each other) -->
+<script src="lib/format.js?v=3"></script>
+<script src="lib/normalize.js?v=5"></script>
+
+<!-- 3. Aggregation (depends on format.js: riskBadge) -->
+<script src="lib/calculate.js?v=4"></script>
+
+<!-- 4. Filter logic (depends on state + will call renderAll at runtime) -->
+<script src="lib/filter.js?v=2"></script>
+
+<!-- 5. Export (depends on state) -->
+<script src="lib/export.js?v=2"></script>
+
+<!-- 6. UI components (depend on state, utilities, lib) -->
+<script src="components/loading.js?v=2"></script>
+<script src="components/pagination.js?v=2"></script>
+<script src="components/nav.js?v=2"></script>
+<script src="components/chart.js?v=4"></script>
+<script src="components/kpi.js?v=2"></script>
+<script src="components/table-warehouse.js?v=5"></script>
+<script src="components/table-branch.js?v=6"></script>
+<script src="components/table-jobtype.js?v=4"></script>
+<script src="components/table-cause.js?v=4"></script>
+<script src="components/table-recorder.js?v=4"></script>
+<script src="components/table-detail.js?v=4"></script>
+
+<!-- 7. App orchestration (ties everything together — must be last) -->
+<script src="scripts/app.js?v=3"></script>
+
+</body>
+</html>
+ 
